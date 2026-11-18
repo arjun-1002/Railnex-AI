@@ -1,0 +1,275 @@
+{
+  "experiment": "Experiment B (Synthetic Maintenance Urgency Prototype)",
+  "disclaimer": "SYNTHETIC DATA \u2014 NOT VALIDATED ON INDIAN RAILWAYS RECORDS",
+  "best_model": "XGBoost",
+  "best_weighted_f1": 0.6178435971794122,
+  "feature_names": [
+    "track_temperature_c",
+    "rail_wear_mm",
+    "track_vibration_level",
+    "track_curvature_degree",
+    "ambient_temperature_c",
+    "humidity_percent",
+    "rainfall_mm",
+    "wind_speed_kmph",
+    "train_age_years",
+    "average_speed_kmph",
+    "distance_travelled_km",
+    "daily_trips",
+    "load_factor_percent",
+    "power_consumption_kw",
+    "ballast_condition_Fair",
+    "ballast_condition_Good",
+    "ballast_condition_Poor",
+    "region_Central Railway",
+    "region_Eastern Railway",
+    "region_Northern Railway",
+    "region_South Central Railway",
+    "region_Southern Railway",
+    "region_Western Railway",
+    "season_Monsoon",
+    "season_Summer",
+    "season_Winter",
+    "train_type_Express",
+    "train_type_Freight",
+    "train_type_Metro",
+    "train_type_Passenger"
+  ],
+  "target_mapping": {
+    "0": "None",
+    "1": "Low",
+    "2": "Medium",
+    "3": "High",
+    "4": "Critical"
+  },
+  "benchmark_summary": {
+    "Logistic Regression": {
+      "model_name": "Logistic Regression",
+      "accuracy": 0.4179,
+      "macro_f1": 0.2075,
+      "weighted_f1": 0.4574,
+      "critical_severity_recall": 0.1765,
+      "confusion_matrix": [
+        [
+          880,
+          180,
+          99,
+          197,
+          231
+        ],
+        [
+          161,
+          67,
+          22,
+          65,
+          42
+        ],
+        [
+          109,
+          44,
+          7,
+          38,
+          32
+        ],
+        [
+          65,
+          21,
+          7,
+          29,
+          17
+        ],
+        [
+          21,
+          12,
+          8,
+          15,
+          12
+        ]
+      ],
+      "per_class": {
+        "Class_0": {
+          "precision": 0.7119741100323624,
+          "recall": 0.5545053560176434,
+          "f1-score": 0.6234502302515055,
+          "support": 1587.0
+        },
+        "Class_1": {
+          "precision": 0.20679012345679013,
+          "recall": 0.1876750700280112,
+          "f1-score": 0.19676945668135096,
+          "support": 357.0
+        },
+        "Class_2": {
+          "precision": 0.04895104895104895,
+          "recall": 0.030434782608695653,
+          "f1-score": 0.03753351206434316,
+          "support": 230.0
+        },
+        "Class_3": {
+          "precision": 0.08430232558139535,
+          "recall": 0.20863309352517986,
+          "f1-score": 0.12008281573498965,
+          "support": 139.0
+        },
+        "Class_4": {
+          "precision": 0.03592814371257485,
+          "recall": 0.17647058823529413,
+          "f1-score": 0.05970149253731343,
+          "support": 68.0
+        }
+      }
+    },
+    "Random Forest": {
+      "model_name": "Random Forest",
+      "accuracy": 0.68,
+      "macro_f1": 0.2363,
+      "weighted_f1": 0.5984,
+      "critical_severity_recall": 0.0,
+      "confusion_matrix": [
+        [
+          1543,
+          40,
+          3,
+          1,
+          0
+        ],
+        [
+          255,
+          63,
+          13,
+          25,
+          1
+        ],
+        [
+          169,
+          44,
+          8,
+          9,
+          0
+        ],
+        [
+          108,
+          21,
+          5,
+          5,
+          0
+        ],
+        [
+          49,
+          15,
+          1,
+          3,
+          0
+        ]
+      ],
+      "per_class": {
+        "Class_0": {
+          "precision": 0.7264595103578154,
+          "recall": 0.9722747321991179,
+          "f1-score": 0.8315817838857451,
+          "support": 1587.0
+        },
+        "Class_1": {
+          "precision": 0.3442622950819672,
+          "recall": 0.17647058823529413,
+          "f1-score": 0.23333333333333334,
+          "support": 357.0
+        },
+        "Class_2": {
+          "precision": 0.26666666666666666,
+          "recall": 0.034782608695652174,
+          "f1-score": 0.06153846153846154,
+          "support": 230.0
+        },
+        "Class_3": {
+          "precision": 0.11627906976744186,
+          "recall": 0.03597122302158273,
+          "f1-score": 0.054945054945054944,
+          "support": 139.0
+        },
+        "Class_4": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 68.0
+        }
+      }
+    },
+    "XGBoost": {
+      "model_name": "XGBoost",
+      "accuracy": 0.7052,
+      "macro_f1": 0.2505,
+      "weighted_f1": 0.6178,
+      "critical_severity_recall": 0.0,
+      "confusion_matrix": [
+        [
+          1586,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          258,
+          81,
+          13,
+          5,
+          0
+        ],
+        [
+          171,
+          45,
+          11,
+          3,
+          0
+        ],
+        [
+          109,
+          22,
+          5,
+          1,
+          2
+        ],
+        [
+          50,
+          12,
+          6,
+          0,
+          0
+        ]
+      ],
+      "per_class": {
+        "Class_0": {
+          "precision": 0.7295308187672493,
+          "recall": 0.9993698802772527,
+          "f1-score": 0.8433927147035363,
+          "support": 1587.0
+        },
+        "Class_1": {
+          "precision": 0.5031055900621118,
+          "recall": 0.226890756302521,
+          "f1-score": 0.3127413127413127,
+          "support": 357.0
+        },
+        "Class_2": {
+          "precision": 0.3142857142857143,
+          "recall": 0.04782608695652174,
+          "f1-score": 0.0830188679245283,
+          "support": 230.0
+        },
+        "Class_3": {
+          "precision": 0.1111111111111111,
+          "recall": 0.007194244604316547,
+          "f1-score": 0.013513513513513514,
+          "support": 139.0
+        },
+        "Class_4": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 68.0
+        }
+      }
+    }
+  }
+}

@@ -46,6 +46,11 @@ TrackPrior-AI/data/raw/railway_network/stations_raw.json
 TrackPrior-AI/data/raw/informs/extracted/
 TrackPrior-AI/data/raw/informs/*.csv
 
+# Node.js
+node_modules/
+.npm
+frontend/node_modules/
+
 # But preserve manifests, reports, figures, scripts, tests, small sample CSVs, and gitkeep
 !.gitkeep
 !TrackPrior-AI/data/raw/standards/*.csv
@@ -55,4 +60,7 @@ TrackPrior-AI/data/raw/informs/*.csv
 !TrackPrior-AI/data/raw/railway_network/railway_stations.csv
 !TrackPrior-AI/data/manifests/*.json
 !TrackPrior-AI/reports/**
+!models/*.json
+!models/real_best_severity_model.joblib
+!models/real_feature_preprocessor.joblib
 

@@ -1,0 +1,200 @@
+{
+  "experiment": "Experiment A (Real Track Geometry Severity Classification)",
+  "best_model": "XGBoost",
+  "best_weighted_f1": 0.9913507368896745,
+  "feature_names": [
+    "defect_length_ft",
+    "defect_amplitude_in",
+    "defect_volume_proxy",
+    "fra_track_class",
+    "freight_speed_limit_mph",
+    "passenger_speed_limit_mph",
+    "speed_ratio",
+    "inspection_month",
+    "defect_type_DIP",
+    "defect_type_SURFACE",
+    "defect_type_XLEVEL",
+    "curve_spiral_tangent_code_C",
+    "curve_spiral_tangent_code_T",
+    "track_code_0.0",
+    "track_code_1.0",
+    "track_code_2.0",
+    "track_code_3.0",
+    "track_code_4.0",
+    "track_code_5.0",
+    "track_code_6.0"
+  ],
+  "raw_features": {
+    "numerical": [
+      "defect_length_ft",
+      "defect_amplitude_in",
+      "defect_volume_proxy",
+      "fra_track_class",
+      "freight_speed_limit_mph",
+      "passenger_speed_limit_mph",
+      "speed_ratio",
+      "inspection_month"
+    ],
+    "categorical": [
+      "defect_type",
+      "curve_spiral_tangent_code",
+      "track_code"
+    ]
+  },
+  "target_mapping": {
+    "0": "Yellow Tag (Pre-Defect / Planned Maintenance)",
+    "1": "Red Tag (FRA Safety Exceedance / Urgent Action Required)"
+  },
+  "benchmark_summary": {
+    "Logistic Regression": {
+      "model_name": "Logistic Regression",
+      "accuracy": 0.878,
+      "precision": 0.7922,
+      "recall": 0.7521,
+      "macro_f1": 0.8442,
+      "weighted_f1": 0.877,
+      "critical_severity_recall": 0.7521,
+      "confusion_matrix": [
+        [
+          4410,
+          355
+        ],
+        [
+          446,
+          1353
+        ]
+      ],
+      "per_class": {
+        "Yellow_Tag_Planned": {
+          "precision": 0.908154859967051,
+          "recall": 0.925498426023085,
+          "f1-score": 0.9167446211412535,
+          "support": 4765.0
+        },
+        "Red_Tag_Urgent": {
+          "precision": 0.7921545667447307,
+          "recall": 0.7520844913841023,
+          "f1-score": 0.7715996578272027,
+          "support": 1799.0
+        }
+      },
+      "top_feature_importance": {
+        "defect_volume_proxy": 23.3049,
+        "defect_length_ft": 13.8811,
+        "defect_type_XLEVEL": 1.4032,
+        "defect_type_DIP": 1.314,
+        "track_code_3.0": 1.1205,
+        "fra_track_class": 0.9143,
+        "track_code_2.0": 0.6995,
+        "track_code_1.0": 0.6522,
+        "track_code_5.0": 0.5925,
+        "track_code_0.0": 0.3416,
+        "defect_type_SURFACE": 0.2269,
+        "curve_spiral_tangent_code_C": 0.0998,
+        "track_code_4.0": 0.0789,
+        "defect_amplitude_in": 0.068,
+        "passenger_speed_limit_mph": 0.0645
+      }
+    },
+    "Random Forest": {
+      "model_name": "Random Forest",
+      "accuracy": 0.9883,
+      "precision": 0.9654,
+      "recall": 0.9928,
+      "macro_f1": 0.9854,
+      "weighted_f1": 0.9883,
+      "critical_severity_recall": 0.9928,
+      "confusion_matrix": [
+        [
+          4701,
+          64
+        ],
+        [
+          13,
+          1786
+        ]
+      ],
+      "per_class": {
+        "Yellow_Tag_Planned": {
+          "precision": 0.9972422571064913,
+          "recall": 0.9865687303252886,
+          "f1-score": 0.9918767802510814,
+          "support": 4765.0
+        },
+        "Red_Tag_Urgent": {
+          "precision": 0.9654054054054054,
+          "recall": 0.9927737632017788,
+          "f1-score": 0.9788983283091258,
+          "support": 1799.0
+        }
+      },
+      "top_feature_importance": {
+        "defect_amplitude_in": 0.5338,
+        "defect_volume_proxy": 0.2106,
+        "defect_length_ft": 0.1022,
+        "defect_type_XLEVEL": 0.028,
+        "defect_type_SURFACE": 0.024,
+        "freight_speed_limit_mph": 0.0193,
+        "fra_track_class": 0.0178,
+        "defect_type_DIP": 0.0163,
+        "inspection_month": 0.0126,
+        "passenger_speed_limit_mph": 0.0124,
+        "speed_ratio": 0.0122,
+        "track_code_0.0": 0.004,
+        "track_code_2.0": 0.0023,
+        "track_code_1.0": 0.002,
+        "curve_spiral_tangent_code_C": 0.0013
+      }
+    },
+    "XGBoost": {
+      "model_name": "XGBoost",
+      "accuracy": 0.9913,
+      "precision": 0.9718,
+      "recall": 0.9972,
+      "macro_f1": 0.9892,
+      "weighted_f1": 0.9914,
+      "critical_severity_recall": 0.9972,
+      "confusion_matrix": [
+        [
+          4713,
+          52
+        ],
+        [
+          5,
+          1794
+        ]
+      ],
+      "per_class": {
+        "Yellow_Tag_Planned": {
+          "precision": 0.9989402289105553,
+          "recall": 0.989087093389297,
+          "f1-score": 0.993989243910155,
+          "support": 4765.0
+        },
+        "Red_Tag_Urgent": {
+          "precision": 0.971830985915493,
+          "recall": 0.9972206781545303,
+          "f1-score": 0.9843621399176955,
+          "support": 1799.0
+        }
+      },
+      "top_feature_importance": {
+        "defect_type_SURFACE": 0.2334,
+        "defect_amplitude_in": 0.2087,
+        "defect_volume_proxy": 0.1991,
+        "defect_type_DIP": 0.1499,
+        "fra_track_class": 0.1336,
+        "freight_speed_limit_mph": 0.0117,
+        "defect_length_ft": 0.0103,
+        "passenger_speed_limit_mph": 0.0095,
+        "curve_spiral_tangent_code_C": 0.0081,
+        "inspection_month": 0.0068,
+        "defect_type_XLEVEL": 0.0065,
+        "speed_ratio": 0.0062,
+        "track_code_0.0": 0.0058,
+        "track_code_2.0": 0.0053,
+        "track_code_1.0": 0.0052
+      }
+    }
+  }
+}
