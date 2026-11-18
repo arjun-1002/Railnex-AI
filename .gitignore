@@ -63,4 +63,6 @@ frontend/node_modules/
 !models/*.json
 !models/real_best_severity_model.joblib
 !models/real_feature_preprocessor.joblib
+!frontend/dist/
+!frontend/dist/**
 
