@@ -1,0 +1,213 @@
+"""
+Generates the exploratory data analysis Jupyter notebook for TrackPrior AI.
+"""
+
+import json
+import os
+
+notebook_path = "d:/supervised/TrackPrior-AI/notebooks/01_exploratory_data_analysis.ipynb"
+
+cells = [
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "# TrackPrior AI — Exploratory Data Analysis & Quality Audit\n",
+            "\n",
+            "**Project:** TrackPrior AI — Railway Track Defect Severity Classification and Maintenance Prioritization System  \n",
+            "**Author:** Senior Data Engineer, ML Engineer & Railway Infrastructure Researcher  \n",
+            "**Date:** 2026-11-18  \n",
+            "\n",
+            "This notebook walks through the collected public datasets, inspects data quality distributions, demonstrates the experimental data splits, and evaluates engineering threshold compliance."
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "import os\n",
+            "import json\n",
+            "import pandas as pd\n",
+            "import numpy as np\n",
+            "import matplotlib.pyplot as plt\n",
+            "import seaborn as sns\n",
+            "\n",
+            "# Configure visual styling\n",
+            "sns.set_theme(style='whitegrid')\n",
+            "plt.rcParams['font.sans-serif'] = 'Arial'\n",
+            "\n",
+            "BASE_DIR = os.path.dirname(os.path.abspath(''))\n",
+            "DATA_DIR = os.path.join(BASE_DIR, 'data')\n",
+            "print(f'TrackPrior AI Project Base: {BASE_DIR}')"
+        ]
+    },
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "## 1. Dataset Manifest Overview\n",
+            "Inspect the verified dataset manifest generated during automated collection and validation."
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "manifest_file = os.path.join(DATA_DIR, 'manifests', 'dataset_manifest.json')\n",
+            "with open(manifest_file, 'r', encoding='utf-8') as f:\n",
+            "    manifest = json.load(f)\n",
+            "\n",
+            "summary_rows = []\n",
+            "for ds in manifest['datasets']:\n",
+            "    summary_rows.append({\n",
+            "        'ID': ds['dataset_id'],\n",
+            "        'Name': ds['name'],\n",
+            "        'Category': ds['category'],\n",
+            "        'Records': f\"{ds['records']:,}\",\n",
+            "        'Coverage Period': ds['observation_period'],\n",
+            "        'Validation': ds['validation_status']\n",
+            "    })\n",
+            "\n",
+            "pd.DataFrame(summary_rows)"
+        ]
+    },
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "## 2. Experiment A: Real Track Geometry Inspection Data (INFORMS 2015)\n",
+            "Inspect the cleaned observational geometry dataset, defect priority tags (`DEF_PRTY`), and defect types."
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "informs_path = os.path.join(DATA_DIR, 'processed', 'informs_cleaned_geometry.parquet')\n",
+            "df_inf = pd.read_parquet(informs_path)\n",
+            "print(f'Total observations: {len(df_inf):,} rows | Columns: {len(df_inf.columns)}')\n",
+            "display(df_inf.head(5))\n",
+            "\n",
+            "print('\\nDefect Severity Class Balance:')\n",
+            "print(df_inf['defect_priority_tag'].value_counts(normalize=True).map(lambda n: f'{n*100:.2f}%'))"
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "# Chronological train and test split verification\n",
+            "train_a = pd.read_parquet(os.path.join(DATA_DIR, 'processed', 'exp_a_real_train.parquet'))\n",
+            "test_a = pd.read_parquet(os.path.join(DATA_DIR, 'processed', 'exp_a_real_test.parquet'))\n",
+            "\n",
+            "print(f'Train split ({train_a.shape[0]:,} rows): {train_a[\"inspection_date\"].min().date()} to {train_a[\"inspection_date\"].max().date()}')\n",
+            "print(f'Test split  ({test_a.shape[0]:,} rows): {test_a[\"inspection_date\"].min().date()} to {test_a[\"inspection_date\"].max().date()}')\n",
+            "assert train_a['inspection_date'].max() < test_a['inspection_date'].min(), 'Chronological leakage detected!'"
+        ]
+    },
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "## 3. Experiment B: Synthetic Maintenance Prototype (Hugging Face)\n",
+            "Inspect the synthetic dataset, evaluate class imbalance, and verify the isolation of target-leakage features."
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "synth_path = os.path.join(DATA_DIR, 'synthetic', 'synthetic_cleaned_track_subset.parquet')\n",
+            "df_synth = pd.read_parquet(synth_path)\n",
+            "print(f'Track-focused synthetic observations: {len(df_synth):,} rows')\n",
+            "\n",
+            "print('\\nOrdinal Severity Breakdown (0: None, 1: Low, 2: Medium, 3: High, 4: Critical):')\n",
+            "display(df_synth['severity_level_ordinal'].value_counts().sort_index())"
+        ]
+    },
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "## 4. Indian Railways Track Inspection Standards (IRPWM 2020)\n",
+            "Review verified engineering limits governing Indian Railways Broad Gauge track maintenance."
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "std_path = os.path.join(DATA_DIR, 'raw', 'standards', 'irpwm_geometry_thresholds.csv')\n",
+            "df_std = pd.read_csv(std_path)\n",
+            "display(df_std[['parameter_name', 'threshold_value', 'measurement_unit', 'applicable_speed_or_track_category', 'maintenance_classification', 'page_number']].head(10))"
+        ]
+    },
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "## 5. RTI TMS Pipeline Verification\n",
+            "Demonstrate how the RTI pipeline (`scripts/rti_pipeline.py`) seamlessly normalizes incoming Zonal Railway TMS records."
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "from rti_pipeline import RTIIndianRailwaysTMSPipeline\n",
+            "\n",
+            "pipeline = RTIIndianRailwaysTMSPipeline()\n",
+            "sample_tms_record = pd.DataFrame({\n",
+            "    'rly': ['NR', 'WR', 'CR'],\n",
+            "    'division': ['Delhi', 'Mumbai Central', 'Nagpur'],\n",
+            "    'sec_name': ['NDLS-GZB', 'BCT-BVI', 'NGP-WR'],\n",
+            "    'track_no': ['UP Main', 'DN Local', 'Single Line'],\n",
+            "    'from_km': [14.2, 22.8, 45.1],\n",
+            "    'date_of_run': ['2024-05-10', '2024-05-11', '2024-05-12'],\n",
+            "    'param_name': ['Track Twist', 'Track Gauge (Slack)', 'Alignment Peak'],\n",
+            "    'amplitude': [4.5, 12.0, 4.0],\n",
+            "    'urgency': ['UML', 'UML', 'NBML']\n",
+            "})\n",
+            "\n",
+            "mapped, missing = pipeline.map_columns(sample_tms_record)\n",
+            "std_sample = pipeline.standardize_severity(mapped)\n",
+            "display(std_sample[['zone', 'division', 'block_section', 'geometry_parameter', 'measured_value', 'standardized_severity']])"
+        ]
+    }
+]
+
+notebook_data = {
+    "cells": cells,
+    "metadata": {
+        "kernelspec": {
+            "display_name": "Python 3",
+            "language": "python",
+            "name": "python3"
+        },
+        "language_info": {
+            "name": "python",
+            "version": "3.11.9"
+        }
+    },
+    "nbformat": 4,
+    "nbformat_minor": 4
+}
+
+with open(notebook_path, 'w', encoding='utf-8') as f:
+    json.dump(notebook_data, f, indent=2)
+
+print(f"Generated EDA Notebook: {notebook_path}")

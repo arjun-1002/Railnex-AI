@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter
+.ipynb_checkpoints
+
+# Environment & IDE
+.env
+.idea/
+.vscode/
+*.swp
+
+# Large raw datasets / archives & binaries
+*.zip
+*.tar.gz
+*.pbf
+*.osm
+*.parquet
+*.joblib
+*.xlsx
+TrackPrior-AI/data/raw/huggingface/*.csv
+TrackPrior-AI/data/raw/railway_network/railway_lines.geojson
+TrackPrior-AI/data/raw/railway_network/stations_raw.json
+TrackPrior-AI/data/raw/informs/extracted/
+TrackPrior-AI/data/raw/informs/*.csv
+
+# But preserve manifests, reports, figures, scripts, tests, small sample CSVs, and gitkeep
+!.gitkeep
+!TrackPrior-AI/data/raw/standards/*.csv
+!TrackPrior-AI/data/raw/accidents/*.csv
+!TrackPrior-AI/data/raw/traffic/*.csv
+!TrackPrior-AI/data/raw/weather/*.csv
+!TrackPrior-AI/data/raw/railway_network/railway_stations.csv
+!TrackPrior-AI/data/manifests/*.json
+!TrackPrior-AI/reports/**
+

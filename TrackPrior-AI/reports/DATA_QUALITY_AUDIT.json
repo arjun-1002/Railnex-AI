@@ -1,0 +1,1141 @@
+{
+  "informs_geometry": {
+    "dataset_name": "INFORMS 2015 Track Geometry Analytics Dataset",
+    "provenance": "INFORMS Railway Applications Section (RAS) Problem Solving Competition (2015)",
+    "licensing": "Open Academic / Research Competition Dataset (Attribution required; not for commercial redistribution)",
+    "total_records": 23847,
+    "total_columns": 14,
+    "duplicate_records": 0,
+    "missing_value_percentages": {
+      "LINE_SEG_NBR": 0.0,
+      "MILEPOST": 0.0,
+      "TRACK_SDTK_NBR": 0.0,
+      "TEST_DT": 0.0,
+      "DEF_NBR": 0.0,
+      "GEO_CAR_NME": 0.0,
+      "DEF_PRTY": 0.0,
+      "DEF_LGTH": 0.0,
+      "DEF_AMPLTD": 0.0,
+      "TSC_CD": 0.0,
+      "CLASS": 0.0,
+      "TEST_FSPD": 0.0,
+      "TEST_PSPD": 0.0,
+      "DFCT_TYPE": 0.0
+    },
+    "numerical_distributions": {
+      "LINE_SEG_NBR": {
+        "mean": 2.366,
+        "std": 0.888,
+        "min": 1.0,
+        "q25": 2.0,
+        "median": 2.0,
+        "q75": 3.0,
+        "max": 4.0
+      },
+      "MILEPOST": {
+        "mean": 213.987,
+        "std": 122.702,
+        "min": 0.709,
+        "q25": 99.711,
+        "median": 222.094,
+        "q75": 304.297,
+        "max": 444.273
+      },
+      "TRACK_SDTK_NBR": {
+        "mean": 0.683,
+        "std": 0.805,
+        "min": 0.0,
+        "q25": 0.0,
+        "median": 0.0,
+        "q75": 1.0,
+        "max": 6.0
+      },
+      "DEF_NBR": {
+        "mean": 568524.159,
+        "std": 10541512.986,
+        "min": 23.0,
+        "q25": 9176.5,
+        "median": 19977.0,
+        "q75": 46118.5,
+        "max": 207036039.0
+      },
+      "DEF_LGTH": {
+        "mean": 12.15,
+        "std": 18.127,
+        "min": 1.0,
+        "q25": 4.0,
+        "median": 7.0,
+        "q75": 13.0,
+        "max": 798.0
+      },
+      "DEF_AMPLTD": {
+        "mean": -0.053,
+        "std": 1.234,
+        "min": -3.59,
+        "q25": -1.11,
+        "median": -0.92,
+        "q75": 1.19,
+        "max": 4.63
+      },
+      "CLASS": {
+        "mean": 4.758,
+        "std": 0.47,
+        "min": 2.0,
+        "q25": 5.0,
+        "median": 5.0,
+        "q75": 5.0,
+        "max": 5.0
+      },
+      "TEST_FSPD": {
+        "mean": 66.529,
+        "std": 7.149,
+        "min": 11.0,
+        "q25": 70.0,
+        "median": 70.0,
+        "q75": 70.0,
+        "max": 70.0
+      },
+      "TEST_PSPD": {
+        "mean": 60.04,
+        "std": 36.173,
+        "min": 0.0,
+        "q25": 0.0,
+        "median": 79.0,
+        "q75": 85.0,
+        "max": 90.0
+      }
+    },
+    "categorical_distributions": {
+      "GEO_CAR_NME": {
+        "GEO105": 10941,
+        "GEO107": 9961,
+        "GEO100": 987,
+        "GEO503": 805,
+        "GEO504": 543,
+        "GEO 27": 283,
+        "GEO500": 107,
+        "GEO501": 97,
+        "GEO 26": 49,
+        "GEO494": 44
+      },
+      "DEF_PRTY": {
+        "YEL": 17360,
+        "RED": 6487
+      },
+      "TSC_CD": {
+        "T": 22718,
+        "C": 1129
+      },
+      "DFCT_TYPE": {
+        "XLEVEL": 11909,
+        "SURFACE": 7577,
+        "DIP": 4361
+      }
+    },
+    "date_coverage": {
+      "start": "2007-01-17",
+      "end": "2013-11-21",
+      "total_days": 2500
+    },
+    "geographic_coverage": null,
+    "target_information": {
+      "target_column": "DEF_PRTY",
+      "classes": {
+        "YEL": 17360,
+        "RED": 6487
+      },
+      "class_proportions": {
+        "YEL": 72.8,
+        "RED": 27.2
+      }
+    },
+    "leakage_analysis": {
+      "DEF_NBR": {
+        "type": "categorical_or_mixed",
+        "risk": "HIGH (Post-failure/Inspection attribute; must be excluded from predictive inputs)"
+      },
+      "GEO_CAR_NME": {
+        "type": "categorical_or_mixed",
+        "risk": "HIGH (Post-failure/Inspection attribute; must be excluded from predictive inputs)"
+      }
+    }
+  },
+  "huggingface_maintenance_synthetic": {
+    "dataset_name": "Indian Railway Maintenance Dataset (Hugging Face - samyuktha01)",
+    "provenance": "Hugging Face Hub (samyuktha01/Indian_Railway_maintance) - SYNTHETIC DATASET",
+    "licensing": "Apache 2.0 / Open Source Community Data",
+    "total_records": 100300,
+    "total_columns": 35,
+    "duplicate_records": 300,
+    "missing_value_percentages": {
+      "train_id": 0.0,
+      "region": 0.0,
+      "season": 0.0,
+      "train_type": 0.0,
+      "train_age_years": 0.0,
+      "average_speed_kmph": 0.0,
+      "distance_travelled_km": 0.0,
+      "track_temperature_c": 0.0,
+      "rail_wear_mm": 0.0,
+      "track_vibration_level": 6.0,
+      "ballast_condition": 0.0,
+      "track_curvature_degree": 0.0,
+      "ambient_temperature_c": 0.0,
+      "humidity_percent": 4.99,
+      "rainfall_mm": 8.0,
+      "wind_speed_kmph": 6.99,
+      "wheel_wear_percent": 3.0,
+      "axle_temperature_c": 6.0,
+      "brake_pressure_psi": 0.0,
+      "brake_pad_wear_percent": 4.0,
+      "bearing_temperature_c": 7.0,
+      "battery_voltage": 4.0,
+      "traction_motor_temp_c": 5.0,
+      "signal_system_status": 0.0,
+      "power_consumption_kw": 0.0,
+      "load_factor_percent": 1.0,
+      "daily_trips": 0.0,
+      "delay_minutes": 2.0,
+      "last_maintenance_days": 3.0,
+      "inspection_score": 0.0,
+      "sensor_health_index": 0.0,
+      "failure_type": 79.8,
+      "maintenance_required": 0.0,
+      "failure_severity": 79.8,
+      "risk_score": 0.0
+    },
+    "numerical_distributions": {
+      "train_id": {
+        "mean": 50000.575,
+        "std": 28867.341,
+        "min": 1.0,
+        "q25": 25005.75,
+        "median": 49999.5,
+        "q75": 75005.25,
+        "max": 100000.0
+      },
+      "train_age_years": {
+        "mean": 15.466,
+        "std": 8.625,
+        "min": 1.0,
+        "q25": 8.0,
+        "median": 15.0,
+        "q75": 23.0,
+        "max": 30.0
+      },
+      "average_speed_kmph": {
+        "mean": 75.0,
+        "std": 19.941,
+        "min": 20.0,
+        "q25": 61.605,
+        "median": 74.993,
+        "q75": 88.454,
+        "max": 160.0
+      },
+      "distance_travelled_km": {
+        "mean": 752045.15,
+        "std": 431593.217,
+        "min": 5003.0,
+        "q25": 378227.75,
+        "median": 750888.0,
+        "q75": 1126187.25,
+        "max": 1499989.0
+      },
+      "track_temperature_c": {
+        "mean": 38.0,
+        "std": 11.956,
+        "min": -5.0,
+        "q25": 29.933,
+        "median": 37.967,
+        "q75": 46.13,
+        "max": 70.0
+      },
+      "rail_wear_mm": {
+        "mean": 7.984,
+        "std": 2.992,
+        "min": 0.0,
+        "q25": 5.961,
+        "median": 7.985,
+        "q75": 10.012,
+        "max": 21.043
+      },
+      "track_vibration_level": {
+        "mean": 4.008,
+        "std": 1.492,
+        "min": 0.0,
+        "q25": 3.002,
+        "median": 4.007,
+        "q75": 5.013,
+        "max": 10.625
+      },
+      "track_curvature_degree": {
+        "mean": 7.979,
+        "std": 5.559,
+        "min": 0.012,
+        "q25": 3.846,
+        "median": 6.709,
+        "q75": 10.756,
+        "max": 30.0
+      },
+      "ambient_temperature_c": {
+        "mean": 30.016,
+        "std": 7.934,
+        "min": 0.0,
+        "q25": 24.653,
+        "median": 30.007,
+        "q75": 35.429,
+        "max": 50.0
+      },
+      "humidity_percent": {
+        "mean": 59.917,
+        "std": 19.472,
+        "min": 10.0,
+        "q25": 46.498,
+        "median": 60.078,
+        "q75": 73.505,
+        "max": 100.0
+      },
+      "rainfall_mm": {
+        "mean": 20.023,
+        "std": 14.17,
+        "min": 0.052,
+        "q25": 9.603,
+        "median": 16.813,
+        "q75": 26.98,
+        "max": 137.765
+      },
+      "wind_speed_kmph": {
+        "mean": 15.103,
+        "std": 7.81,
+        "min": 0.0,
+        "q25": 9.589,
+        "median": 15.023,
+        "q75": 20.432,
+        "max": 49.168
+      },
+      "wheel_wear_percent": {
+        "mean": 45.131,
+        "std": 19.683,
+        "min": 0.0,
+        "q25": 31.572,
+        "median": 45.023,
+        "q75": 58.485,
+        "max": 100.0
+      },
+      "axle_temperature_c": {
+        "mean": 65.009,
+        "std": 12.017,
+        "min": 20.0,
+        "q25": 56.929,
+        "median": 65.026,
+        "q75": 73.107,
+        "max": 119.724
+      },
+      "brake_pressure_psi": {
+        "mean": 94.995,
+        "std": 14.999,
+        "min": 31.865,
+        "q25": 84.83,
+        "median": 94.989,
+        "q75": 105.156,
+        "max": 140.0
+      },
+      "brake_pad_wear_percent": {
+        "mean": 40.225,
+        "std": 21.204,
+        "min": 0.0,
+        "q25": 25.203,
+        "median": 40.0,
+        "q75": 54.678,
+        "max": 100.0
+      },
+      "bearing_temperature_c": {
+        "mean": 69.984,
+        "std": 14.936,
+        "min": 20.0,
+        "q25": 59.906,
+        "median": 69.994,
+        "q75": 80.096,
+        "max": 136.314
+      },
+      "battery_voltage": {
+        "mean": 23.999,
+        "std": 2.512,
+        "min": 12.194,
+        "q25": 22.299,
+        "median": 24.006,
+        "q75": 25.695,
+        "max": 32.0
+      },
+      "traction_motor_temp_c": {
+        "mean": 75.098,
+        "std": 15.014,
+        "min": 20.0,
+        "q25": 64.945,
+        "median": 75.089,
+        "q75": 85.278,
+        "max": 145.145
+      },
+      "power_consumption_kw": {
+        "mean": 799.953,
+        "std": 248.093,
+        "min": 100.0,
+        "q25": 632.436,
+        "median": 800.703,
+        "q75": 967.607,
+        "max": 1837.864
+      },
+      "load_factor_percent": {
+        "mean": 64.669,
+        "std": 19.326,
+        "min": 0.0,
+        "q25": 51.513,
+        "median": 64.928,
+        "q75": 78.54,
+        "max": 100.0
+      },
+      "daily_trips": {
+        "mean": 12.466,
+        "std": 6.907,
+        "min": 1.0,
+        "q25": 6.0,
+        "median": 12.0,
+        "q75": 18.0,
+        "max": 24.0
+      },
+      "delay_minutes": {
+        "mean": 16.024,
+        "std": 11.359,
+        "min": 0.012,
+        "q25": 7.7,
+        "median": 13.415,
+        "q75": 21.56,
+        "max": 119.961
+      },
+      "last_maintenance_days": {
+        "mean": 182.475,
+        "std": 105.172,
+        "min": 1.0,
+        "q25": 91.0,
+        "median": 183.0,
+        "q75": 273.0,
+        "max": 364.0
+      },
+      "inspection_score": {
+        "mean": 77.868,
+        "std": 11.614,
+        "min": 40.0,
+        "q25": 69.961,
+        "median": 78.042,
+        "q75": 86.13,
+        "max": 100.0
+      },
+      "sensor_health_index": {
+        "mean": 79.347,
+        "std": 13.85,
+        "min": 14.417,
+        "q25": 69.798,
+        "median": 79.973,
+        "q75": 90.13,
+        "max": 100.0
+      },
+      "maintenance_required": {
+        "mean": 0.202,
+        "std": 0.402,
+        "min": 0.0,
+        "q25": 0.0,
+        "median": 0.0,
+        "q75": 0.0,
+        "max": 1.0
+      },
+      "risk_score": {
+        "mean": 57.779,
+        "std": 7.675,
+        "min": 30.697,
+        "q25": 52.401,
+        "median": 57.65,
+        "q75": 62.957,
+        "max": 97.839
+      }
+    },
+    "categorical_distributions": {
+      "region": {
+        "South Central Railway": 16862,
+        "Central Railway": 16751,
+        "Southern Railway": 16743,
+        "Western Railway": 16742,
+        "Eastern Railway": 16632,
+        "Northern Railway": 16570
+      },
+      "season": {
+        "Summer": 40070,
+        "Monsoon": 30215,
+        "Winter": 30015
+      },
+      "train_type": {
+        "Passenger": 45149,
+        "Express": 29988,
+        "Freight": 20085,
+        "Metro": 5078
+      },
+      "ballast_condition": {
+        "Good": 59999,
+        "Fair": 30031,
+        "Poor": 10270
+      },
+      "signal_system_status": {
+        "Normal": 90266,
+        "Warning": 8025,
+        "Fault": 2009
+      },
+      "failure_type": {
+        "None": 80036,
+        "Brake Failure": 5117,
+        "Wheel Defect": 4547,
+        "Track Defect": 3968,
+        "Signal Failure": 3478,
+        "Bearing Failure": 3154
+      },
+      "failure_severity": {
+        "None": 80036,
+        "Low": 9140,
+        "Medium": 6051,
+        "High": 3432,
+        "Critical": 1641
+      }
+    },
+    "date_coverage": null,
+    "geographic_coverage": null,
+    "target_information": {
+      "target_column": "failure_severity",
+      "classes": {
+        "None": 80036,
+        "Low": 9140,
+        "Medium": 6051,
+        "High": 3432,
+        "Critical": 1641
+      },
+      "class_proportions": {
+        "None": 79.8,
+        "Low": 9.11,
+        "Medium": 6.03,
+        "High": 3.42,
+        "Critical": 1.64
+      }
+    },
+    "leakage_analysis": {
+      "risk_score": {
+        "type": "categorical_or_mixed",
+        "risk": "HIGH (Post-failure/Inspection attribute; must be excluded from predictive inputs)"
+      },
+      "maintenance_required": {
+        "type": "categorical_or_mixed",
+        "risk": "HIGH (Post-failure/Inspection attribute; must be excluded from predictive inputs)"
+      },
+      "failure_type": {
+        "type": "categorical_or_mixed",
+        "risk": "HIGH (Post-failure/Inspection attribute; must be excluded from predictive inputs)"
+      },
+      "inspection_score": {
+        "type": "categorical_or_mixed",
+        "risk": "HIGH (Post-failure/Inspection attribute; must be excluded from predictive inputs)"
+      },
+      "delay_minutes": {
+        "type": "categorical_or_mixed",
+        "risk": "HIGH (Post-failure/Inspection attribute; must be excluded from predictive inputs)"
+      }
+    }
+  },
+  "railway_stations": {
+    "dataset_name": "Indian Railways Operational Station Geography",
+    "provenance": "OpenStreetMap & DataMeet Indian Railways Community Mapping Project",
+    "licensing": "Open Database License (ODbL) / CC-BY-SA 2.0",
+    "total_records": 8990,
+    "total_columns": 7,
+    "duplicate_records": 0,
+    "missing_value_percentages": {
+      "station_code": 0.0,
+      "station_name": 0.01,
+      "state": 51.09,
+      "zone": 50.41,
+      "address": 51.09,
+      "longitude": 3.26,
+      "latitude": 3.26
+    },
+    "numerical_distributions": {
+      "longitude": {
+        "mean": 79.972,
+        "std": 5.267,
+        "min": 68.968,
+        "q25": 76.047,
+        "median": 78.946,
+        "q75": 84.019,
+        "max": 95.725
+      },
+      "latitude": {
+        "mean": 22.414,
+        "std": 5.441,
+        "min": 8.088,
+        "q25": 19.066,
+        "median": 23.427,
+        "q75": 26.353,
+        "max": 33.739
+      }
+    },
+    "categorical_distributions": {
+      "station_code": {
+        "BDHL": 1,
+        "XX-BECE": 1,
+        "XX-BSPY": 1,
+        "YY-BPLC": 1,
+        "KHH": 1,
+        "SRKN": 1,
+        "BKKA": 1,
+        "NHR": 1,
+        "PRGD": 1,
+        "KNNA": 1
+      },
+      "station_name": {
+        "MAULA ALI": 3,
+        "Suku": 2,
+        "ALAL": 2,
+        "JAGUDAN": 2,
+        "BAPUDHAM MOTIHARI": 2,
+        "KOMATIPALLI": 2,
+        "Jehanabad Court": 2,
+        "BOTAD JN": 2,
+        "SULGARE": 2,
+        "NAGARGALI": 2
+      },
+      "state": {
+        "nan": 4593,
+        "Uttar Pradesh": 529,
+        "Rajasthan": 451,
+        "Gujarat": 422,
+        "Maharashtra": 378,
+        "West Bengal": 345,
+        "Madhya Pradesh": 316,
+        "Karnataka": 301,
+        "Tamil Nadu": 253,
+        "Punjab": 212
+      },
+      "zone": {
+        "nan": 4532,
+        "NR": 590,
+        "WR": 504,
+        "NWR": 426,
+        "SR": 335,
+        "SCR": 294,
+        "SWR": 290,
+        "NER": 264,
+        "ER": 263,
+        "NFR": 262
+      },
+      "address": {
+        "nan": 4593,
+        "Mumbai, Maharashtra": 26,
+        "Kolkata, West Bengal": 20,
+        "Vadodara, Gujarat": 15,
+        "Chennai, Tamil Nadu": 15,
+        "National Highway 29, Uttar Pradesh": 14,
+        "Bengaluru, Karnataka": 14,
+        "Gujarat, Gujarat": 13,
+        "State Highway 57, Uttar Pradesh": 13,
+        "Pali, Rajasthan": 12
+      }
+    },
+    "date_coverage": null,
+    "geographic_coverage": {
+      "latitude_min": 8.088,
+      "latitude_max": 33.7385,
+      "longitude_min": 68.9678,
+      "longitude_max": 95.7254
+    },
+    "target_information": null,
+    "leakage_analysis": {}
+  },
+  "traffic_statistics": {
+    "dataset_name": "Indian Railways Official National Traffic Statistics (2018-2024)",
+    "provenance": "Ministry of Railways (Railway Board) Year Book & MoSPI Transport Statistics",
+    "licensing": "Government Open Data License - India (GODL)",
+    "total_records": 6,
+    "total_columns": 16,
+    "duplicate_records": 0,
+    "missing_value_percentages": {
+      "fiscal_year": 0.0,
+      "route_km_broad_gauge": 0.0,
+      "route_km_metre_gauge": 0.0,
+      "route_km_narrow_gauge": 0.0,
+      "route_km_total": 0.0,
+      "route_km_electrified": 0.0,
+      "running_track_km": 0.0,
+      "total_track_km": 0.0,
+      "freight_loading_million_tonnes": 0.0,
+      "freight_ntkm_billion": 0.0,
+      "freight_average_lead_km": 0.0,
+      "passengers_originating_millions": 0.0,
+      "passenger_km_billion": 0.0,
+      "gross_tonne_km_freight_billion": 0.0,
+      "gross_tonne_km_passenger_billion": 0.0,
+      "source": 0.0
+    },
+    "numerical_distributions": {
+      "route_km_broad_gauge": {
+        "mean": 64581.167,
+        "std": 1060.699,
+        "min": 62891.0,
+        "q25": 64063.25,
+        "median": 64748.0,
+        "q75": 65285.75,
+        "max": 65800.0
+      },
+      "route_km_metre_gauge": {
+        "mean": 1948.0,
+        "std": 615.024,
+        "min": 1200.0,
+        "q25": 1523.75,
+        "median": 1883.5,
+        "q75": 2329.5,
+        "max": 2839.0
+      },
+      "route_km_narrow_gauge": {
+        "mean": 1413.833,
+        "std": 241.617,
+        "min": 1100.0,
+        "q25": 1233.5,
+        "median": 1441.5,
+        "q75": 1600.0,
+        "max": 1683.0
+      },
+      "route_km_total": {
+        "mean": 67943.0,
+        "std": 265.073,
+        "min": 67413.0,
+        "q25": 67977.75,
+        "median": 68043.0,
+        "q75": 68085.75,
+        "max": 68103.0
+      },
+      "route_km_electrified": {
+        "mean": 49202.667,
+        "std": 10966.498,
+        "min": 35488.0,
+        "q25": 40969.25,
+        "median": 49064.0,
+        "q75": 57170.75,
+        "max": 63456.0
+      },
+      "running_track_km": {
+        "mean": 101593.333,
+        "std": 3684.14,
+        "min": 95981.0,
+        "q25": 99642.75,
+        "median": 101848.5,
+        "q75": 104193.0,
+        "max": 106000.0
+      },
+      "total_track_km": {
+        "mean": 129267.0,
+        "std": 4120.761,
+        "min": 123542.0,
+        "q25": 126850.75,
+        "median": 129192.0,
+        "q75": 131752.25,
+        "max": 135000.0
+      },
+      "freight_loading_million_tonnes": {
+        "mean": 1363.95,
+        "std": 166.226,
+        "min": 1208.41,
+        "q25": 1224.27,
+        "median": 1325.37,
+        "q75": 1488.577,
+        "max": 1591.0
+      },
+      "freight_ntkm_billion": {
+        "mean": 814.235,
+        "std": 105.761,
+        "min": 707.69,
+        "q25": 724.465,
+        "median": 799.97,
+        "q75": 892.605,
+        "max": 955.0
+      },
+      "freight_average_lead_km": {
+        "mean": 596.5,
+        "std": 9.607,
+        "min": 584.0,
+        "q25": 588.75,
+        "median": 598.5,
+        "q75": 603.75,
+        "max": 607.0
+      },
+      "passengers_originating_millions": {
+        "mean": 5736.667,
+        "std": 2803.27,
+        "min": 1250.0,
+        "q25": 4238.25,
+        "median": 6563.0,
+        "q75": 7747.0,
+        "max": 8439.0
+      },
+      "passenger_km_billion": {
+        "mean": 832.46,
+        "std": 352.509,
+        "min": 230.93,
+        "q25": 679.29,
+        "median": 982.65,
+        "q75": 1043.055,
+        "max": 1157.17
+      },
+      "gross_tonne_km_freight_billion": {
+        "mean": 1633.25,
+        "std": 213.357,
+        "min": 1422.5,
+        "q25": 1453.15,
+        "median": 1597.8,
+        "q75": 1791.8,
+        "max": 1920.0
+      },
+      "gross_tonne_km_passenger_billion": {
+        "mean": 512.517,
+        "std": 205.005,
+        "min": 154.2,
+        "q25": 434.3,
+        "median": 602.7,
+        "q75": 631.825,
+        "max": 695.8
+      }
+    },
+    "categorical_distributions": {
+      "fiscal_year": {
+        "2018-19": 1,
+        "2019-20": 1,
+        "2020-21": 1,
+        "2021-22": 1,
+        "2022-23": 1,
+        "2023-24": 1
+      },
+      "source": {
+        "Indian Railways Year Book 2018-19, Ministry of Railways": 1,
+        "Indian Railways Year Book 2019-20, Ministry of Railways": 1,
+        "Indian Railways Year Book 2020-21, Ministry of Railways (COVID-19 impact)": 1,
+        "Indian Railways Year Book 2021-22, Ministry of Railways": 1,
+        "Indian Railways Year Book 2022-23, Ministry of Railways": 1,
+        "Ministry of Railways Monthly Evaluation Report (March 2024)": 1
+      }
+    },
+    "date_coverage": null,
+    "geographic_coverage": null,
+    "target_information": null,
+    "leakage_analysis": {}
+  },
+  "inspection_standards": {
+    "dataset_name": "Indian Railways Permanent Way Manual (IRPWM 2020) & RDSO Geometry Standards",
+    "provenance": "Research Designs and Standards Organisation (RDSO) & Railway Board",
+    "licensing": "Official Public Engineering Standard / Technical Manual",
+    "total_records": 40,
+    "total_columns": 8,
+    "duplicate_records": 0,
+    "missing_value_percentages": {
+      "parameter_name": 0.0,
+      "threshold_value": 0.0,
+      "measurement_unit": 0.0,
+      "applicable_speed_or_track_category": 0.0,
+      "maintenance_classification": 0.0,
+      "source_document": 0.0,
+      "page_number": 0.0,
+      "document_version_or_publication_date": 0.0
+    },
+    "numerical_distributions": {
+      "threshold_value": {
+        "mean": 8.07,
+        "std": 12.07,
+        "min": -8.0,
+        "q25": 0.25,
+        "median": 6.0,
+        "q75": 10.0,
+        "max": 45.0
+      },
+      "page_number": {
+        "mean": 135.85,
+        "std": 33.196,
+        "min": 38.0,
+        "q25": 143.0,
+        "median": 145.5,
+        "q75": 149.0,
+        "max": 153.0
+      }
+    },
+    "categorical_distributions": {
+      "parameter_name": {
+        "Track Gauge (Tight)": 6,
+        "Track Gauge (Slack)": 6,
+        "Unevenness Peak (3.6m chord)": 6,
+        "Alignment Peak (7.2m chord)": 6,
+        "Track Twist (3.6m base)": 6,
+        "Vertical Acceleration Peak": 4,
+        "Track Quality Index (TQI)": 4,
+        "Lateral Acceleration Peak": 2
+      },
+      "measurement_unit": {
+        "mm": 24,
+        "mm/m": 6,
+        "g": 6,
+        "Index score": 4
+      },
+      "applicable_speed_or_track_category": {
+        "Speed > 130 km/h (Group A)": 14,
+        "Speed <= 110 km/h (Group C, D, E)": 12,
+        "110 < Speed <= 130 km/h (Group B)": 10,
+        "All Track Classes": 4
+      },
+      "maintenance_classification": {
+        "Urgent Maintenance Limit (UML)": 18,
+        "Need Based Maintenance Limit (NBML)": 15,
+        "Comfort / Planned Maintenance": 3,
+        "Very Good Track Quality (<28)": 1,
+        "Good Track Quality (28-36)": 1,
+        "Average Track Quality (36-45)": 1,
+        "Planned Maintenance Limit (Through Tamping Required if >=45)": 1
+      },
+      "source_document": {
+        "IRPWM 2020": 30,
+        "RDSO Guidelines / IRPWM 2020": 6,
+        "RDSO Track Recording Car Manual": 4
+      },
+      "document_version_or_publication_date": {
+        "June 2020 / ACS-149": 30,
+        "June 2020 / RDSO/2020/GE-0012": 6,
+        "2019 / RDSO-TQI-V2": 4
+      }
+    },
+    "date_coverage": null,
+    "geographic_coverage": null,
+    "target_information": {
+      "target_column": "maintenance_classification",
+      "classes": {
+        "Urgent Maintenance Limit (UML)": 18,
+        "Need Based Maintenance Limit (NBML)": 15,
+        "Comfort / Planned Maintenance": 3,
+        "Very Good Track Quality (<28)": 1,
+        "Good Track Quality (28-36)": 1,
+        "Average Track Quality (36-45)": 1,
+        "Planned Maintenance Limit (Through Tamping Required if >=45)": 1
+      },
+      "class_proportions": {
+        "Urgent Maintenance Limit (UML)": 45.0,
+        "Need Based Maintenance Limit (NBML)": 37.5,
+        "Comfort / Planned Maintenance": 7.5,
+        "Very Good Track Quality (<28)": 2.5,
+        "Good Track Quality (28-36)": 2.5,
+        "Average Track Quality (36-45)": 2.5,
+        "Planned Maintenance Limit (Through Tamping Required if >=45)": 2.5
+      }
+    },
+    "leakage_analysis": {}
+  },
+  "cag_derailments": {
+    "dataset_name": "CAG Report No. 22 of 2022 - Derailments in Indian Railways (2017-2021)",
+    "provenance": "Comptroller and Auditor General of India (Official Audit Report tabled in Parliament)",
+    "licensing": "Public Parliamentary Audit Report",
+    "total_records": 8,
+    "total_columns": 6,
+    "duplicate_records": 0,
+    "missing_value_percentages": {
+      "cause_category": 0.0,
+      "specific_cause": 0.0,
+      "incident_count": 0.0,
+      "percentage_of_total": 0.0,
+      "department_responsible": 0.0,
+      "audit_reference": 0.0
+    },
+    "numerical_distributions": {
+      "incident_count": {
+        "mean": 140.875,
+        "std": 73.943,
+        "min": 48.0,
+        "q25": 97.0,
+        "median": 143.5,
+        "q75": 173.75,
+        "max": 275.0
+      },
+      "percentage_of_total": {
+        "mean": 12.499,
+        "std": 6.561,
+        "min": 4.26,
+        "q25": 8.607,
+        "median": 12.73,
+        "q75": 15.415,
+        "max": 24.4
+      }
+    },
+    "categorical_distributions": {
+      "cause_category": {
+        "Track / Engineering Defects": 3,
+        "Mechanical / Rolling Stock Defects": 1,
+        "Operational / Human Failure": 1,
+        "Locomotive / Motive Power Defects": 1,
+        "Signalling & Telecommunication Failure": 1,
+        "Environmental & External Factors": 1
+      },
+      "specific_cause": {
+        "Lack of routine maintenance / improper packing of ballast": 1,
+        "Track geometry parameters exceeding permissible maintenance limits (gauge/twist/alignment)": 1,
+        "Rail fractures and weld failures undetected by USFD": 1,
+        "Wagon/coach wheel defects, flange wear, spring breakage": 1,
+        "Incorrect setting of points, shunting errors, signal disregard": 1,
+        "Locomotive wheel defect, suspension failure": 1,
+        "Point machine failure, interlocking disconnection": 1,
+        "Heavy rainfall, flash floods, boulder fall, sabotage/cattle run-over": 1
+      },
+      "department_responsible": {
+        "Civil Engineering": 3,
+        "Mechanical": 1,
+        "Traffic / Operations": 1,
+        "Electrical / Diesel Loco": 1,
+        "S&T": 1,
+        "External / Force Majeure": 1
+      },
+      "audit_reference": {
+        "CAG Report 22 of 2022, Para 3.2.1": 1,
+        "CAG Report 22 of 2022, Para 3.2.2": 1,
+        "CAG Report 22 of 2022, Para 3.2.3": 1,
+        "CAG Report 22 of 2022, Para 3.3.1": 1,
+        "CAG Report 22 of 2022, Para 3.4.1": 1,
+        "CAG Report 22 of 2022, Para 3.5.1": 1,
+        "CAG Report 22 of 2022, Para 3.6.1": 1,
+        "CAG Report 22 of 2022, Para 3.7.1": 1
+      }
+    },
+    "date_coverage": null,
+    "geographic_coverage": null,
+    "target_information": {
+      "target_column": "cause_category",
+      "classes": {
+        "Track / Engineering Defects": 3,
+        "Mechanical / Rolling Stock Defects": 1,
+        "Operational / Human Failure": 1,
+        "Locomotive / Motive Power Defects": 1,
+        "Signalling & Telecommunication Failure": 1,
+        "Environmental & External Factors": 1
+      },
+      "class_proportions": {
+        "Track / Engineering Defects": 37.5,
+        "Mechanical / Rolling Stock Defects": 12.5,
+        "Operational / Human Failure": 12.5,
+        "Locomotive / Motive Power Defects": 12.5,
+        "Signalling & Telecommunication Failure": 12.5,
+        "Environmental & External Factors": 12.5
+      }
+    },
+    "leakage_analysis": {}
+  },
+  "weather_timeseries": {
+    "dataset_name": "Weather Station Hourly Timeseries (Sample Import Template)",
+    "provenance": "Simulated reference dataset adhering to IMD standard reporting schemas",
+    "licensing": "Project Internal Reference Template",
+    "total_records": 240,
+    "total_columns": 8,
+    "duplicate_records": 0,
+    "missing_value_percentages": {
+      "timestamp": 0.0,
+      "station_id": 0.0,
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "temperature_c": 0.0,
+      "rainfall_mm": 0.0,
+      "humidity_percent": 0.0,
+      "wind_speed_kmph": 0.0
+    },
+    "numerical_distributions": {
+      "latitude": {
+        "mean": 21.687,
+        "std": 4.397,
+        "min": 17.385,
+        "q25": 17.385,
+        "median": 19.076,
+        "q75": 22.573,
+        "max": 28.614
+      },
+      "longitude": {
+        "mean": 78.629,
+        "std": 5.403,
+        "min": 72.878,
+        "q25": 72.878,
+        "median": 77.209,
+        "q75": 78.487,
+        "max": 88.364
+      },
+      "temperature_c": {
+        "mean": 26.619,
+        "std": 5.808,
+        "min": 12.7,
+        "q25": 22.3,
+        "median": 26.45,
+        "q75": 30.425,
+        "max": 45.0
+      },
+      "rainfall_mm": {
+        "mean": 0.67,
+        "std": 1.141,
+        "min": 0.0,
+        "q25": 0.0,
+        "median": 0.0,
+        "q75": 1.0,
+        "max": 7.7
+      },
+      "humidity_percent": {
+        "mean": 67.001,
+        "std": 13.997,
+        "min": 32.0,
+        "q25": 56.7,
+        "median": 67.75,
+        "q75": 75.275,
+        "max": 100.0
+      },
+      "wind_speed_kmph": {
+        "mean": 12.473,
+        "std": 5.079,
+        "min": 0.0,
+        "q25": 9.1,
+        "median": 12.6,
+        "q75": 15.9,
+        "max": 24.2
+      }
+    },
+    "categorical_distributions": {
+      "timestamp": {
+        "2023-01-01 00:00:00": 1,
+        "2023-01-01 01:00:00": 1,
+        "2023-01-01 02:00:00": 1,
+        "2023-01-01 03:00:00": 1,
+        "2023-01-01 04:00:00": 1,
+        "2023-01-01 05:00:00": 1,
+        "2023-01-01 06:00:00": 1,
+        "2023-01-01 07:00:00": 1,
+        "2023-01-01 08:00:00": 1,
+        "2023-01-01 09:00:00": 1
+      },
+      "station_id": {
+        "HYD-W04": 67,
+        "KOL-W03": 64,
+        "DEL-W01": 55,
+        "MUM-W02": 54
+      }
+    },
+    "date_coverage": {
+      "start": "2023-01-01",
+      "end": "2023-01-10",
+      "total_days": 9
+    },
+    "geographic_coverage": {
+      "latitude_min": 17.385,
+      "latitude_max": 28.6139,
+      "longitude_min": 72.8777,
+      "longitude_max": 88.3639
+    },
+    "target_information": null,
+    "leakage_analysis": {}
+  }
+}

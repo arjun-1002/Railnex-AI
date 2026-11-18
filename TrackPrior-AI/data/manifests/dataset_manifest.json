@@ -1,0 +1,155 @@
+{
+  "project_name": "TrackPrior AI",
+  "version": "1.0.0",
+  "generated_at": "2026-11-18T10:52:05.972352",
+  "datasets_count": 7,
+  "datasets": [
+    {
+      "dataset_id": "DS-01",
+      "name": "INFORMS Track Geometry Analytics Dataset",
+      "category": "Real Observational Railway Inspection Data",
+      "file_path": "data/processed/informs_cleaned_geometry.parquet",
+      "format": "Parquet / CSV",
+      "records": 23847,
+      "columns": 15,
+      "observation_period": "2007-01-17 to 2013-11-21",
+      "geographic_coverage": "North American Class 1 Railroad Network (De-identified FRA corridor)",
+      "ml_role": "Experiment A: Primary Supervised Ground-Truth Track Defect Severity Classification",
+      "target_variable": "severity_target_binary (0: Yellow Tag / Planned Maintenance, 1: Red Tag / Urgent Action)",
+      "validation_status": "PASSED",
+      "check_details": {
+        "row_count_sufficient": true,
+        "target_no_nulls": true,
+        "target_valid_classes": true,
+        "defect_amplitude_bounded": true,
+        "defect_length_positive": true,
+        "valid_track_classes": true,
+        "date_range_valid": true
+      }
+    },
+    {
+      "dataset_id": "DS-02",
+      "name": "Indian Railway Maintenance Dataset (Hugging Face - samyuktha01)",
+      "category": "Synthetic Machine Learning Prototype Data",
+      "file_path": "data/synthetic/synthetic_cleaned_track_subset.parquet",
+      "format": "Parquet",
+      "records": 11904,
+      "columns": 37,
+      "observation_period": "Synthetic simulation (no calendar date range)",
+      "geographic_coverage": "Simulated Indian Railways Zonal Distribution",
+      "ml_role": "Experiment B: Synthetic Multi-Class Maintenance Urgency Prototype (Isolated from real data)",
+      "target_variable": "severity_level_ordinal (0: None, 1: Low, 2: Medium, 3: High, 4: Critical)",
+      "validation_status": "PASSED",
+      "check_details": {
+        "row_count_sufficient": true,
+        "target_present": true,
+        "target_classes_valid": true,
+        "rail_wear_non_negative": true,
+        "temperatures_plausible": true,
+        "synthetic_disclaimer_present": true
+      }
+    },
+    {
+      "dataset_id": "DS-03",
+      "name": "Indian Railways Network Geography & Stations",
+      "category": "Geospatial Reference Infrastructure",
+      "file_path": "data/processed/cleaned_stations.parquet & data/raw/railway_network/railway_lines.geojson",
+      "format": "GeoJSON (lines) & Parquet/CSV (stations)",
+      "records": 8989,
+      "columns": 8,
+      "observation_period": "OpenStreetMap 2024 active topology",
+      "geographic_coverage": "Nationwide India (68\u00b0E to 98\u00b0E, 6\u00b0N to 38\u00b0N)",
+      "ml_role": "Spatial reference for inspection geolocation and zonal topology mapping",
+      "target_variable": "None (Spatial context)",
+      "validation_status": "PASSED",
+      "check_details": {
+        "station_count_sufficient": true,
+        "valid_station_codes": true,
+        "valid_geo_coordinates": true,
+        "lines_geojson_exists": true
+      }
+    },
+    {
+      "dataset_id": "DS-04",
+      "name": "Indian Railways Annual Traffic & Track Statistics",
+      "category": "Aggregated Macro-Operational Statistics",
+      "file_path": "data/raw/traffic/indian_railway_traffic_statistics_2018_2024.csv",
+      "format": "CSV",
+      "records": 6,
+      "columns": 16,
+      "observation_period": "2018-19 to 2023-24 (6 Fiscal Years)",
+      "geographic_coverage": "National Indian Railways Network (17 Zonal Railways)",
+      "ml_role": "Contextual macro-operational baselines (cannot be disaggregated into fictional track sections)",
+      "target_variable": "None (Aggregated statistical context)",
+      "validation_status": "PASSED",
+      "check_details": {
+        "fiscal_years_covered": true,
+        "route_km_positive": true,
+        "running_track_km_positive": true,
+        "freight_loading_positive": true,
+        "zonal_table_exists": true
+      }
+    },
+    {
+      "dataset_id": "DS-05",
+      "name": "Indian Railways Permanent Way Manual (IRPWM 2020) & RDSO Geometry Standards",
+      "category": "Engineering Safety & Inspection Standards",
+      "file_path": "data/raw/standards/irpwm_geometry_thresholds.csv",
+      "format": "CSV",
+      "records": 40,
+      "columns": 8,
+      "observation_period": "Current active manual (IRPWM 2020 / ACS-149)",
+      "geographic_coverage": "Indian Railways Broad Gauge Network (Standard 1676 mm)",
+      "ml_role": "Ground-truth engineering threshold reference for defect classification and priority labeling",
+      "target_variable": "maintenance_classification (PML, NBML, UML, Comfort, Quality index)",
+      "validation_status": "PASSED",
+      "check_details": {
+        "standards_count_sufficient": true,
+        "all_thresholds_numeric": true,
+        "units_populated": true,
+        "sources_cited": true,
+        "page_numbers_provided": true
+      }
+    },
+    {
+      "dataset_id": "DS-06",
+      "name": "CAG Performance Audit on Derailments in Indian Railways & CRS Inquiries",
+      "category": "Statutory Safety Audits & Accident Causation Records",
+      "file_path": "data/raw/accidents/cag_derailment_causation_2017_2021.csv",
+      "format": "CSV",
+      "records": 8,
+      "columns": 6,
+      "observation_period": "2017-18 to 2020-21 (Audit Period) & Major CRS Inquiries (2017-2023)",
+      "geographic_coverage": "Nationwide Indian Railways Incidents",
+      "ml_role": "Incident risk calibration and empirical track defect derailment causality validation",
+      "target_variable": "cause_category (Isolated from inspection records)",
+      "validation_status": "PASSED",
+      "check_details": {
+        "records_populated": true,
+        "incident_counts_positive": true,
+        "percentages_sum_approx_100": true,
+        "crs_investigations_exist": true
+      }
+    },
+    {
+      "dataset_id": "DS-07",
+      "name": "Weather Data Import & Harmonization Pipeline",
+      "category": "Environmental Time-Series Observations",
+      "file_path": "data/processed/weather_standardized.parquet",
+      "format": "Parquet & CSV",
+      "records": 240,
+      "columns": 8,
+      "observation_period": "2023-01-01 to 2023-01-10",
+      "geographic_coverage": "Weather monitoring stations with validated coordinates",
+      "ml_role": "Environmental covariates (coupled strictly via spatio-temporal joins)",
+      "target_variable": "None (Environmental covariate)",
+      "validation_status": "PASSED",
+      "check_details": {
+        "timestamps_valid": true,
+        "temperature_bounds": true,
+        "humidity_bounds": true,
+        "rainfall_non_negative": true
+      }
+    }
+  ]
+}

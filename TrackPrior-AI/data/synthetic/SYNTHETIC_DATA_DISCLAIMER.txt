@@ -1,0 +1,8 @@
+================================================================================
+SYNTHETIC DATA — NOT OFFICIAL INDIAN RAILWAYS RECORDS
+================================================================================
+Source: Hugging Face (samyuktha01/Indian_Railway_maintance)
+Notice: This dataset is synthetically generated for machine learning prototyping.
+It does NOT represent measured inspection records from Indian Railways Track Management System (TMS).
+It must NEVER be merged with real physical inspection observations for model validation.
+Generated at: 2026-11-18T10:40:46.319133

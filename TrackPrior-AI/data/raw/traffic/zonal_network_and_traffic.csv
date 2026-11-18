@@ -1,0 +1,18 @@
+zone_code,zone_name,headquarters,divisions,route_km_approx,running_track_km_approx
+CR,Central Railway,Mumbai CSMT,"Mumbai, Bhusawal, Nagpur, Solapur, Pune",4183,6120
+ER,Eastern Railway,Kolkata Fairlie,"Howrah, Sealdah, Asansol, Malda",2775,5210
+ECR,East Central Railway,Hajipur,"Danapur, Dhanbad, Pt. Deen Dayal Upadhyaya, Samastipur, Sonpur",4252,6820
+ECoR,East Coast Railway,Bhubaneswar,"Khurda Road, Sambalpur, Waltair",2794,4890
+NR,Northern Railway,New Delhi Baroda House,"Delhi, Ambala, Firozpur, Lucknow, Moradabad",7360,12100
+NCR,North Central Railway,Prayagraj,"Prayagraj, Agra, Jhansi",3522,6340
+NER,North Eastern Railway,Gorakhpur,"Izzatnagar, Lucknow, Varanasi",3887,4720
+NFR,Northeast Frontier Railway,Maligaon Guwahati,"Alipurduar, Katihar, Lumding, Rangiya, Tinsukia",4280,5120
+NWR,North Western Railway,Jaipur,"Jaipur, Ajmer, Bikaner, Jodhpur",5550,6920
+SR,Southern Railway,Chennai Central,"Chennai, Tiruchirappalli, Madurai, Palakkad, Salem, Thiruvananthapuram",5079,7890
+SCR,South Central Railway,Secunderabad,"Secunderabad, Hyderabad, Vijayawada, Guntakal, Guntur, Nanded",6562,10450
+SER,South Eastern Railway,Kolkata Garden Reach,"Adra, Chakradharpur, Kharagpur, Ranchi",2750,5600
+SECR,South East Central Railway,Bilaspur,"Bilaspur, Raipur, Nagpur",2512,4710
+SWR,South Western Railway,Hubballi,"Hubballi, Bengaluru, Mysuru",3662,4910
+WR,Western Railway,Mumbai Churchgate,"Mumbai Central, Vadodara, Ratlam, Ahmedabad, Rajkot, Bhavnagar",6510,9850
+WCR,West Central Railway,Jabalpur,"Jabalpur, Bhopal, Kota",3025,5420
+MR,Kolkata Metro,Kolkata,Metro Railway Kolkata,48,96

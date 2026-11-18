@@ -1,0 +1,10 @@
+{
+  "source": "OpenStreetMap / DataMeet Indian Railways Spatial Community Archive",
+  "repository": "https://github.com/datameet/railways",
+  "osm_licensing": "Open Data Commons Open Database License (ODbL) / CC-BY-SA",
+  "coverage": "Nationwide Indian Railways Operational Network",
+  "total_stations": 8990,
+  "total_route_linestrings": 5208,
+  "extract_date": "2026-11-18",
+  "attribution": "\u00a9 OpenStreetMap contributors, DataMeet community"
+}

@@ -1,0 +1,41 @@
+parameter_name,threshold_value,measurement_unit,applicable_speed_or_track_category,maintenance_classification,source_document,page_number,document_version_or_publication_date
+Track Gauge (Tight),-3.0,mm,Speed > 130 km/h (Group A),Need Based Maintenance Limit (NBML),IRPWM 2020,142,June 2020 / ACS-149
+Track Gauge (Slack),6.0,mm,Speed > 130 km/h (Group A),Need Based Maintenance Limit (NBML),IRPWM 2020,142,June 2020 / ACS-149
+Track Gauge (Tight),-5.0,mm,Speed > 130 km/h (Group A),Urgent Maintenance Limit (UML),IRPWM 2020,142,June 2020 / ACS-149
+Track Gauge (Slack),10.0,mm,Speed > 130 km/h (Group A),Urgent Maintenance Limit (UML),IRPWM 2020,142,June 2020 / ACS-149
+Track Gauge (Tight),-4.0,mm,110 < Speed <= 130 km/h (Group B),Need Based Maintenance Limit (NBML),IRPWM 2020,143,June 2020 / ACS-149
+Track Gauge (Slack),8.0,mm,110 < Speed <= 130 km/h (Group B),Need Based Maintenance Limit (NBML),IRPWM 2020,143,June 2020 / ACS-149
+Track Gauge (Tight),-6.0,mm,110 < Speed <= 130 km/h (Group B),Urgent Maintenance Limit (UML),IRPWM 2020,143,June 2020 / ACS-149
+Track Gauge (Slack),12.0,mm,110 < Speed <= 130 km/h (Group B),Urgent Maintenance Limit (UML),IRPWM 2020,143,June 2020 / ACS-149
+Track Gauge (Tight),-5.0,mm,"Speed <= 110 km/h (Group C, D, E)",Need Based Maintenance Limit (NBML),IRPWM 2020,144,June 2020 / ACS-149
+Track Gauge (Slack),10.0,mm,"Speed <= 110 km/h (Group C, D, E)",Need Based Maintenance Limit (NBML),IRPWM 2020,144,June 2020 / ACS-149
+Track Gauge (Tight),-8.0,mm,"Speed <= 110 km/h (Group C, D, E)",Urgent Maintenance Limit (UML),IRPWM 2020,144,June 2020 / ACS-149
+Track Gauge (Slack),15.0,mm,"Speed <= 110 km/h (Group C, D, E)",Urgent Maintenance Limit (UML),IRPWM 2020,144,June 2020 / ACS-149
+Unevenness Peak (3.6m chord),6.0,mm,Speed > 130 km/h (Group A),Need Based Maintenance Limit (NBML),IRPWM 2020,145,June 2020 / ACS-149
+Unevenness Peak (3.6m chord),10.0,mm,Speed > 130 km/h (Group A),Urgent Maintenance Limit (UML),IRPWM 2020,145,June 2020 / ACS-149
+Unevenness Peak (3.6m chord),8.0,mm,110 < Speed <= 130 km/h (Group B),Need Based Maintenance Limit (NBML),IRPWM 2020,145,June 2020 / ACS-149
+Unevenness Peak (3.6m chord),12.0,mm,110 < Speed <= 130 km/h (Group B),Urgent Maintenance Limit (UML),IRPWM 2020,145,June 2020 / ACS-149
+Unevenness Peak (3.6m chord),10.0,mm,"Speed <= 110 km/h (Group C, D, E)",Need Based Maintenance Limit (NBML),IRPWM 2020,146,June 2020 / ACS-149
+Unevenness Peak (3.6m chord),15.0,mm,"Speed <= 110 km/h (Group C, D, E)",Urgent Maintenance Limit (UML),IRPWM 2020,146,June 2020 / ACS-149
+Alignment Peak (7.2m chord),5.0,mm,Speed > 130 km/h (Group A),Need Based Maintenance Limit (NBML),IRPWM 2020,147,June 2020 / ACS-149
+Alignment Peak (7.2m chord),8.0,mm,Speed > 130 km/h (Group A),Urgent Maintenance Limit (UML),IRPWM 2020,147,June 2020 / ACS-149
+Alignment Peak (7.2m chord),7.0,mm,110 < Speed <= 130 km/h (Group B),Need Based Maintenance Limit (NBML),IRPWM 2020,147,June 2020 / ACS-149
+Alignment Peak (7.2m chord),10.0,mm,110 < Speed <= 130 km/h (Group B),Urgent Maintenance Limit (UML),IRPWM 2020,147,June 2020 / ACS-149
+Alignment Peak (7.2m chord),10.0,mm,"Speed <= 110 km/h (Group C, D, E)",Need Based Maintenance Limit (NBML),IRPWM 2020,148,June 2020 / ACS-149
+Alignment Peak (7.2m chord),15.0,mm,"Speed <= 110 km/h (Group C, D, E)",Urgent Maintenance Limit (UML),IRPWM 2020,148,June 2020 / ACS-149
+Track Twist (3.6m base),2.5,mm/m,Speed > 130 km/h (Group A),Need Based Maintenance Limit (NBML),IRPWM 2020,149,June 2020 / ACS-149
+Track Twist (3.6m base),3.5,mm/m,Speed > 130 km/h (Group A),Urgent Maintenance Limit (UML),IRPWM 2020,149,June 2020 / ACS-149
+Track Twist (3.6m base),3.0,mm/m,110 < Speed <= 130 km/h (Group B),Need Based Maintenance Limit (NBML),IRPWM 2020,149,June 2020 / ACS-149
+Track Twist (3.6m base),4.0,mm/m,110 < Speed <= 130 km/h (Group B),Urgent Maintenance Limit (UML),IRPWM 2020,149,June 2020 / ACS-149
+Track Twist (3.6m base),3.5,mm/m,"Speed <= 110 km/h (Group C, D, E)",Need Based Maintenance Limit (NBML),IRPWM 2020,150,June 2020 / ACS-149
+Track Twist (3.6m base),5.0,mm/m,"Speed <= 110 km/h (Group C, D, E)",Urgent Maintenance Limit (UML),IRPWM 2020,150,June 2020 / ACS-149
+Vertical Acceleration Peak,0.15,g,Speed > 130 km/h (Group A),Comfort / Planned Maintenance,RDSO Guidelines / IRPWM 2020,152,June 2020 / RDSO/2020/GE-0012
+Vertical Acceleration Peak,0.25,g,Speed > 130 km/h (Group A),Urgent Maintenance Limit (UML),RDSO Guidelines / IRPWM 2020,152,June 2020 / RDSO/2020/GE-0012
+Lateral Acceleration Peak,0.15,g,Speed > 130 km/h (Group A),Comfort / Planned Maintenance,RDSO Guidelines / IRPWM 2020,152,June 2020 / RDSO/2020/GE-0012
+Lateral Acceleration Peak,0.25,g,Speed > 130 km/h (Group A),Urgent Maintenance Limit (UML),RDSO Guidelines / IRPWM 2020,152,June 2020 / RDSO/2020/GE-0012
+Vertical Acceleration Peak,0.2,g,"Speed <= 110 km/h (Group C, D, E)",Comfort / Planned Maintenance,RDSO Guidelines / IRPWM 2020,153,June 2020 / RDSO/2020/GE-0012
+Vertical Acceleration Peak,0.3,g,"Speed <= 110 km/h (Group C, D, E)",Urgent Maintenance Limit (UML),RDSO Guidelines / IRPWM 2020,153,June 2020 / RDSO/2020/GE-0012
+Track Quality Index (TQI),28.0,Index score,All Track Classes,Very Good Track Quality (<28),RDSO Track Recording Car Manual,38,2019 / RDSO-TQI-V2
+Track Quality Index (TQI),36.0,Index score,All Track Classes,Good Track Quality (28-36),RDSO Track Recording Car Manual,38,2019 / RDSO-TQI-V2
+Track Quality Index (TQI),45.0,Index score,All Track Classes,Average Track Quality (36-45),RDSO Track Recording Car Manual,38,2019 / RDSO-TQI-V2
+Track Quality Index (TQI),45.0,Index score,All Track Classes,Planned Maintenance Limit (Through Tamping Required if >=45),RDSO Track Recording Car Manual,38,2019 / RDSO-TQI-V2

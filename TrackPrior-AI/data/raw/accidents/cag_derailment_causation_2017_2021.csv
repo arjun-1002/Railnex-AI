@@ -1,0 +1,9 @@
+cause_category,specific_cause,incident_count,percentage_of_total,department_responsible,audit_reference
+Track / Engineering Defects,Lack of routine maintenance / improper packing of ballast,171,15.17,Civil Engineering,"CAG Report 22 of 2022, Para 3.2.1"
+Track / Engineering Defects,Track geometry parameters exceeding permissible maintenance limits (gauge/twist/alignment),156,13.84,Civil Engineering,"CAG Report 22 of 2022, Para 3.2.2"
+Track / Engineering Defects,Rail fractures and weld failures undetected by USFD,112,9.94,Civil Engineering,"CAG Report 22 of 2022, Para 3.2.3"
+Mechanical / Rolling Stock Defects,"Wagon/coach wheel defects, flange wear, spring breakage",182,16.15,Mechanical,"CAG Report 22 of 2022, Para 3.3.1"
+Operational / Human Failure,"Incorrect setting of points, shunting errors, signal disregard",275,24.4,Traffic / Operations,"CAG Report 22 of 2022, Para 3.4.1"
+Locomotive / Motive Power Defects,"Locomotive wheel defect, suspension failure",52,4.61,Electrical / Diesel Loco,"CAG Report 22 of 2022, Para 3.5.1"
+Signalling & Telecommunication Failure,"Point machine failure, interlocking disconnection",48,4.26,S&T,"CAG Report 22 of 2022, Para 3.6.1"
+Environmental & External Factors,"Heavy rainfall, flash floods, boulder fall, sabotage/cattle run-over",131,11.62,External / Force Majeure,"CAG Report 22 of 2022, Para 3.7.1"

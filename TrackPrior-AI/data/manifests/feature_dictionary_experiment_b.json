@@ -1,0 +1,69 @@
+{
+  "experiment": "Experiment B \u2014 Synthetic Multi-Class Track Maintenance Urgency Prototype",
+  "dataset_source": "Hugging Face (samyuktha01/Indian_Railway_maintance)",
+  "data_nature": "SYNTHETIC SIMULATED DATASET \u2014 NOT OFFICIAL INDIAN RAILWAYS RECORDS",
+  "disclaimer": "This experiment is strictly an algorithmic prototype and pipeline benchmark. Results must never be claimed to validate actual Indian Railways track performance.",
+  "target_variable": {
+    "name": "severity_level_ordinal",
+    "type": "Ordinal Multi-Class (Integer 0 to 4)",
+    "encoding": {
+      "0": "None",
+      "1": "Low",
+      "2": "Medium",
+      "3": "High",
+      "4": "Critical"
+    },
+    "class_distribution_train": {
+      "0": 6349,
+      "1": 1427,
+      "2": 919,
+      "3": 557,
+      "4": 271
+    },
+    "class_distribution_test": {
+      "0": 1587,
+      "1": 357,
+      "2": 230,
+      "3": 139,
+      "4": 68
+    }
+  },
+  "split_strategy": "Stratified Random Split (80% train, 20% test, random_state=42)",
+  "features": {
+    "numerical_features": [
+      "track_temperature_c",
+      "rail_wear_mm",
+      "track_vibration_level",
+      "track_curvature_degree",
+      "ambient_temperature_c",
+      "humidity_percent",
+      "rainfall_mm",
+      "wind_speed_kmph",
+      "train_age_years",
+      "average_speed_kmph",
+      "distance_travelled_km",
+      "daily_trips",
+      "load_factor_percent",
+      "power_consumption_kw"
+    ],
+    "categorical_features": [
+      "ballast_condition",
+      "region",
+      "season",
+      "train_type"
+    ]
+  },
+  "excluded_leakage_features": {
+    "risk_score": "CRITICAL TARGET LEAKAGE: Continuous variable computed directly from failure state (r > 0.88 with severity)",
+    "maintenance_required": "CRITICAL TARGET LEAKAGE: Direct binary flag indicating maintenance requirement",
+    "failure_type": "TARGET LEAKAGE: Categorical failure taxonomy",
+    "inspection_score": "Post-hoc evaluator score reflecting known defects",
+    "delay_minutes": "Operational consequence of defect occurrence rather than predictive precursor",
+    "train_id": "Row sequence identifier"
+  },
+  "assumptions": [
+    "Dataset is purely synthetic, created for data science prototyping and code testing.",
+    "Features reflect simulated physics and environment (wear, temperature, humidity).",
+    "Leakage-prone columns must be rigorously omitted to avoid inflated synthetic accuracy."
+  ]
+}

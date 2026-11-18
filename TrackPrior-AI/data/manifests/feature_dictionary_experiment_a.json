@@ -1,0 +1,58 @@
+{
+  "experiment": "Experiment A \u2014 Real Track Geometry Defect Severity Classification",
+  "dataset_source": "INFORMS 2015 Railway Applications Section Track Geometry Analytics",
+  "data_nature": "Real Observational Railway Track Geometry Car Measurements",
+  "target_variable": {
+    "name": "severity_target_binary",
+    "type": "Binary Classification (Integer 0 or 1)",
+    "encoding": {
+      "0": "Yellow Tag (Pre-defect / Planned Maintenance)",
+      "1": "Red Tag (FRA Exceedance / Urgent Action)"
+    },
+    "class_distribution_train": {
+      "0": 12595,
+      "1": 4688
+    },
+    "class_distribution_test": {
+      "0": 4765,
+      "1": 1799
+    }
+  },
+  "split_strategy": "Chronological Split at 2012-01-01 (prevents future-to-past temporal leakage)",
+  "features": {
+    "numerical_features": [
+      "defect_length_ft",
+      "defect_amplitude_in",
+      "defect_volume_proxy",
+      "fra_track_class",
+      "freight_speed_limit_mph",
+      "passenger_speed_limit_mph",
+      "speed_ratio",
+      "inspection_month"
+    ],
+    "categorical_features": [
+      "defect_type",
+      "curve_spiral_tangent_code",
+      "track_code"
+    ],
+    "engineered_features": [
+      "defect_volume_proxy",
+      "speed_ratio",
+      "inspection_month"
+    ]
+  },
+  "excluded_features": {
+    "line_segment_id": "Group identifier (spatial clustering)",
+    "milepost": "Spatial coordinate (prevent overfitting to exact coordinate)",
+    "defect_id": "Defect transaction sequence index",
+    "geo_car_name": "Inspection vehicle hardware label",
+    "defect_priority_tag": "Direct string representation of target",
+    "inspection_date": "Timestamp (used strictly for chronological partitioning)"
+  },
+  "assumptions": [
+    "Dataset represents real track geometry car inspections from North American Class 1 railroad operating under FRA track safety standards 49 CFR Part 213.",
+    "Yellow tags indicate geometry anomalies nearing safety thresholds but still legally permissible for scheduled maintenance.",
+    "Red tags require immediate speed reduction or urgent physical track correction.",
+    "Chronological splitting prevents lookahead bias and mimics real-world predictive deployment."
+  ]
+}
