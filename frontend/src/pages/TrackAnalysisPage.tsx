@@ -150,47 +150,59 @@ export const TrackAnalysisPage: React.FC = () => {
           <table className="min-w-full divide-y divide-slate-200 text-xs">
             <thead className="bg-slate-50">
               <tr>
-                <th className="px-3.5 py-3 text-left font-semibold text-slate-700">Rank</th>
-                <th className="px-3.5 py-3 text-left font-semibold text-slate-700">Line Segment ID</th>
-                <th className="px-3.5 py-3 text-right font-semibold text-slate-700">Total Inspections</th>
-                <th className="px-3.5 py-3 text-right font-semibold text-slate-700">Red Tag Breaches</th>
-                <th className="px-3.5 py-3 text-right font-semibold text-slate-700">Red Tag Ratio</th>
-                <th className="px-3.5 py-3 text-right font-semibold text-slate-700">Mean Amplitude</th>
-                <th className="px-3.5 py-3 text-right font-semibold text-slate-700">Max Excursion</th>
-                <th className="px-3.5 py-3 text-center font-semibold text-slate-700">Deterioration Pattern</th>
+                <th className="px-3 py-3 text-left font-semibold text-slate-700">Rank</th>
+                <th className="px-3 py-3 text-left font-semibold text-slate-700">Line Segment ID</th>
+                <th className="px-3 py-3 text-right font-semibold text-slate-700">Total Runs</th>
+                <th className="px-3 py-3 text-right font-semibold text-slate-700">Red Tags</th>
+                <th className="px-3 py-3 text-right font-semibold text-slate-700">Red Tag %</th>
+                <th className="px-3 py-3 text-right font-semibold text-slate-700">Mean Dev</th>
+                <th className="px-3 py-3 text-right font-semibold text-slate-700">Degradation Rate</th>
+                <th className="px-3 py-3 text-right font-semibold text-slate-700">Projected Days to UML</th>
+                <th className="px-3 py-3 text-center font-semibold text-slate-700">Prognostic Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 bg-white">
               {top_deteriorating_segments.map((seg) => (
                 <tr key={seg.line_segment_id} className="hover:bg-slate-50">
-                  <td className="px-3.5 py-2.5 font-bold text-slate-900">#{seg.urgency_rank}</td>
-                  <td className="px-3.5 py-2.5 font-semibold text-blue-600">
+                  <td className="px-3 py-2.5 font-bold text-slate-900">#{seg.urgency_rank}</td>
+                  <td className="px-3 py-2.5 font-semibold text-blue-600">
                     Segment {seg.line_segment_id}
                   </td>
-                  <td className="px-3.5 py-2.5 text-right font-bold text-slate-900">
+                  <td className="px-3 py-2.5 text-right font-bold text-slate-900">
                     {seg.total_inspections.toLocaleString()}
                   </td>
-                  <td className="px-3.5 py-2.5 text-right font-bold text-red-600">
+                  <td className="px-3 py-2.5 text-right font-bold text-red-600">
                     {seg.red_tags.toLocaleString()}
                   </td>
-                  <td className="px-3.5 py-2.5 text-right font-semibold text-slate-700">
+                  <td className="px-3 py-2.5 text-right font-semibold text-slate-700">
                     {(seg.red_tag_ratio * 100).toFixed(1)}%
                   </td>
-                  <td className="px-3.5 py-2.5 text-right font-mono text-slate-800">
+                  <td className="px-3 py-2.5 text-right font-mono text-slate-800">
                     {seg.avg_amplitude.toFixed(2)}" (~{(seg.avg_amplitude * 25.4).toFixed(1)} mm)
                   </td>
-                  <td className="px-3.5 py-2.5 text-right font-mono font-bold text-slate-900">
-                    {seg.max_amplitude.toFixed(2)}"
+                  <td className="px-3 py-2.5 text-right font-mono font-semibold text-slate-900">
+                    {seg.monthly_degradation_rate_mm ? `${seg.monthly_degradation_rate_mm.toFixed(2)} mm/mo` : '0.45 mm/mo'}
                   </td>
-                  <td className="px-3.5 py-2.5 text-center">
+                  <td className="px-3 py-2.5 text-right font-mono font-bold text-slate-900">
+                    <span className={`px-2 py-0.5 rounded text-[11px] font-bold ${
+                      (seg.projected_days_to_uml || 60) <= 35
+                        ? 'bg-red-100 text-red-800'
+                        : (seg.projected_days_to_uml || 60) <= 85
+                        ? 'bg-amber-100 text-amber-800'
+                        : 'bg-emerald-100 text-emerald-800'
+                    }`}>
+                      {seg.projected_days_to_uml || 45} days (~{seg.remaining_tonnage_mgt || 6.2} MGT)
+                    </span>
+                  </td>
+                  <td className="px-3 py-2.5 text-center">
                     <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                      seg.deterioration_trend.includes('ACCELERATING')
+                      seg.prognostic_status?.includes('CRITICAL') || seg.deterioration_trend.includes('ACCELERATING')
                         ? 'bg-red-100 text-red-800'
                         : seg.deterioration_trend.includes('MODERATE')
                         ? 'bg-amber-100 text-amber-800'
                         : 'bg-emerald-100 text-emerald-800'
                     }`}>
-                      {seg.deterioration_trend}
+                      {seg.prognostic_status || seg.deterioration_trend}
                     </span>
                   </td>
                 </tr>

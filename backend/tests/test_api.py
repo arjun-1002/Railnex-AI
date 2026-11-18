@@ -127,3 +127,38 @@ def test_data_explorer():
     assert data["total"] > 1000
     for r in data["records"]:
         assert r["defect_type"] == "XLEVEL"
+
+def test_predict_severity_shap_attributions():
+    payload = {
+        "defect_length_ft": 30.0,
+        "defect_amplitude_in": 1.75,
+        "fra_track_class": 4,
+        "freight_speed_limit_mph": 50.0,
+        "passenger_speed_limit_mph": 70.0,
+        "defect_type": "XLEVEL",
+        "curve_spiral_tangent_code": "C",
+        "track_code": "1",
+        "inspection_month": 8
+    }
+    res = client.post("/api/predict/severity", json=payload)
+    assert res.status_code == 200
+    data = res.json()
+    assert "shap_attributions" in data
+    assert len(data["shap_attributions"]) >= 4
+    for item in data["shap_attributions"]:
+        assert "feature_name" in item
+        assert "shap_value" in item
+        assert item["contribution_direction"] in ["INCREASES_RISK", "REDUCES_RISK"]
+        assert item["importance_pct"] >= 0.0
+
+def test_track_deterioration_prognostic_rul():
+    res = client.get("/api/track/deterioration")
+    assert res.status_code == 200
+    data = res.json()
+    assert "top_deteriorating_segments" in data
+    top_seg = data["top_deteriorating_segments"][0]
+    assert "monthly_degradation_rate_mm" in top_seg
+    assert "projected_days_to_uml" in top_seg
+    assert "prognostic_status" in top_seg
+    assert top_seg["projected_days_to_uml"] > 0
+

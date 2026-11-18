@@ -77,6 +77,14 @@ export interface StandardsComparison {
   status: string;
 }
 
+export interface ShapAttribution {
+  feature_name: string;
+  feature_label: string;
+  shap_value: number;
+  contribution_direction: 'INCREASES_RISK' | 'REDUCES_RISK';
+  importance_pct: number;
+}
+
 export interface SeverityPredictionResult {
   predicted_class: string;
   severity_label: string;
@@ -88,6 +96,7 @@ export interface SeverityPredictionResult {
   };
   contributing_factors: ContributingFactor[];
   standards_comparison: StandardsComparison[];
+  shap_attributions?: ShapAttribution[];
   suggested_action: string;
   limitations_disclaimer: string;
 }
@@ -117,6 +126,10 @@ export interface TrackDeteriorationData {
     red_tag_ratio: number;
     deterioration_trend: string;
     urgency_rank: number;
+    monthly_degradation_rate_mm?: number;
+    projected_days_to_uml?: number;
+    prognostic_status?: string;
+    remaining_tonnage_mgt?: number;
   }>;
   longitudinal_sample_segment: {
     line_segment_id: number;

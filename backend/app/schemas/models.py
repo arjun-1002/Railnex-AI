@@ -27,6 +27,13 @@ class StandardsComparison(BaseModel):
     irpwm_standard: str
     status: str
 
+class ShapAttribution(BaseModel):
+    feature_name: str
+    feature_label: str
+    shap_value: float
+    contribution_direction: str
+    importance_pct: float
+
 class SeverityPredictionResponse(BaseModel):
     predicted_class: str
     severity_label: str
@@ -35,6 +42,7 @@ class SeverityPredictionResponse(BaseModel):
     probabilities: Dict[str, float]
     contributing_factors: List[ContributingFactor]
     standards_comparison: List[StandardsComparison]
+    shap_attributions: List[ShapAttribution] = Field(default_factory=list)
     suggested_action: str
     limitations_disclaimer: str
 
@@ -61,6 +69,10 @@ class TrackDeteriorationItem(BaseModel):
     deterioration_trend: str
     urgency_rank: int
     last_inspection_date: Optional[str] = None
+    monthly_degradation_rate_mm: float = 0.0
+    projected_days_to_uml: int = 180
+    prognostic_status: str = "STABLE DEGRADATION"
+    remaining_tonnage_mgt: float = 25.0
 
 class StationItem(BaseModel):
     station_code: str

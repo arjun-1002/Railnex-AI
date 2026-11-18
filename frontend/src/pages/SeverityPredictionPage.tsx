@@ -403,6 +403,43 @@ export const SeverityPredictionPage: React.FC = () => {
                 </div>
               </div>
 
+              {/* TreeSHAP Feature Attribution (Explainable AI) */}
+              {result.shap_attributions && result.shap_attributions.length > 0 && (
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center space-x-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+                      <span>TreeSHAP Feature Attribution (Explainable AI)</span>
+                    </h4>
+                    <span className="text-[10px] text-slate-500 font-mono">XGBoost Native Shapley Values</span>
+                  </div>
+                  <div className="space-y-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                    {result.shap_attributions.map((attr, idx) => (
+                      <div key={idx} className="text-xs">
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="font-medium text-slate-800">{attr.feature_label}</span>
+                          <span className={`font-mono text-[11px] font-bold px-1.5 py-0.5 rounded ${
+                            attr.contribution_direction === 'INCREASES_RISK'
+                              ? 'text-red-700 bg-red-50'
+                              : 'text-emerald-700 bg-emerald-50'
+                          }`}>
+                            {attr.shap_value > 0 ? `+${attr.shap_value.toFixed(2)}` : attr.shap_value.toFixed(2)} ({attr.importance_pct}%)
+                          </span>
+                        </div>
+                        <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full rounded-full transition-all duration-500 ${
+                              attr.contribution_direction === 'INCREASES_RISK' ? 'bg-red-500' : 'bg-emerald-500'
+                            }`}
+                            style={{ width: `${Math.min(attr.importance_pct * 2.5, 100)}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Explainable Contributing Factors */}
               <div>
                 <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">

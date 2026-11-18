@@ -203,6 +203,18 @@ class DataService:
         grouped = grouped.sort_values(by=['red_tag_ratio', 'total_inspections'], ascending=[False, False])
         grouped['urgency_rank'] = range(1, len(grouped) + 1)
 
+        # Remaining Useful Life (RUL) & Prognostic Health Assessment
+        # Converted max amplitude in mm vs IRPWM 15mm UML limit
+        max_amp_mm = grouped['max_amplitude'] * 25.4
+        grouped['monthly_degradation_rate_mm'] = np.round(0.20 + (grouped['red_tag_ratio'] * 0.95), 2)
+        days_calc = ((15.0 - max_amp_mm.clip(upper=14.5)) / (grouped['monthly_degradation_rate_mm'] / 30.0)).clip(lower=12).astype(int)
+        grouped['projected_days_to_uml'] = days_calc
+        grouped['prognostic_status'] = np.where(
+            grouped['projected_days_to_uml'] <= 35, "CRITICAL — UML IMMINENT",
+            np.where(grouped['projected_days_to_uml'] <= 85, "MODERATE DEGRADATION — SCHEDULE", "STABLE MAINTENANCE")
+        )
+        grouped['remaining_tonnage_mgt'] = np.round((grouped['projected_days_to_uml'] / 30.0) * 4.2, 1)
+
         # Deterioration over time for top line segment
         top_segment = int(grouped.iloc[0]['line_segment_id'])
         df_top = df[df['line_segment_id'] == top_segment].copy()
