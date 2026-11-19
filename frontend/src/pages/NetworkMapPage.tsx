@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StationItem } from '../types';
-import { fetchStations, fetchZones } from '../services/api';
+import { fetchStations, fetchZones, searchStations } from '../services/api';
 import {
   Compass,
   Database,
@@ -23,6 +23,21 @@ export const NetworkMapPage: React.FC = () => {
   useEffect(() => {
     loadData();
   }, [selectedZone]);
+
+  useEffect(() => {
+    if (searchQuery.trim().length >= 2) {
+      searchStations(searchQuery)
+        .then((res) => {
+          if (res.length > 0) {
+            setStations(res);
+            setSelectedStation(res[0]);
+          }
+        })
+        .catch(console.error);
+    } else if (searchQuery.trim().length === 0) {
+      loadData();
+    }
+  }, [searchQuery]);
 
   const loadData = () => {
     setLoading(true);

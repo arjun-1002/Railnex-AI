@@ -98,3 +98,44 @@ export async function queryDataExplorer(params: {
   if (!res.ok) throw new Error(`Failed to query explorer: ${res.statusText}`);
   return res.json();
 }
+
+export async function uploadRtiTmsFile(file: File): Promise<any> {
+  const formData = new FormData();
+  formData.append('file', file);
+  const res = await fetch(`${API_BASE}/upload/rti-tms`, {
+    method: 'POST',
+    body: formData
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || `TMS upload failed: ${res.statusText}`);
+  }
+  return res.json();
+}
+
+export async function uploadWeatherFile(file: File): Promise<any> {
+  const formData = new FormData();
+  formData.append('file', file);
+  const res = await fetch(`${API_BASE}/upload/weather`, {
+    method: 'POST',
+    body: formData
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || `Weather upload failed: ${res.statusText}`);
+  }
+  return res.json();
+}
+
+export async function fetchMaintenanceAdvisory(): Promise<any> {
+  const res = await fetch(`${API_BASE}/reports/advisory`);
+  if (!res.ok) throw new Error(`Failed to load maintenance advisory: ${res.statusText}`);
+  return res.json();
+}
+
+export async function searchStations(query: string): Promise<StationItem[]> {
+  const res = await fetch(`${API_BASE}/network/search?q=${encodeURIComponent(query)}`);
+  if (!res.ok) throw new Error(`Station search failed: ${res.statusText}`);
+  return res.json();
+}
+

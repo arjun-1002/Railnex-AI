@@ -162,3 +162,45 @@ def test_track_deterioration_prognostic_rul():
     assert "prognostic_status" in top_seg
     assert top_seg["projected_days_to_uml"] > 0
 
+def test_upload_rti_tms_endpoint():
+    csv_content = b"zone,division,section,track,km,param,amplitude,speed\nNR,Delhi,NDLS-GZB,UP,14.5,XLEVEL,16.5,110\nWR,Mumbai,BCT-VR,DN,22.0,TWIST,4.5,100\n"
+    res = client.post(
+        "/api/upload/rti-tms",
+        files={"file": ("sample_tms_upload.csv", csv_content, "text/csv")}
+    )
+    assert res.status_code == 200
+    data = res.json()
+    assert data["status"] == "SUCCESS"
+    assert "audit" in data
+    assert data["audit"]["ingested_records"] == 2
+    assert "UML" in data["audit"]["severity_distribution"]
+
+def test_upload_weather_endpoint():
+    weather_csv = b"timestamp,station_id,temperature_c,rainfall_mm,humidity_percent\n2023-01-01 10:00:00,STN_01,24.5,0.0,65.0\n2023-01-01 11:00:00,STN_01,25.2,1.2,68.0\n"
+    res = client.post(
+        "/api/upload/weather",
+        files={"file": ("sample_weather_upload.csv", weather_csv, "text/csv")}
+    )
+    assert res.status_code == 200
+    data = res.json()
+    assert data["status"] == "SUCCESS"
+    assert data["audit"]["total_records"] == 2
+
+def test_get_maintenance_advisory():
+    res = client.get("/api/reports/advisory")
+    assert res.status_code == 200
+    data = res.json()
+    assert "advisory_ref" in data
+    assert "IRPWM 2020" in data["statutory_mandate"]
+    assert len(data["critical_exceedances"]) > 0
+    assert len(data["tamping_allocation"]) > 0
+
+def test_search_stations_endpoint():
+    res = client.get("/api/network/search?q=NDLS")
+    assert res.status_code == 200
+    data = res.json()
+    assert len(data) >= 1
+    codes = [s["station_code"] for s in data]
+    assert "NDLS" in codes
+
+

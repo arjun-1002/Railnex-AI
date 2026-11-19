@@ -52,7 +52,7 @@ class RTIIndianRailwaysTMSPipeline:
         'km_end': ['km_end', 'km_to', 'to_km', 'end_km', 'milepost_end'],
         'inspection_date': ['inspection_date', 'run_date', 'test_date', 'trc_date', 'date_of_run', 'test_dt', 'date'],
         'inspection_type': ['inspection_type', 'car_type', 'trc_no', 'machine_type', 'inspection_system', 'oms_no'],
-        'geometry_parameter': ['geometry_parameter', 'parameter', 'param_name', 'defect_type', 'channel', 'defect_description', 'parameter_name'],
+        'geometry_parameter': ['geometry_parameter', 'parameter', 'param_name', 'param', 'defect_type', 'channel', 'defect_description', 'parameter_name'],
         'measured_value': ['measured_value', 'peak_value', 'amplitude', 'value_mm', 'exceedance', 'max_value', 'value'],
         'measurement_unit': ['measurement_unit', 'unit', 'units', 'dim'],
         'sectional_speed_kmph': ['sectional_speed_kmph', 'speed', 'speed_kmph', 'sectional_speed', 'max_speed', 'f_speed'],
@@ -131,29 +131,36 @@ class RTIIndianRailwaysTMSPipeline:
             gauge_tight_uml = param_lower.str.contains('gauge') & (df['measured_value'] <= -6.0)
             df.loc[gauge_slack_uml | gauge_tight_uml, 'standardized_severity'] = 'UML'
             
+            # Crosslevel UML (>= 12.0 mm) and NBML (>= 8.0 mm)
+            xlevel_uml = param_lower.str.contains('crosslevel|xlevel|cant') & (df['measured_value'].abs() >= 12.0)
+            xlevel_nbml = param_lower.str.contains('crosslevel|xlevel|cant') & (df['measured_value'].abs() >= 8.0) & ~xlevel_uml
+            df.loc[xlevel_nbml, 'standardized_severity'] = 'NBML'
+            df.loc[xlevel_uml, 'standardized_severity'] = 'UML'
+
+            # Unevenness / Surface Profile UML (>= 10.0 mm) and NBML (>= 6.0 mm)
+            surf_uml = param_lower.str.contains('unevenness|surface|profile|dip') & (df['measured_value'].abs() >= 10.0)
+            surf_nbml = param_lower.str.contains('unevenness|surface|profile|dip') & (df['measured_value'].abs() >= 6.0) & ~surf_uml
+            df.loc[surf_nbml, 'standardized_severity'] = 'NBML'
+            df.loc[surf_uml, 'standardized_severity'] = 'UML'
+
             # Peak acceleration UML (> 0.25g / 0.30g)
             accel_uml = param_lower.str.contains('accel') & (df['measured_value'].abs() >= 0.25)
             df.loc[accel_uml, 'standardized_severity'] = 'UML'
             
         return df
 
-    def process_tms_file(self, file_path, output_dir=None):
-        print(f"Processing Indian Railways TMS file: {file_path}")
-        df_raw = self.load_file(file_path)
+    def process_dataframe(self, df_raw, source_filename="uploaded_tms.csv", output_dir=None):
         df_mapped, missing = self.map_columns(df_raw)
         
-        # Standardize dates
         if 'inspection_date' in df_mapped.columns:
             df_mapped['inspection_date'] = pd.to_datetime(df_mapped['inspection_date'], errors='coerce')
         if 'rectification_date' in df_mapped.columns:
             df_mapped['rectification_date'] = pd.to_datetime(df_mapped['rectification_date'], errors='coerce')
             
-        # Standardize severity
         df_clean = self.standardize_severity(df_mapped)
         
-        # Ingestion Audit
         audit = {
-            "source_file": os.path.basename(file_path),
+            "source_file": source_filename,
             "ingested_records": len(df_clean),
             "unmapped_standard_fields": missing,
             "zonal_railways_detected": df_clean['zone'].dropna().unique().tolist() if 'zone' in df_clean.columns else [],
@@ -164,13 +171,17 @@ class RTIIndianRailwaysTMSPipeline:
         
         if output_dir:
             os.makedirs(output_dir, exist_ok=True)
-            base_name = os.path.splitext(os.path.basename(file_path))[0]
+            base_name = os.path.splitext(source_filename)[0]
             out_parquet = os.path.join(output_dir, f"standardized_tms_{base_name}.parquet")
             df_clean.to_parquet(out_parquet, index=False)
-            print(f"Saved standardized TMS table to: {out_parquet}")
             audit["output_parquet"] = out_parquet
             
         return df_clean, audit
+
+    def process_tms_file(self, file_path, output_dir=None):
+        print(f"Processing Indian Railways TMS file: {file_path}")
+        df_raw = self.load_file(file_path)
+        return self.process_dataframe(df_raw, source_filename=os.path.basename(file_path), output_dir=output_dir)
 
 def main():
     parser = argparse.ArgumentParser(description="Indian Railways RTI TMS Integration Engine")

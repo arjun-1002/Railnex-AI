@@ -135,6 +135,23 @@ class WeatherDataImporter:
             }
         return report
 
+    def process_dataframe(self, raw_df, output_name=None):
+        std_df = self.standardize(raw_df)
+        audit = self.audit_quality(std_df)
+        
+        if output_name:
+            csv_path = os.path.join(self.output_dir, f"{output_name}.csv")
+            parquet_path = os.path.join(self.output_dir, f"{output_name}.parquet")
+            std_df.to_csv(csv_path, index=False)
+            audit["output_csv"] = csv_path
+            try:
+                std_df.to_parquet(parquet_path, index=False)
+                audit["output_parquet"] = parquet_path
+            except Exception:
+                pass
+            
+        return std_df, audit
+
     def import_weather_dataset(self, file_path, output_name='weather_standardized'):
         """Full pipeline: Load -> Standardize -> Audit -> Export."""
         print(f"Importing weather dataset from: {file_path}")
@@ -146,7 +163,10 @@ class WeatherDataImporter:
         parquet_path = os.path.join(self.output_dir, f"{output_name}.parquet")
         
         std_df.to_csv(csv_path, index=False)
-        std_df.to_parquet(parquet_path, index=False)
+        try:
+            std_df.to_parquet(parquet_path, index=False)
+        except Exception:
+            pass
         
         print(f"Weather dataset successfully standardized and exported:")
         print(f"  Rows: {len(std_df):,}")
