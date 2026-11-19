@@ -11,7 +11,7 @@ import pandas as pd
 
 from ..schemas.models import (
     SeverityPredictionRequest, SeverityPredictionResponse,
-    MaintenancePriorityItem, StationItem
+    MaintenancePriorityItem, StationItem, DegradationSimulationRequest
 )
 from ..core.ml_service import MLService
 from ..core.data_service import DataService
@@ -222,6 +222,22 @@ def search_stations(q: str = Query(..., min_length=1, description="Station searc
     """Searches Indian Railways stations by code, name, or state."""
     try:
         return data_service.search_stations(query=q)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/track/simulate-degradation")
+def simulate_track_degradation(req: DegradationSimulationRequest):
+    """Simulates track geometry degradation under variable axle loads, deferred tamping, and climate events."""
+    try:
+        return data_service.simulate_track_degradation(
+            line_segment_id=req.line_segment_id,
+            baseline_amplitude_mm=req.baseline_amplitude_mm,
+            axle_load_tonnes=req.axle_load_tonnes,
+            traffic_mgt_annual=req.traffic_mgt_annual,
+            deferred_maintenance_days=req.deferred_maintenance_days,
+            monsoon_rainfall_mm=req.monsoon_rainfall_mm,
+            ballast_condition=req.ballast_condition
+        )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

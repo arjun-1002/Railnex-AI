@@ -409,3 +409,102 @@ class DataService:
             }
         }
 
+    def simulate_track_degradation(
+        self,
+        line_segment_id: int = 10103100,
+        baseline_amplitude_mm: float = 8.5,
+        axle_load_tonnes: float = 22.82,
+        traffic_mgt_annual: float = 35.0,
+        deferred_maintenance_days: int = 0,
+        monsoon_rainfall_mm: float = 0.0,
+        ballast_condition: str = "MODERATE"
+    ) -> Dict[str, Any]:
+        """
+        Simulates accelerated track geometry degradation under variable axle loads,
+        deferred maintenance intervals, and monsoon rainfall conditions.
+        """
+        # Dynamic Force Amplification Factor
+        phi_axle = ((axle_load_tonnes / 22.82) ** 1.45) * ((traffic_mgt_annual / 35.0) ** 0.65)
+        # Environmental Softening Factor
+        phi_rain = 1.0 + (monsoon_rainfall_mm / 300.0) * 0.60
+        # Ballast Formation Factor
+        ballast_factors = {"EXCELLENT": 0.80, "GOOD": 1.0, "MODERATE": 1.25, "DEGRADED": 1.65}
+        k_ballast = ballast_factors.get(ballast_condition.upper(), 1.25)
+
+        alpha_base = 0.42  # Baseline degradation rate (mm/month)
+        alpha_sim = round(alpha_base * phi_axle * phi_rain * k_ballast, 3)
+
+        # Current amplitude adjusted for deferred tamping delay
+        delta_current = round(baseline_amplitude_mm + (alpha_sim * (deferred_maintenance_days / 30.0)), 2)
+        uml_threshold_mm = 12.0  # IRPWM 2020 Table 5.1 UML for Broad Gauge
+        nbml_threshold_mm = 8.0   # NBML Need Based Limit
+
+        # Projected days to reach UML
+        days_to_uml = max(0, int((uml_threshold_mm - min(11.8, delta_current)) / (alpha_sim / 30.0)))
+
+        # 12-Month Projection Curve
+        projection_months = list(range(0, 13))
+        projection_curve = []
+        for m in projection_months:
+            base_amp = round(baseline_amplitude_mm + (alpha_base * m), 2)
+            sim_amp = round(delta_current + (alpha_sim * m), 2)
+            projection_curve.append({
+                "month": f"M+{m}",
+                "baseline_trajectory_mm": base_amp,
+                "simulated_trajectory_mm": sim_amp,
+                "uml_threshold_mm": uml_threshold_mm,
+                "nbml_threshold_mm": nbml_threshold_mm
+            })
+
+        # Operational Advisory Directive
+        if days_to_uml <= 14:
+            advisory_urgency = "EMERGENCY_INTERVENTION"
+            mandated_speed_kmph = 60
+            action_directive = (
+                "EMERGENCY CAUTION ORDER: Impose immediate 60 km/h speed restriction. "
+                "Mobilize mechanized tamping unit (CSM) within 48 hours to avert flange climbing."
+            )
+        elif days_to_uml <= 45:
+            advisory_urgency = "HIGH_PRIORITY_SCHEDULE"
+            mandated_speed_kmph = 100
+            action_directive = (
+                "HIGH PRIORITY: Accelerate through-tamping and ballast shoulder profiling into current "
+                "divisional 14-day machine roster. Monitor gauge retention weekly."
+            )
+        else:
+            advisory_urgency = "STABLE_MONITORING"
+            mandated_speed_kmph = 130
+            action_directive = (
+                "ROUTINE MONITORING: Track geometry remains within statutory need-based bounds. "
+                "Maintain scheduled periodic Track Recording Car inspection."
+            )
+
+        acceleration_factor_pct = round(((alpha_sim - alpha_base) / alpha_base) * 100, 1)
+
+        return {
+            "simulation_inputs": {
+                "line_segment_id": line_segment_id,
+                "baseline_amplitude_mm": baseline_amplitude_mm,
+                "axle_load_tonnes": axle_load_tonnes,
+                "traffic_mgt_annual": traffic_mgt_annual,
+                "deferred_maintenance_days": deferred_maintenance_days,
+                "monsoon_rainfall_mm": monsoon_rainfall_mm,
+                "ballast_condition": ballast_condition
+            },
+            "degradation_metrics": {
+                "baseline_rate_mm_per_month": alpha_base,
+                "simulated_rate_mm_per_month": alpha_sim,
+                "degradation_acceleration_pct": acceleration_factor_pct,
+                "current_amplitude_mm": delta_current,
+                "projected_days_to_uml": days_to_uml,
+                "uml_threshold_mm": uml_threshold_mm
+            },
+            "advisory": {
+                "urgency_tier": advisory_urgency,
+                "mandated_speed_restriction_kmph": mandated_speed_kmph,
+                "action_directive": action_directive
+            },
+            "projection_timeline": projection_curve
+        }
+
+

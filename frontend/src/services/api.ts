@@ -139,3 +139,21 @@ export async function searchStations(query: string): Promise<StationItem[]> {
   return res.json();
 }
 
+export async function simulateTrackDegradation(params: {
+  line_segment_id?: number;
+  baseline_amplitude_mm?: number;
+  axle_load_tonnes?: number;
+  traffic_mgt_annual?: number;
+  deferred_maintenance_days?: number;
+  monsoon_rainfall_mm?: number;
+  ballast_condition?: string;
+}): Promise<any> {
+  const res = await fetch(`${API_BASE}/track/simulate-degradation`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params),
+  });
+  if (!res.ok) throw new Error(`Simulation failed: ${res.statusText}`);
+  return res.json();
+}
+

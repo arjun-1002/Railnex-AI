@@ -203,4 +203,45 @@ def test_search_stations_endpoint():
     codes = [s["station_code"] for s in data]
     assert "NDLS" in codes
 
+def test_ir_trc_corridor_sample_ingestion():
+    file_path = "TrackPrior-AI/data/raw/tms_samples/sample_ir_trc_corridor_run.csv"
+    with open(file_path, "rb") as f:
+        file_bytes = f.read()
+    res = client.post(
+        "/api/upload/rti-tms",
+        files={"file": ("sample_ir_trc_corridor_run.csv", file_bytes, "text/csv")}
+    )
+    assert res.status_code == 200
+    data = res.json()
+    assert data["status"] == "SUCCESS"
+    audit = data["audit"]
+    assert audit["ingested_records"] == 150
+    assert "NR" in audit["zonal_railways_detected"]
+    assert "NCR" in audit["zonal_railways_detected"]
+    assert "Delhi" in audit["divisions_detected"]
+    assert "Prayagraj" in audit["divisions_detected"]
+    assert audit["severity_distribution"]["UML"] > 0
+    assert len(data["preview_records"]) == 20
+
+def test_track_degradation_simulation():
+    payload = {
+        "line_segment_id": 10103100,
+        "baseline_amplitude_mm": 8.5,
+        "axle_load_tonnes": 25.0,
+        "traffic_mgt_annual": 45.0,
+        "deferred_maintenance_days": 45,
+        "monsoon_rainfall_mm": 180.0,
+        "ballast_condition": "DEGRADED"
+    }
+    res = client.post("/api/track/simulate-degradation", json=payload)
+    assert res.status_code == 200
+    data = res.json()
+    assert "degradation_metrics" in data
+    metrics = data["degradation_metrics"]
+    assert metrics["simulated_rate_mm_per_month"] > metrics["baseline_rate_mm_per_month"]
+    assert metrics["degradation_acceleration_pct"] > 50.0
+    assert len(data["projection_timeline"]) == 13
+    assert data["advisory"]["mandated_speed_restriction_kmph"] <= 100
+
+
 

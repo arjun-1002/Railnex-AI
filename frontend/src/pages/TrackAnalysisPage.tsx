@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { TrackDeteriorationData } from '../types';
-import { fetchTrackDeterioration } from '../services/api';
+import { fetchTrackDeterioration, simulateTrackDegradation } from '../services/api';
 import {
   Activity,
   AlertTriangle,
@@ -12,7 +12,11 @@ import {
   LineChart as LineChartIcon,
   TrendingDown,
   TrendingUp,
-  Zap
+  Zap,
+  Sliders,
+  CloudRain,
+  ShieldAlert,
+  Sparkles
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -24,7 +28,8 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend
+  Legend,
+  ReferenceLine
 } from 'recharts';
 
 export const TrackAnalysisPage: React.FC = () => {
@@ -32,6 +37,14 @@ export const TrackAnalysisPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedSegment, setSelectedSegment] = useState<number | null>(null);
+
+  // What-If Simulation State
+  const [simAxleLoad, setSimAxleLoad] = useState<number>(22.82);
+  const [simTrafficMgt, setSimTrafficMgt] = useState<number>(35.0);
+  const [simDeferredDays, setSimDeferredDays] = useState<number>(0);
+  const [simMonsoonRain, setSimMonsoonRain] = useState<number>(0);
+  const [simBallast, setSimBallast] = useState<string>('MODERATE');
+  const [simResult, setSimResult] = useState<any | null>(null);
 
   useEffect(() => {
     fetchTrackDeterioration()
@@ -47,6 +60,20 @@ export const TrackAnalysisPage: React.FC = () => {
         setLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    simulateTrackDegradation({
+      line_segment_id: selectedSegment || 10103100,
+      baseline_amplitude_mm: 8.5,
+      axle_load_tonnes: simAxleLoad,
+      traffic_mgt_annual: simTrafficMgt,
+      deferred_maintenance_days: simDeferredDays,
+      monsoon_rainfall_mm: simMonsoonRain,
+      ballast_condition: simBallast
+    })
+      .then((res) => setSimResult(res))
+      .catch((err) => console.error(err));
+  }, [selectedSegment, simAxleLoad, simTrafficMgt, simDeferredDays, simMonsoonRain, simBallast]);
 
   if (loading) {
     return (
@@ -135,6 +162,203 @@ export const TrackAnalysisPage: React.FC = () => {
         <p className="text-xs text-slate-500 mt-3 pt-2 border-t border-slate-100">
           <strong>Engineering Observation:</strong> Sharp drops in defect frequency denote successful through-tamping and ballast shoulder profiling machine blocks, followed by progressive traffic-induced degradation.
         </p>
+      </div>
+
+      {/* Interactive What-If Operational Sensitivity & Climate Resilience Sandbox */}
+      <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2">
+          <div className="flex items-center space-x-2">
+            <Sliders className="w-5 h-5 text-blue-600" />
+            <div>
+              <h3 className="text-sm font-bold text-slate-900">
+                Interactive What-If Operational Sensitivity & Climate Resilience Sandbox
+              </h3>
+              <p className="text-xs text-slate-500">
+                Simulate how heavy axle loads, deferred tamping intervals, and extreme monsoon precipitation alter track degradation velocity
+              </p>
+            </div>
+          </div>
+          <span className="px-2.5 py-1 rounded text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 self-start sm:self-auto">
+            Dynamic Prognostic Sandbox
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          {/* Left Column: Interactive Controls */}
+          <div className="lg:col-span-5 space-y-4 bg-slate-50/70 p-4 rounded-xl border border-slate-200 text-xs">
+            {/* Axle Load Slider */}
+            <div>
+              <div className="flex justify-between font-semibold text-slate-800 mb-1">
+                <span>Axle Load (Broad Gauge)</span>
+                <span className="font-mono text-blue-600 font-bold">{simAxleLoad.toFixed(2)} Tonnes</span>
+              </div>
+              <input
+                type="range"
+                min="20.0"
+                max="25.0"
+                step="0.25"
+                value={simAxleLoad}
+                onChange={(e) => setSimAxleLoad(parseFloat(e.target.value))}
+                className="w-full accent-blue-600 cursor-pointer"
+              />
+              <div className="flex justify-between text-[10px] text-slate-400 mt-0.5">
+                <span>20.0t (Standard)</span>
+                <span>22.82t (Indian Railways Std)</span>
+                <span>25.0t (Heavy Haul)</span>
+              </div>
+            </div>
+
+            {/* Annual Traffic Density Slider */}
+            <div>
+              <div className="flex justify-between font-semibold text-slate-800 mb-1">
+                <span>Annual Traffic Density</span>
+                <span className="font-mono text-blue-600 font-bold">{simTrafficMgt} MGT / year</span>
+              </div>
+              <input
+                type="range"
+                min="15"
+                max="60"
+                step="5"
+                value={simTrafficMgt}
+                onChange={(e) => setSimTrafficMgt(parseInt(e.target.value))}
+                className="w-full accent-blue-600 cursor-pointer"
+              />
+              <span className="text-[10px] text-slate-400">Million Gross Tonnes carried over the segment annually</span>
+            </div>
+
+            {/* Deferred Tamping Delay Slider */}
+            <div>
+              <div className="flex justify-between font-semibold text-slate-800 mb-1">
+                <span>Deferred Maintenance Delay</span>
+                <span className={`font-mono font-bold ${simDeferredDays > 0 ? 'text-amber-600' : 'text-slate-600'}`}>
+                  +{simDeferredDays} Days
+                </span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="120"
+                step="15"
+                value={simDeferredDays}
+                onChange={(e) => setSimDeferredDays(parseInt(e.target.value))}
+                className="w-full accent-amber-600 cursor-pointer"
+              />
+              <span className="text-[10px] text-slate-400">Simulate effect of deferring scheduled mechanized tamping window</span>
+            </div>
+
+            {/* Monsoon Rainfall Slider */}
+            <div>
+              <div className="flex justify-between font-semibold text-slate-800 mb-1">
+                <span>Monsoon Precipitation (48h Cumulative)</span>
+                <span className={`font-mono font-bold ${simMonsoonRain > 0 ? 'text-indigo-600' : 'text-slate-600'}`}>
+                  {simMonsoonRain} mm
+                </span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="300"
+                step="25"
+                value={simMonsoonRain}
+                onChange={(e) => setSimMonsoonRain(parseInt(e.target.value))}
+                className="w-full accent-indigo-600 cursor-pointer"
+              />
+              <span className="text-[10px] text-slate-400">Heavy rainfall saturates ballast formation, accelerating settlement</span>
+            </div>
+
+            {/* Ballast Condition Selector */}
+            <div>
+              <label className="block font-semibold text-slate-800 mb-1">Ballast Cushion & Formation State</label>
+              <select
+                value={simBallast}
+                onChange={(e) => setSimBallast(e.target.value)}
+                className="w-full px-3 py-1.5 rounded-lg border border-slate-200 bg-white font-medium text-xs focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="EXCELLENT">Excellent (Fresh ballast cushion &gt; 350 mm)</option>
+                <option value="GOOD">Good (Standard 300 mm cushion)</option>
+                <option value="MODERATE">Moderate (Partial fouling / cleanable)</option>
+                <option value="DEGRADED">Degraded (Caked ballast / poor drainage)</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Right Column: Dynamic KPIs & Projected Curve */}
+          <div className="lg:col-span-7 space-y-4">
+            {simResult && (
+              <>
+                {/* Simulation KPI Summary Cards */}
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl">
+                    <span className="text-[11px] text-slate-500 block">Simulated Rate</span>
+                    <p className="text-base font-extrabold text-slate-900 mt-0.5">
+                      {simResult.degradation_metrics.simulated_rate_mm_per_month} <span className="text-xs font-normal text-slate-500">mm/mo</span>
+                    </p>
+                    <span className={`text-[10px] font-bold ${simResult.degradation_metrics.degradation_acceleration_pct > 0 ? 'text-red-600' : 'text-emerald-600'}`}>
+                      {simResult.degradation_metrics.degradation_acceleration_pct > 0 ? `+${simResult.degradation_metrics.degradation_acceleration_pct}%` : 'Baseline'}
+                    </span>
+                  </div>
+
+                  <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl">
+                    <span className="text-[11px] text-slate-500 block">Days to UML</span>
+                    <p className="text-base font-extrabold text-slate-900 mt-0.5">
+                      {simResult.degradation_metrics.projected_days_to_uml} <span className="text-xs font-normal text-slate-500">days</span>
+                    </p>
+                    <span className={`px-1.5 py-0.2 rounded text-[10px] font-bold ${
+                      simResult.degradation_metrics.projected_days_to_uml <= 14 ? 'bg-red-100 text-red-800' :
+                      simResult.degradation_metrics.projected_days_to_uml <= 45 ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'
+                    }`}>
+                      {simResult.advisory.urgency_tier.replace('_', ' ')}
+                    </span>
+                  </div>
+
+                  <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl">
+                    <span className="text-[11px] text-slate-500 block">Mandated Speed</span>
+                    <p className="text-base font-extrabold text-blue-700 mt-0.5">
+                      {simResult.advisory.mandated_speed_restriction_kmph} <span className="text-xs font-normal text-slate-500">km/h</span>
+                    </p>
+                    <span className="text-[10px] text-slate-500">Caution order limit</span>
+                  </div>
+                </div>
+
+                {/* Advisory Directive Banner */}
+                <div className={`p-3 rounded-xl border text-xs flex items-start space-x-2.5 ${
+                  simResult.degradation_metrics.projected_days_to_uml <= 14
+                    ? 'bg-red-50 border-red-200 text-red-900'
+                    : simResult.degradation_metrics.projected_days_to_uml <= 45
+                    ? 'bg-amber-50 border-amber-200 text-amber-900'
+                    : 'bg-blue-50 border-blue-200 text-blue-900'
+                }`}>
+                  <ShieldAlert className="w-4 h-4 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-bold block">Operational Directive:</span>
+                    <p className="text-[11px] mt-0.5">{simResult.advisory.action_directive}</p>
+                  </div>
+                </div>
+
+                {/* 12-Month Projected Deterioration Trajectory */}
+                <div className="h-60 border border-slate-100 rounded-xl p-2 bg-slate-50/50">
+                  <div className="text-[11px] font-bold text-slate-700 mb-1 px-2 flex justify-between">
+                    <span>12-Month Track Geometry Trajectory Comparison</span>
+                    <span className="text-[10px] font-mono text-slate-400">IRPWM Table 5.1 Benchmarking</span>
+                  </div>
+                  <ResponsiveContainer width="100%" height="88%">
+                    <LineChart data={simResult.projection_timeline}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                      <XAxis dataKey="month" tick={{ fontSize: 10 }} />
+                      <YAxis tick={{ fontSize: 10 }} domain={[6, 20]} unit="mm" />
+                      <Tooltip />
+                      <Legend wrapperStyle={{ fontSize: '11px' }} />
+                      <ReferenceLine y={12.0} stroke="#ef4444" strokeDasharray="4 4" label={{ value: 'UML (12.0 mm)', fill: '#ef4444', fontSize: 10 }} />
+                      <ReferenceLine y={8.0} stroke="#f59e0b" strokeDasharray="4 4" label={{ value: 'NBML (8.0 mm)', fill: '#f59e0b', fontSize: 10 }} />
+                      <Line type="monotone" dataKey="baseline_trajectory_mm" name="Baseline Degradation" stroke="#2563eb" strokeWidth={2} dot={{ r: 2 }} />
+                      <Line type="monotone" dataKey="simulated_trajectory_mm" name="Simulated Scenario" stroke="#dc2626" strokeWidth={2.5} dot={{ r: 2 }} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Top Deteriorating Track Corridors Table */}

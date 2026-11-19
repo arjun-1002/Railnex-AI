@@ -81,3 +81,12 @@ class StationItem(BaseModel):
     zone: Optional[str] = None
     latitude: Optional[float] = None
     longitude: Optional[float] = None
+
+class DegradationSimulationRequest(BaseModel):
+    line_segment_id: int = Field(10103100, description="Track line segment ID")
+    baseline_amplitude_mm: float = Field(8.5, ge=1.0, le=20.0, description="Baseline peak amplitude in mm")
+    axle_load_tonnes: float = Field(22.82, ge=18.0, le=35.0, description="Axle load in tonnes")
+    traffic_mgt_annual: float = Field(35.0, ge=10.0, le=100.0, description="Annual traffic in Million Gross Tonnes")
+    deferred_maintenance_days: int = Field(0, ge=0, le=180, description="Days deferred before tamping")
+    monsoon_rainfall_mm: float = Field(0.0, ge=0.0, le=500.0, description="Recent 48h rainfall in mm")
+    ballast_condition: str = Field("MODERATE", description="Ballast condition: EXCELLENT, GOOD, MODERATE, DEGRADED")
