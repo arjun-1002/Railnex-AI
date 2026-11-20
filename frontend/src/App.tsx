@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TabType } from './types';
 import { Header } from './components/Header';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { OverviewPage } from './pages/OverviewPage';
 import { TrackAnalysisPage } from './pages/TrackAnalysisPage';
 import { SeverityPredictionPage } from './pages/SeverityPredictionPage';
@@ -24,18 +25,20 @@ export function App() {
 
       {/* Main Content Viewport */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12">
-        {activeTab === 'overview' && <OverviewPage />}
-        {activeTab === 'severity_prediction' && <SeverityPredictionPage />}
-        {activeTab === 'maintenance_priority' && <MaintenancePriorityPage />}
-        {activeTab === 'track_analysis' && <TrackAnalysisPage />}
-        {activeTab === 'cv_inspection' && <CvInspectionPage />}
-        {activeTab === 'usfd_analysis' && <UsfdAnalysisPage />}
-        {activeTab === 'weather_intelligence' && <WeatherIntelligencePage />}
-        {activeTab === 'network_map' && <NetworkMapPage />}
-        {activeTab === 'model_evaluation' && <ModelEvaluationPage />}
-        {activeTab === 'ai_assistant' && <AssistantPage />}
-        {activeTab === 'data_explorer' && <DataExplorerPage />}
-        {activeTab === 'settings' && <SettingsPage />}
+        <ErrorBoundary fallbackTitle="Module Viewport Error">
+          {activeTab === 'overview' && <OverviewPage />}
+          {activeTab === 'severity_prediction' && <SeverityPredictionPage />}
+          {activeTab === 'maintenance_priority' && <MaintenancePriorityPage />}
+          {activeTab === 'track_analysis' && <TrackAnalysisPage />}
+          {activeTab === 'cv_inspection' && <CvInspectionPage />}
+          {activeTab === 'usfd_analysis' && <UsfdAnalysisPage />}
+          {activeTab === 'weather_intelligence' && <WeatherIntelligencePage />}
+          {activeTab === 'network_map' && <NetworkMapPage />}
+          {activeTab === 'model_evaluation' && <ModelEvaluationPage />}
+          {activeTab === 'ai_assistant' && <AssistantPage />}
+          {activeTab === 'data_explorer' && <DataExplorerPage />}
+          {activeTab === 'settings' && <SettingsPage />}
+        </ErrorBoundary>
       </main>
 
       {/* Footer */}

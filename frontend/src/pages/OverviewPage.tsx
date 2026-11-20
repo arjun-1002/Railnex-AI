@@ -111,7 +111,7 @@ export const OverviewPage: React.FC = () => {
           </div>
           <div className="mt-3">
             <span className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-              {summary_cards.total_inspection_records.toLocaleString()}
+              {(summary_cards.total_inspection_records ?? 0).toLocaleString()}
             </span>
             <span className="text-xs text-slate-500 ml-2">records</span>
           </div>
@@ -205,7 +205,7 @@ export const OverviewPage: React.FC = () => {
                   <span className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
                   <span className="text-slate-700 font-medium">{item.name}</span>
                 </div>
-                <span className="font-bold text-slate-900">{item.count.toLocaleString()} ({item.percentage}%)</span>
+                <span className="font-bold text-slate-900">{Number(item.count ?? 0).toLocaleString()} ({item.percentage}%)</span>
               </div>
             ))}
           </div>
@@ -327,21 +327,28 @@ export const OverviewPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 bg-white">
-              {(datasets_manifest ?? []).map((ds, idx) => (
-                <tr key={idx} className="hover:bg-slate-50">
-                  <td className="px-3 py-2 font-mono font-bold text-slate-900">{ds.dataset_id}</td>
-                  <td className="px-3 py-2 font-medium text-slate-900">{ds.name}</td>
-                  <td className="px-3 py-2 text-slate-600">{ds.category}</td>
-                  <td className="px-3 py-2 text-right font-bold text-slate-900">{ds.records.toLocaleString()}</td>
-                  <td className="px-3 py-2 text-slate-600">{ds.observation_period}</td>
-                  <td className="px-3 py-2 text-slate-700">{ds.ml_role}</td>
-                  <td className="px-3 py-2 text-center">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                      <CheckCircle2 className="w-3 h-3 mr-1" /> PASSED
-                    </span>
-                  </td>
-                </tr>
-              ))}
+              {(datasets_manifest ?? []).map((ds: any, idx: number) => {
+                const id = ds.dataset_id || ds.id || `DS-${idx + 1}`;
+                const name = ds.name || ds.dataset_name || 'Dataset';
+                const count = ds.records ?? ds.number_of_records ?? 0;
+                const period = ds.observation_period || ds.historical_coverage || ds.geographic_coverage || '2015-2024';
+                const role = ds.ml_role || ds.real_or_synthetic_status || ds.description || 'Reference Dataset';
+                return (
+                  <tr key={idx} className="hover:bg-slate-50">
+                    <td className="px-3 py-2 font-mono font-bold text-slate-900">{id}</td>
+                    <td className="px-3 py-2 font-medium text-slate-900">{name}</td>
+                    <td className="px-3 py-2 text-slate-600">{ds.category || 'General'}</td>
+                    <td className="px-3 py-2 text-right font-bold text-slate-900">{Number(count).toLocaleString()}</td>
+                    <td className="px-3 py-2 text-slate-600">{period}</td>
+                    <td className="px-3 py-2 text-slate-700">{role}</td>
+                    <td className="px-3 py-2 text-center">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                        <CheckCircle2 className="w-3 h-3 mr-1" /> PASSED
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
