@@ -1,0 +1,7 @@
+annual_traffic_gmt,frequency_months,route_classification
+< 5 GMT,12,Branch Lines / Low Density
+5 - 8 GMT,9,Medium Density
+8 - 12 GMT,6,Standard Broad Gauge
+12 - 16 GMT,4,High Density Route
+16 - 40 GMT,3,Heavy Freight / Golden Quadrilateral
+> 40 GMT,2,Ultra-Heavy Corridor / DFC Feeder

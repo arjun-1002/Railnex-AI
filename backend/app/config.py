@@ -1,5 +1,6 @@
 """
-Railnex AI Backend Configuration
+RailRakshak AI — Backend Configuration & App Metadata
+B.Tech CSE (AI & ML) Supervised Learning (INT395) Topic 20
 """
 
 import os
@@ -7,11 +8,12 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATA_DIR = os.path.join(BASE_DIR, 'TrackPrior-AI', 'data')
 MODELS_DIR = os.path.join(BASE_DIR, 'models')
-REPORTS_DIR = os.path.join(BASE_DIR, 'TrackPrior-AI', 'reports')
+REPORTS_DIR = os.path.join(BASE_DIR, 'docs')
 
-API_TITLE = "Railnex AI — Railway Track Defect Severity Classification & Prioritization API"
-API_VERSION = "1.0.0"
+API_TITLE = "RailRakshak AI — Intelligent Railway Track Defect Classification & Predictive Maintenance System"
+API_VERSION = "2.0.0"
 API_DESCRIPTION = (
-    "Intelligent analytical decision-support API for railway track infrastructure monitoring, "
-    "defect severity classification, deterioration analysis, and maintenance prioritization."
+    "Comprehensive decision-support API for Indian Railways permanent way monitoring, "
+    "multiclass defect severity classification (INT395 Topic 20), TreeSHAP feature attributions, "
+    "USFD ultrasonic flaw detection, 5-year weather intelligence, and computer vision defect recognition."
 )

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { ModelBenchmarkSummary } from '../types';
 import { fetchModelEvaluation } from '../services/api';
 import {
   AlertTriangle,
   BarChart2,
   CheckCircle2,
   Layers,
-  LineChart,
   ShieldCheck,
-  TrendingUp,
-  Zap
+  Award,
+  Clock,
+  Crosshair,
+  TrendingUp
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -22,9 +22,9 @@ import {
 } from 'recharts';
 
 export const ModelEvaluationPage: React.FC = () => {
-  const [data, setData] = useState<ModelBenchmarkSummary | null>(null);
-  const [activeExp, setActiveExp] = useState<'A' | 'B'>('A');
-  const [selectedModel, setSelectedModel] = useState<string>('XGBoost');
+  const [data, setData] = useState<any | null>(null);
+  const [activeTab, setActiveTab] = useState<'INT395' | 'A' | 'B'>('INT395');
+  const [selectedModel, setSelectedModel] = useState<string>('LightGBM');
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -50,19 +50,19 @@ export const ModelEvaluationPage: React.FC = () => {
     );
   }
 
-  const expA = data.experiment_a_real;
-  const expB = data.experiment_b_synthetic;
+  const multiclassModels = data.multiclass_7_models_benchmark?.models || {};
+  const expA = data.experiment_a_real?.benchmark_summary || {};
+  const expB = data.experiment_b_synthetic?.benchmark_summary || {};
 
-  const currentSummary = activeExp === 'A' ? expA?.benchmark_summary : expB?.benchmark_summary;
-  const activeModelStats = currentSummary ? currentSummary[selectedModel] || Object.values(currentSummary)[0] : null;
+  const activeModelDetails = multiclassModels[selectedModel] || multiclassModels['LightGBM'] || null;
 
-  // Format feature importance for Recharts
-  const featureImpData = (activeModelStats as any)?.top_feature_importance
-    ? Object.entries((activeModelStats as any).top_feature_importance).map(([feature, score]: [string, any]) => ({
-        feature: feature.replace(/_/g, ' '),
-        importance: score
-      }))
-    : [];
+  // Chart data comparing Macro-F1 across the 7 models
+  const comparisonBarData = Object.entries(multiclassModels).map(([name, m]: [string, any]) => ({
+    name: name.replace(" Champion", "").replace(" Classifier", ""),
+    macro_f1: Math.round(m.macro_f1 * 1000) / 10,
+    critical_recall: Math.round(m.critical_recall * 1000) / 10,
+    accuracy: Math.round(m.accuracy * 1000) / 10
+  })).sort((a, b) => b.macro_f1 - a.macro_f1);
 
   return (
     <div className="space-y-6 pb-12">
@@ -72,256 +72,260 @@ export const ModelEvaluationPage: React.FC = () => {
           <div>
             <div className="flex items-center space-x-2">
               <span className="px-2.5 py-0.5 rounded text-xs font-bold uppercase bg-blue-100 text-blue-800">
-                Transparent AI Governance
+                INT395 Topic 20
               </span>
               <h2 className="text-lg font-bold text-slate-900">
-                Machine Learning Model Evaluation & Benchmark Comparison
+                Module 15 — Supervised Machine Learning Benchmark Dashboard
               </h2>
             </div>
             <p className="text-xs sm:text-sm text-slate-600 mt-1">
-              Rigorous comparative evaluation of Logistic Regression, Random Forest, and XGBoost on out-of-time test partitions.
+              Comprehensive academic evaluation of 7 classifiers on 23,847 real geometry records using strict chronological out-of-time testing (split boundary: 2012-01-01).
             </p>
           </div>
 
-          {/* Experiment Switcher Tabs */}
+          {/* Tab Switcher */}
           <div className="flex rounded-lg border border-slate-200 bg-slate-100 p-1 shrink-0">
             <button
-              onClick={() => {
-                setActiveExp('A');
-                setSelectedModel('XGBoost');
-              }}
+              onClick={() => setActiveTab('INT395')}
               className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${
-                activeExp === 'A'
+                activeTab === 'INT395'
                   ? 'bg-white text-blue-600 shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              Experiment A (Real Observational Data)
+              INT395 7-Model Benchmark
             </button>
             <button
-              onClick={() => {
-                setActiveExp('B');
-                setSelectedModel('XGBoost');
-              }}
+              onClick={() => setActiveTab('A')}
               className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${
-                activeExp === 'B'
+                activeTab === 'A'
                   ? 'bg-white text-blue-600 shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              Experiment B (Synthetic Prototype)
+              Experiment A (Binary Real)
+            </button>
+            <button
+              onClick={() => setActiveTab('B')}
+              className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${
+                activeTab === 'B'
+                  ? 'bg-white text-blue-600 shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              Experiment B (Synthetic Leakage)
             </button>
           </div>
         </div>
 
-        {/* Experiment Context Banner */}
+        {/* Banner Context */}
         <div className="mt-4 pt-3 border-t border-slate-100 text-xs">
-          {activeExp === 'A' ? (
+          {activeTab === 'INT395' && (
+            <div className="flex items-center space-x-2 text-blue-800 bg-blue-50 px-3 py-2 rounded-lg border border-blue-200">
+              <Award className="w-4 h-4 text-blue-600 shrink-0" />
+              <span>
+                <strong>Academic Primary Metric:</strong> <strong>Macro-F1</strong> evaluates unweighted balance across all 4 severity tiers (Normal, Minor, Major, Critical). LightGBM achieves Champion status with <strong>99.49% Macro-F1</strong> and <strong>99.52% Critical (Class 3) Recall</strong> (missing only 2 out of 417 critical defects).
+              </span>
+            </div>
+          )}
+          {activeTab === 'A' && (
             <div className="flex items-center space-x-2 text-emerald-800 bg-emerald-50 px-3 py-2 rounded-lg border border-emerald-200">
               <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
               <span>
-                <strong>Experiment A Methodology:</strong> Evaluated on 6,564 out-of-time physical geometry car test records (2012–2013) using models trained on 17,283 historical records (2007–2011). Zero lookahead or spatial leakage.
+                <strong>Experiment A Protocol:</strong> 17,283 records (2007–2011) training set vs 6,564 records (2012–2013) out-of-time test set.
               </span>
             </div>
-          ) : (
+          )}
+          {activeTab === 'B' && (
             <div className="flex items-center space-x-2 text-amber-800 bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">
               <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
               <span>
-                <strong>Experiment B Disclaimer:</strong> Simulated dataset prototype from Hugging Face. Target leakage variables (<code className="font-mono">risk_score</code>, <code className="font-mono">maintenance_required</code>) strictly excluded. Not validated on Indian Railways track records.
+                <strong>Target Leakage Audit:</strong> Demonstrates that synthetic benchmarks with post-hoc risk indices artificially boast 100% accuracy ($r = 0.887$). Pruning leakage features drops accuracy to 70.52%.
               </span>
             </div>
           )}
         </div>
       </div>
 
-      {/* Model Benchmark Table */}
-      <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
-        <h3 className="text-sm font-bold text-slate-900 tracking-tight mb-1">
-          Model Performance Matrix ({activeExp === 'A' ? 'Real Track Geometry Test Split' : 'Synthetic Prototype Split'})
-        </h3>
-        <p className="text-xs text-slate-500 mb-4">
-          Comparative metrics across baseline linear model, ensemble forest, and gradient boosted trees
-        </p>
-
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-slate-200 text-xs">
-            <thead className="bg-slate-50">
-              <tr>
-                <th className="px-3.5 py-3 text-left font-semibold text-slate-700">Algorithm</th>
-                <th className="px-3.5 py-3 text-right font-semibold text-slate-700">Accuracy</th>
-                {activeExp === 'A' && (
-                  <th className="px-3.5 py-3 text-right font-semibold text-slate-700">Precision</th>
-                )}
-                <th className="px-3.5 py-3 text-right font-semibold text-slate-700">Recall</th>
-                <th className="px-3.5 py-3 text-right font-semibold text-slate-700">
-                  Critical Severity Recall
-                </th>
-                <th className="px-3.5 py-3 text-right font-semibold text-slate-700">Macro-F1</th>
-                <th className="px-3.5 py-3 text-right font-semibold text-slate-700">Weighted-F1</th>
-                <th className="px-3.5 py-3 text-center font-semibold text-slate-700">Inspect</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 bg-white">
-              {currentSummary &&
-                Object.entries(currentSummary).map(([name, m]) => {
-                  const isSelected = selectedModel === name;
-                  const isChampion = name === 'XGBoost';
-                  return (
-                    <tr
-                      key={name}
-                      onClick={() => setSelectedModel(name)}
-                      className={`cursor-pointer transition-colors ${
-                        isSelected ? 'bg-blue-50/70' : 'hover:bg-slate-50'
-                      }`}
-                    >
-                      <td className="px-3.5 py-3 font-medium text-slate-900 flex items-center space-x-2">
-                        <span>{name}</span>
-                        {isChampion && (
-                          <span className="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">
-                            CHAMPION
-                          </span>
-                        )}
-                      </td>
-                      <td className="px-3.5 py-3 text-right font-mono font-bold text-slate-900">
-                        {(m.accuracy * 100).toFixed(2)}%
-                      </td>
-                      {activeExp === 'A' && (
-                        <td className="px-3.5 py-3 text-right font-mono text-slate-700">
-                          {((m as any).precision * 100).toFixed(2)}%
-                        </td>
-                      )}
-                      <td className="px-3.5 py-3 text-right font-mono text-slate-700">
-                        {((m as any).recall !== undefined ? (m as any).recall * 100 : m.accuracy * 100).toFixed(2)}%
-                      </td>
-                      <td className="px-3.5 py-3 text-right font-mono font-extrabold text-red-600">
-                        {(m.critical_severity_recall * 100).toFixed(2)}%
-                      </td>
-                      <td className="px-3.5 py-3 text-right font-mono text-slate-700">
-                        {(m.macro_f1 * 100).toFixed(2)}%
-                      </td>
-                      <td className="px-3.5 py-3 text-right font-mono font-extrabold text-blue-600">
-                        {(m.weighted_f1 * 100).toFixed(2)}%
-                      </td>
-                      <td className="px-3.5 py-3 text-center">
-                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                          isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600'
-                        }`}>
-                          {isSelected ? 'ACTIVE' : 'SELECT'}
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Selected Model Deep Dive: Confusion Matrix & Feature Importance */}
-      {activeModelStats && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Confusion Matrix */}
+      {/* INT395 7-Model Benchmark View */}
+      {activeTab === 'INT395' && (
+        <div className="space-y-6">
+          {/* 7-Model Table */}
           <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600">
-                  Classification Matrix
-                </span>
-                <h3 className="text-sm font-bold text-slate-900 mt-0.5">
-                  {selectedModel} Confusion Matrix
-                </h3>
-              </div>
-              <span className="text-xs text-slate-500 font-mono">
-                Critical Recall: {(activeModelStats.critical_severity_recall * 100).toFixed(2)}%
-              </span>
+            <h3 className="text-sm font-bold text-slate-900 tracking-tight mb-1">
+              Comparative Multi-Algorithm Performance Matrix (7 Competing Models)
+            </h3>
+            <p className="text-xs text-slate-500 mb-4">
+              Sorted by Primary Evaluation Metric (Macro-F1). Click any model to inspect its 4x4 Confusion Matrix.
+            </p>
+
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-slate-200 text-xs">
+                <thead className="bg-slate-50 text-slate-700 font-semibold">
+                  <tr>
+                    <th className="px-3.5 py-3 text-left">Algorithm</th>
+                    <th className="px-3.5 py-3 text-right">Accuracy</th>
+                    <th className="px-3.5 py-3 text-right text-blue-600 font-bold">Macro-F1 (PRIMARY)</th>
+                    <th className="px-3.5 py-3 text-right">Weighted-F1</th>
+                    <th className="px-3.5 py-3 text-right text-red-600 font-bold">Critical (Class 3) Recall</th>
+                    <th className="px-3.5 py-3 text-right">Critical False Negatives</th>
+                    <th className="px-3.5 py-3 text-right">ROC-AUC (OVR)</th>
+                    <th className="px-3.5 py-3 text-right">Fit Time</th>
+                    <th className="px-3.5 py-3 text-center">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 bg-white">
+                  {Object.entries(multiclassModels).map(([name, m]: [string, any]) => {
+                    const isSelected = selectedModel === name;
+                    const isChampion = name.includes('LightGBM');
+                    return (
+                      <tr
+                        key={name}
+                        onClick={() => setSelectedModel(name)}
+                        className={`cursor-pointer transition-colors ${
+                          isSelected ? 'bg-blue-50/70 font-medium' : 'hover:bg-slate-50'
+                        }`}
+                      >
+                        <td className="px-3.5 py-3 font-semibold text-slate-900 flex items-center space-x-2">
+                          <span>{name}</span>
+                          {isChampion && (
+                            <span className="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                              CHAMPION
+                            </span>
+                          )}
+                        </td>
+                        <td className="px-3.5 py-3 text-right font-mono font-bold text-slate-900">
+                          {(m.accuracy * 100).toFixed(2)}%
+                        </td>
+                        <td className="px-3.5 py-3 text-right font-mono font-bold text-blue-600">
+                          {(m.macro_f1 * 100).toFixed(2)}%
+                        </td>
+                        <td className="px-3.5 py-3 text-right font-mono text-slate-700">
+                          {(m.weighted_f1 * 100).toFixed(2)}%
+                        </td>
+                        <td className="px-3.5 py-3 text-right font-mono font-extrabold text-red-600">
+                          {(m.critical_recall * 100).toFixed(2)}%
+                        </td>
+                        <td className="px-3.5 py-3 text-right font-mono text-slate-700">
+                          {m.critical_false_negatives} / {m.critical_total}
+                        </td>
+                        <td className="px-3.5 py-3 text-right font-mono text-slate-700">
+                          {m.roc_auc_ovr ? m.roc_auc_ovr.toFixed(4) : "N/A"}
+                        </td>
+                        <td className="px-3.5 py-3 text-right font-mono text-slate-500">
+                          {m.fit_time_seconds}s
+                        </td>
+                        <td className="px-3.5 py-3 text-center">
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                            isChampion ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-600'
+                          }`}>
+                            {isChampion ? 'CHAMPION' : 'BENCHMARK'}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
-
-            {activeExp === 'A' ? (
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-3 text-center">
-                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                    <span className="text-xs text-slate-500 block">True Yellow Tags (TN)</span>
-                    <strong className="text-2xl font-black text-slate-900">
-                      {activeModelStats.confusion_matrix[0][0].toLocaleString()}
-                    </strong>
-                    <span className="text-[11px] text-emerald-600 block mt-0.5 font-medium">Correct Planned Tags</span>
-                  </div>
-
-                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                    <span className="text-xs text-slate-500 block">False Red Tags (FP)</span>
-                    <strong className="text-2xl font-black text-amber-600">
-                      {activeModelStats.confusion_matrix[0][1].toLocaleString()}
-                    </strong>
-                    <span className="text-[11px] text-slate-500 block mt-0.5 font-medium">Over-estimated Urgency</span>
-                  </div>
-
-                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                    <span className="text-xs text-slate-500 block">False Yellow Tags (FN)</span>
-                    <strong className="text-2xl font-black text-red-600">
-                      {activeModelStats.confusion_matrix[1][0].toLocaleString()}
-                    </strong>
-                    <span className="text-[11px] text-red-600 block mt-0.5 font-bold">Missed Red Tags</span>
-                  </div>
-
-                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                    <span className="text-xs text-slate-500 block">True Red Tags (TP)</span>
-                    <strong className="text-2xl font-black text-emerald-700">
-                      {activeModelStats.confusion_matrix[1][1].toLocaleString()}
-                    </strong>
-                    <span className="text-[11px] text-emerald-600 block mt-0.5 font-bold">Correct Urgent Detections</span>
-                  </div>
-                </div>
-
-                <p className="text-xs text-slate-500 pt-2 border-t border-slate-100">
-                  <strong>Safety Takeaway:</strong> For railway safety, False Negatives (missed Red Tags) are the most critical risk. In XGBoost, False Negatives are minimized to only <strong>{activeModelStats.confusion_matrix[1][0]} cases out of 1,799 Red Tags</strong> (99.72% recall).
-                </p>
-              </div>
-            ) : (
-              <div className="p-4 text-xs text-slate-600 text-center">
-                Multi-class 5x5 matrix available in raw audit logs.
-              </div>
-            )}
           </div>
 
-          {/* Top Feature Importance */}
-          <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600">
-                  Explainable AI
-                </span>
-                <h3 className="text-sm font-bold text-slate-900 mt-0.5">
-                  {selectedModel} Feature Importance Attribution
-                </h3>
-              </div>
-              <span className="text-xs text-slate-500 font-mono">Relative weights</span>
-            </div>
-
-            {featureImpData.length > 0 ? (
+          {/* Confusion Matrix & Macro-F1 Bar Chart */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Macro-F1 Comparison Chart */}
+            <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
+              <h4 className="text-sm font-bold text-slate-900 mb-1">
+                Macro-F1 vs Critical Recall Comparison (7 Models)
+              </h4>
+              <p className="text-xs text-slate-500 mb-4">
+                Primary INT395 academic metric across all 7 evaluated architectures
+              </p>
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart
-                    data={featureImpData.slice(0, 7)}
-                    layout="vertical"
-                    margin={{ left: 20, right: 20, top: 5, bottom: 5 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f8fafc" />
-                    <XAxis type="number" tick={{ fontSize: 10 }} />
-                    <YAxis dataKey="feature" type="category" width={130} tick={{ fontSize: 10 }} />
-                    <Tooltip formatter={(v: any) => [`${(Number(v) * 100).toFixed(1)}%`, 'Contribution']} />
-                    <Bar dataKey="importance" fill="#2563eb" radius={[0, 4, 4, 0]} />
+                  <BarChart data={comparisonBarData} margin={{ top: 10, right: 10, left: -10, bottom: 20 }}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                    <XAxis dataKey="name" tick={{ fontSize: 10 }} interval={0} angle={-20} textAnchor="end" />
+                    <YAxis domain={[80, 100]} tick={{ fontSize: 10 }} />
+                    <Tooltip />
+                    <Bar dataKey="macro_f1" name="Macro-F1 (%)" fill="#2563eb" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="critical_recall" name="Critical Recall (%)" fill="#ef4444" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
-            ) : (
-              <div className="p-12 text-center text-slate-400 text-xs">
-                Feature attribution weights available for tree models.
+            </div>
+
+            {/* Selected Model 4x4 Confusion Matrix */}
+            {activeModelDetails && (
+              <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="text-sm font-bold text-slate-900">
+                      Confusion Matrix: {selectedModel}
+                    </h4>
+                    <p className="text-xs text-slate-500">
+                      Out-of-time evaluation test partition (6,564 records)
+                    </p>
+                  </div>
+                  <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-blue-50 text-blue-700">
+                    Macro-F1: {(activeModelDetails.macro_f1 * 100).toFixed(2)}%
+                  </span>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="min-w-full text-center text-xs font-mono">
+                    <thead>
+                      <tr className="border-b border-slate-200 text-slate-500">
+                        <th className="py-2 text-left font-sans">Actual \ Predicted</th>
+                        <th className="py-2 bg-emerald-50 text-emerald-800">Normal (0)</th>
+                        <th className="py-2 bg-amber-50 text-amber-800">Minor (1)</th>
+                        <th className="py-2 bg-orange-50 text-orange-800">Major (2)</th>
+                        <th className="py-2 bg-red-50 text-red-800">Critical (3)</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {activeModelDetails.confusion_matrix.map((row: number[], ridx: number) => {
+                        const labels = ["Normal (0)", "Minor (1)", "Major (2)", "Critical (3)"];
+                        return (
+                          <tr key={ridx} className="hover:bg-slate-50">
+                            <td className="py-2 text-left font-sans font-semibold text-slate-700">{labels[ridx]}</td>
+                            {row.map((val: number, cidx: number) => {
+                              const isDiagonal = ridx === cidx;
+                              return (
+                                <td key={cidx} className={`py-2 ${
+                                  isDiagonal ? 'font-extrabold text-blue-700 bg-blue-50/50' : (val > 0 && ridx === 3 ? 'font-bold text-red-600 bg-red-50' : 'text-slate-500')
+                                }`}>
+                                  {val}
+                                </td>
+                              );
+                            })}
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="text-[11px] text-slate-500 flex items-center justify-between pt-2 border-t border-slate-100">
+                  <span>Critical False Negatives: <strong className="text-red-600">{activeModelDetails.critical_false_negatives}</strong> / {activeModelDetails.critical_total}</span>
+                  <span>Fit Duration: <strong>{activeModelDetails.fit_time_seconds}s</strong></span>
+                </div>
               </div>
             )}
-            <p className="text-xs text-slate-500 mt-3 pt-2 border-t border-slate-100">
-              Defect amplitude, defect extent (volume), and curve code dominate predictive severity decisions.
-            </p>
           </div>
+        </div>
+      )}
+
+      {/* Experiment A & B Views */}
+      {activeTab !== 'INT395' && (
+        <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
+          <h3 className="text-sm font-bold text-slate-900 mb-2">
+            Historical Binary Experiments (Experiment {activeTab})
+          </h3>
+          <p className="text-xs text-slate-600">
+            {activeTab === 'A'
+              ? "Observational geometry car defect classification benchmark (RED vs YELLOW) achieving 99.1% F1."
+              : "Demonstration of target leakage in Hugging Face dataset (risk_score correlation r = 0.887)."}
+          </p>
         </div>
       )}
     </div>

@@ -148,7 +148,7 @@ export const TrackAnalysisPage: React.FC = () => {
 
         <div className="h-64 sm:h-72">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={longitudinal_sample_segment.history}>
+            <BarChart data={longitudinal_sample_segment?.history || []}>
               <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
               <XAxis dataKey="quarter" tick={{ fontSize: 10 }} />
               <YAxis tick={{ fontSize: 11 }} />
@@ -396,10 +396,10 @@ export const TrackAnalysisPage: React.FC = () => {
                     {seg.total_inspections.toLocaleString()}
                   </td>
                   <td className="px-3 py-2.5 text-right font-bold text-red-600">
-                    {seg.red_tags.toLocaleString()}
+                    {(seg.red_tags ?? seg.recurring_defects_count ?? 0).toLocaleString()}
                   </td>
                   <td className="px-3 py-2.5 text-right font-semibold text-slate-700">
-                    {(seg.red_tag_ratio * 100).toFixed(1)}%
+                    {((seg.red_tag_ratio ?? 0) * 100).toFixed(1)}%
                   </td>
                   <td className="px-3 py-2.5 text-right font-mono text-slate-800">
                     {seg.avg_amplitude.toFixed(2)}" (~{(seg.avg_amplitude * 25.4).toFixed(1)} mm)

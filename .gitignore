@@ -57,12 +57,17 @@ frontend/node_modules/
 !TrackPrior-AI/data/raw/accidents/*.csv
 !TrackPrior-AI/data/raw/traffic/*.csv
 !TrackPrior-AI/data/raw/weather/*.csv
-!TrackPrior-AI/data/raw/railway_network/railway_stations.csv
+!TrackPrior-AI/data/raw/railway_network/*.csv
+!TrackPrior-AI/data/raw/images/**
 !TrackPrior-AI/data/manifests/*.json
+!TrackPrior-AI/data/manifests/*.csv
 !TrackPrior-AI/reports/**
+!TrackPrior-AI/models/**
 !models/*.json
 !models/real_best_severity_model.joblib
 !models/real_feature_preprocessor.joblib
+!models/railrakshak_multiclass_champion.joblib
 !frontend/dist/
 !frontend/dist/**
+!railrakshak.db
 

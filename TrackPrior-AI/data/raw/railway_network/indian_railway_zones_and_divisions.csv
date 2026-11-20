@@ -1,0 +1,70 @@
+zone_code,zone_name,zone_hq,division_code,division_name,div_hq,state,route_km,running_track_km,speed_band_max
+NR,Northern Railway,New Delhi,DLI,Delhi,Delhi,Delhi / Haryana / UP,1386.0,2840.0,130
+NR,Northern Railway,New Delhi,MB,Moradabad,Moradabad,Uttar Pradesh / Uttarakhand,1422.0,2210.0,110
+NR,Northern Railway,New Delhi,LKO-NR,Lucknow NR,Lucknow,Uttar Pradesh,1450.0,2320.0,110
+NR,Northern Railway,New Delhi,UMB,Ambala,Ambala Cantt,Haryana / Punjab / HP,1210.0,2180.0,130
+NR,Northern Railway,New Delhi,FZR,Firozpur,Firozpur,Punjab / Jammu & Kashmir,1580.0,2240.0,110
+NCR,North Central Railway,Prayagraj,PRYJ,Prayagraj (Allahabad),Prayagraj,Uttar Pradesh,1024.0,2690.0,130
+NCR,North Central Railway,Prayagraj,AGC,Agra,Agra,Uttar Pradesh / Rajasthan,948.0,1780.0,160
+NCR,North Central Railway,Prayagraj,JHS,Jhansi,Jhansi,Uttar Pradesh / MP,1280.0,2340.0,130
+CR,Central Railway,Mumbai CSMT,CSMT,Mumbai CR,Mumbai,Maharashtra,576.0,1820.0,110
+CR,Central Railway,Mumbai CSMT,BSL,Bhusawal,Bhusawal,Maharashtra / MP,1012.0,2190.0,130
+CR,Central Railway,Mumbai CSMT,NGP-CR,Nagpur CR,Nagpur,Maharashtra / MP,994.0,1890.0,130
+CR,Central Railway,Mumbai CSMT,PA,Pune,Pune,Maharashtra,541.0,980.0,110
+CR,Central Railway,Mumbai CSMT,SUR,Solapur,Solapur,Maharashtra / Karnataka,1003.0,1540.0,110
+WR,Western Railway,Mumbai Churchgate,MMCT,Mumbai WR,Mumbai,Maharashtra / Gujarat,520.0,1640.0,130
+WR,Western Railway,Mumbai Churchgate,BRC,Vadodara,Vadodara,Gujarat,1380.0,2510.0,130
+WR,Western Railway,Mumbai Churchgate,ADI,Ahmedabad,Ahmedabad,Gujarat,1420.0,2180.0,110
+WR,Western Railway,Mumbai Churchgate,RTM,Ratlam,Ratlam,Madhya Pradesh / Rajasthan,1056.0,2120.0,130
+WR,Western Railway,Mumbai Churchgate,RJT,Rajkot,Rajkot,Gujarat,980.0,1320.0,110
+WR,Western Railway,Mumbai Churchgate,BVP,Bhavnagar,Bhavnagar,Gujarat,1120.0,1420.0,100
+ER,Eastern Railway,Kolkata,HWH,Howrah,Howrah,West Bengal,680.0,1940.0,130
+ER,Eastern Railway,Kolkata,SDAH,Sealdah,Kolkata,West Bengal,720.0,1820.0,110
+ER,Eastern Railway,Kolkata,ASN,Asansol,Asansol,West Bengal / Jharkhand,690.0,1780.0,130
+ER,Eastern Railway,Kolkata,MLDT,Malda,Malda,West Bengal / Bihar,740.0,1280.0,110
+ECR,East Central Railway,Hajipur,DNR,Danapur,Patna / Danapur,Bihar / UP,880.0,1890.0,130
+ECR,East Central Railway,Hajipur,DDU,Pt. Deen Dayal Upadhyaya,DDU,Uttar Pradesh / Bihar,720.0,1980.0,130
+ECR,East Central Railway,Hajipur,DHN,Dhanbad,Dhanbad,Jharkhand / West Bengal,940.0,2420.0,110
+ECR,East Central Railway,Hajipur,SEE,Sonpur,Sonpur,Bihar,860.0,1420.0,110
+ECR,East Central Railway,Hajipur,SPJ,Samastipur,Samastipur,Bihar,1050.0,1560.0,100
+SCR,South Central Railway,Secunderabad,SC,Secunderabad,Secunderabad,Telangana / Maharashtra,1320.0,2540.0,130
+SCR,South Central Railway,Secunderabad,HYB,Hyderabad,Hyderabad,Telangana / Andhra Pradesh,680.0,1120.0,110
+SCR,South Central Railway,Secunderabad,BZA,Vijayawada,Vijayawada,Andhra Pradesh,1040.0,2360.0,130
+SCR,South Central Railway,Secunderabad,GTL,Guntakal,Guntakal,Andhra Pradesh / Karnataka,1410.0,2280.0,110
+SCR,South Central Railway,Secunderabad,GNT,Guntur,Guntur,Andhra Pradesh,620.0,940.0,110
+SCR,South Central Railway,Secunderabad,NED,Nanded,Nanded,Maharashtra / Telangana,990.0,1280.0,100
+SR,Southern Railway,Chennai,MAS,Chennai,Chennai,Tamil Nadu / Andhra Pradesh,710.0,1940.0,130
+SR,Southern Railway,Chennai,TPJ,Tiruchirappalli,Tiruchirappalli,Tamil Nadu,1020.0,1450.0,110
+SR,Southern Railway,Chennai,MDU,Madurai,Madurai,Tamil Nadu,1350.0,1720.0,110
+SR,Southern Railway,Chennai,PGT,Palakkad,Palakkad,Kerala / Tamil Nadu,580.0,1180.0,110
+SR,Southern Railway,Chennai,TVC,Thiruvananthapuram,Thiruvananthapuram,Kerala / Tamil Nadu,625.0,1210.0,100
+SR,Southern Railway,Chennai,SA,Salem,Salem,Tamil Nadu,795.0,1240.0,110
+SER,South Eastern Railway,Kolkata Garden Reach,KGP,Kharagpur,Kharagpur,West Bengal / Odisha,820.0,2180.0,130
+SER,South Eastern Railway,Kolkata Garden Reach,ADRA,Adra,Adra,West Bengal / Jharkhand,940.0,1820.0,110
+SER,South Eastern Railway,Kolkata Garden Reach,CKP,Chakradharpur,Chakradharpur,Jharkhand / Odisha,780.0,2420.0,120
+SER,South Eastern Railway,Kolkata Garden Reach,RNC,Ranchi,Ranchi,Jharkhand,540.0,890.0,110
+ECoR,East Coast Railway,Bhubaneswar,KUR,Khurda Road,Jatni / Bhubaneswar,Odisha,920.0,2240.0,130
+ECoR,East Coast Railway,Bhubaneswar,SBP,Sambalpur,Sambalpur,Odisha / Chhattisgarh,860.0,1420.0,110
+ECoR,East Coast Railway,Bhubaneswar,WAT,Waltair (Visakhapatnam),Visakhapatnam,Andhra Pradesh / Odisha / CG,1100.0,2180.0,110
+SWR,South Western Railway,Hubballi,UBL,Hubballi,Hubballi,Karnataka / Goa,1180.0,1720.0,110
+SWR,South Western Railway,Hubballi,SBC,Bengaluru,Bengaluru,Karnataka / Tamil Nadu,940.0,1680.0,130
+SWR,South Western Railway,Hubballi,MYS,Mysuru,Mysuru,Karnataka,1050.0,1340.0,110
+WCR,West Central Railway,Jabalpur,JBP,Jabalpur,Jabalpur,Madhya Pradesh,1140.0,2360.0,130
+WCR,West Central Railway,Jabalpur,BPL,Bhopal,Bhopal,Madhya Pradesh,1010.0,2280.0,130
+WCR,West Central Railway,Jabalpur,KOTA,Kota,Kota,Rajasthan / Madhya Pradesh,890.0,1960.0,130
+NWR,North Western Railway,Jaipur,JP,Jaipur,Jaipur,Rajasthan / Haryana,1280.0,1840.0,120
+NWR,North Western Railway,Jaipur,JU,Jodhpur,Jodhpur,Rajasthan,1620.0,1980.0,110
+NWR,North Western Railway,Jaipur,AII,Ajmer,Ajmer,Rajasthan / Gujarat,1190.0,1640.0,110
+NWR,North Western Railway,Jaipur,BKN,Bikaner,Bikaner,Rajasthan / Punjab / Haryana,1740.0,2020.0,110
+NER,North Eastern Railway,Gorakhpur,IZN,Izzatnagar,Bareilly,Uttar Pradesh / Uttarakhand,1140.0,1580.0,100
+NER,North Eastern Railway,Gorakhpur,LJN,Lucknow NER,Lucknow,Uttar Pradesh,1180.0,1720.0,110
+NER,North Eastern Railway,Gorakhpur,BSB,Varanasi,Varanasi,Uttar Pradesh / Bihar,1120.0,1680.0,110
+NFR,Northeast Frontier Railway,Maligaon / Guwahati,KIR,Katihar,Katihar,Bihar / West Bengal,890.0,1420.0,110
+NFR,Northeast Frontier Railway,Maligaon / Guwahati,APDJ,Alipurduar,Alipurduar,West Bengal / Assam,720.0,1120.0,100
+NFR,Northeast Frontier Railway,Maligaon / Guwahati,RNY,Rangiya,Rangiya,Assam / Arunachal Pradesh,880.0,1280.0,100
+NFR,Northeast Frontier Railway,Maligaon / Guwahati,LMG,Lumding,Lumding,Assam / Nagaland / Tripura / Mizoram,1020.0,1480.0,90
+NFR,Northeast Frontier Railway,Maligaon / Guwahati,TSK,Tinsukia,Tinsukia,Assam / Arunachal Pradesh,680.0,940.0,90
+SECR,South East Central Railway,Bilaspur,BSP,Bilaspur,Bilaspur,Chhattisgarh / Odisha,980.0,2420.0,130
+SECR,South East Central Railway,Bilaspur,R,Raipur,Raipur,Chhattisgarh,540.0,1380.0,130
+SECR,South East Central Railway,Bilaspur,NGP-SECR,Nagpur SECR,Nagpur,Maharashtra / MP,920.0,1640.0,110
+METRO,Metro Railway Kolkata,Kolkata,KMR,Kolkata Metro,Kolkata,West Bengal,48.0,96.0,80

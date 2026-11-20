@@ -9,6 +9,10 @@ import { NetworkMapPage } from './pages/NetworkMapPage';
 import { DataExplorerPage } from './pages/DataExplorerPage';
 import { ModelEvaluationPage } from './pages/ModelEvaluationPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { CvInspectionPage } from './pages/CvInspectionPage';
+import { UsfdAnalysisPage } from './pages/UsfdAnalysisPage';
+import { WeatherIntelligencePage } from './pages/WeatherIntelligencePage';
+import { AssistantPage } from './pages/AssistantPage';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<TabType>('overview');
@@ -19,14 +23,18 @@ export function App() {
       <Header activeTab={activeTab} onSelectTab={setActiveTab} />
 
       {/* Main Content Viewport */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12">
         {activeTab === 'overview' && <OverviewPage />}
-        {activeTab === 'track_analysis' && <TrackAnalysisPage />}
         {activeTab === 'severity_prediction' && <SeverityPredictionPage />}
         {activeTab === 'maintenance_priority' && <MaintenancePriorityPage />}
+        {activeTab === 'track_analysis' && <TrackAnalysisPage />}
+        {activeTab === 'cv_inspection' && <CvInspectionPage />}
+        {activeTab === 'usfd_analysis' && <UsfdAnalysisPage />}
+        {activeTab === 'weather_intelligence' && <WeatherIntelligencePage />}
         {activeTab === 'network_map' && <NetworkMapPage />}
-        {activeTab === 'data_explorer' && <DataExplorerPage />}
         {activeTab === 'model_evaluation' && <ModelEvaluationPage />}
+        {activeTab === 'ai_assistant' && <AssistantPage />}
+        {activeTab === 'data_explorer' && <DataExplorerPage />}
         {activeTab === 'settings' && <SettingsPage />}
       </main>
 
@@ -34,13 +42,13 @@ export function App() {
       <footer className="bg-white border-t border-slate-200 py-6 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-3">
           <div className="flex items-center space-x-2">
-            <span className="font-bold text-slate-900">RAILNEX AI</span>
+            <span className="font-bold text-slate-900">RAILRAKSHAK AI</span>
             <span>&bull;</span>
-            <span>Railway Track Defect Severity Classification & Maintenance Prioritization System</span>
+            <span>B.Tech CSE (AI & ML) Supervised Learning (INT395) Topic 20</span>
           </div>
 
           <div className="flex items-center space-x-4">
-            <span className="text-slate-400">Academic Research Decision Support</span>
+            <span className="text-slate-400">Indian Railways Decision Support Platform</span>
             <span>&bull;</span>
             <a
               href="https://github.com/arjun-1002/Railnex-AI.git"

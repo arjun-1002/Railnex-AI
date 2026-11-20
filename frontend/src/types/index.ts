@@ -1,26 +1,45 @@
 export type TabType = 
   | 'overview' 
-  | 'track_analysis' 
   | 'severity_prediction' 
   | 'maintenance_priority' 
+  | 'track_analysis' 
+  | 'cv_inspection'
+  | 'usfd_analysis'
+  | 'weather_intelligence'
   | 'network_map' 
-  | 'data_explorer' 
   | 'model_evaluation' 
+  | 'ai_assistant'
+  | 'data_explorer' 
   | 'settings';
 
 export interface OverviewMetrics {
   summary_cards: {
     total_inspection_records: number;
     monitored_line_segments: number;
-    critical_red_tags: number;
-    planned_yellow_tags: number;
+    critical_defects_count?: number;
+    critical_red_tags?: number;
+    planned_yellow_tags?: number;
     active_railway_stations: number;
-    operational_zones_tracked: number;
+    operational_zones_tracked?: number;
+    railway_zones_tracked?: number;
+    operating_divisions?: number;
     model_champion: string;
-    champion_f1_score: number;
+    champion_f1_score?: number;
+    champion_macro_f1?: number;
+    champion_critical_recall?: number;
+    weather_buckling_alerts?: number;
+    weather_flood_alerts?: number;
   };
   severity_distribution: Array<{
     name: string;
+    count: number;
+    percentage: number;
+    color: string;
+    code?: number;
+  }>;
+  multiclass_severity_distribution?: Array<{
+    name: string;
+    code: number;
     count: number;
     percentage: number;
     color: string;
@@ -34,22 +53,8 @@ export interface OverviewMetrics {
     period: string;
     inspections: number;
   }>;
-  cag_derailment_causation: Array<{
-    cause_category: string;
-    specific_cause: string;
-    incident_count: number;
-    percentage_of_total: number;
-    department_responsible: string;
-  }>;
-  datasets_manifest: Array<{
-    dataset_id: string;
-    name: string;
-    category: string;
-    records: number;
-    observation_period: string;
-    validation_status: string;
-    ml_role: string;
-  }>;
+  cag_derailment_causation?: any[];
+  datasets_manifest?: any[];
 }
 
 export interface SeverityPredictionInput {
@@ -87,13 +92,15 @@ export interface ShapAttribution {
 
 export interface SeverityPredictionResult {
   predicted_class: string;
+  severity_code?: number;
   severity_label: string;
   urgency_level: string;
   confidence_score: number;
+  uncertainty_score?: number;
   probabilities: {
-    Yellow_Tag_Planned: number;
-    Red_Tag_Urgent: number;
+    [key: string]: number;
   };
+  severity_color?: string;
   contributing_factors: ContributingFactor[];
   standards_comparison: StandardsComparison[];
   shap_attributions?: ShapAttribution[];
@@ -111,33 +118,42 @@ export interface MaintenancePriorityItem {
   predicted_severity: string;
   confidence: number;
   priority_score: number;
-  priority_tier: 'CRITICAL_REVIEW' | 'HIGH_PRIORITY' | 'SCHEDULED_MONITORING';
+  priority_tier: string;
   suggested_action: string;
   inspection_date?: string;
+  urgency_color?: string;
 }
 
 export interface TrackDeteriorationData {
   top_deteriorating_segments: Array<{
     line_segment_id: number;
     total_inspections: number;
-    red_tags: number;
+    recurring_defects_count: number;
+    red_tags?: number;
+    red_tag_ratio?: number;
     avg_amplitude: number;
     max_amplitude: number;
-    red_tag_ratio: number;
     deterioration_trend: string;
     urgency_rank: number;
-    monthly_degradation_rate_mm?: number;
-    projected_days_to_uml?: number;
-    prognostic_status?: string;
-    remaining_tonnage_mgt?: number;
+    monthly_degradation_rate_mm: number;
+    projected_days_to_uml: number;
+    prognostic_status: string;
+    remaining_tonnage_mgt: number;
+    last_inspection_date?: string;
   }>;
   longitudinal_sample_segment: {
     line_segment_id: number;
-    history: Array<{
+    history?: Array<{
       quarter: string;
       defect_count: number;
-      avg_amp: number;
       red_count: number;
+    }>;
+    history_points: Array<{
+      inspection_date: string;
+      milepost: number;
+      amplitude_mm: number;
+      defect_type: string;
+      severity_tag: string;
     }>;
   };
 }
@@ -151,39 +167,6 @@ export interface StationItem {
   longitude?: number;
 }
 
-export interface ModelBenchmarkSummary {
-  experiment_a_real?: {
-    experiment: string;
-    best_model: string;
-    best_weighted_f1: number;
-    benchmark_summary: Record<string, {
-      model_name: string;
-      accuracy: number;
-      precision: number;
-      recall: number;
-      macro_f1: number;
-      weighted_f1: number;
-      critical_severity_recall: number;
-      confusion_matrix: number[][];
-      top_feature_importance: Record<string, number>;
-    }>;
-  };
-  experiment_b_synthetic?: {
-    experiment: string;
-    disclaimer: string;
-    best_model: string;
-    best_weighted_f1: number;
-    benchmark_summary: Record<string, {
-      model_name: string;
-      accuracy: number;
-      macro_f1: number;
-      weighted_f1: number;
-      critical_severity_recall: number;
-      confusion_matrix: number[][];
-    }>;
-  };
-}
-
 export interface EngineeringStandard {
   parameter_name: string;
   threshold_value: number;
@@ -191,6 +174,28 @@ export interface EngineeringStandard {
   applicable_speed_or_track_category: string;
   maintenance_classification: string;
   source_document: string;
-  page_number: string;
-  document_version_or_publication_date: string;
+  page_number?: number;
+  document_version_or_publication_date?: string;
+}
+
+export interface CvDefectPredictionResult {
+  image_filename: string;
+  detected_class: 'DEFECTIVE' | 'HEALTHY';
+  confidence: number;
+  defect_subtype: string;
+  annotated_bounding_box?: {
+    ymin?: number;
+    xmin?: number;
+    ymax?: number;
+    xmax?: number;
+  };
+  engineering_recommendation: string;
+  disclaimer: string;
+}
+
+export interface AssistantChatResult {
+  response_text: string;
+  referenced_standards: string[];
+  suggested_followups: string[];
+  timestamp: string;
 }

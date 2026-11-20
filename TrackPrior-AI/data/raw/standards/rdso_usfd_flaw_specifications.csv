@@ -1,0 +1,17 @@
+defect_code,defect_type,location,probe_angle_deg,severity_classification,action_required,growth_rate_mm_per_gmt
+111,Transverse Fissure (Gauge Face Corner),Head,70,IMR,Emergency fishplate with clamps; 30 km/h speed restriction; replace within 3 days,0.35
+112,Transverse Fissure (Non-Gauge Face Corner),Head,70,OBS,Mark with red paint; re-test within 15 days; record progression,0.18
+113,Compound Fissure in Rail Head,Head,70,IMR,Emergency clamp; stop/restrict traffic until jointed,0.42
+211,Horizontal Split Head (Longitudinal),Head,0,OBS,Observe fortnightly; monitor length and depth,0.22
+212,Horizontal Split at Head-Web Junction,Fillet,0,IMR,Immediate fishplate clamp; rail replacement required,0.38
+311,Vertical Split Head (Longitudinal Seam),Head,70,IMR,Urgent rail replacement; risk of sudden head detachment,0.5
+411,Star / Diagonal Crack radiating from Bolt Hole,Web / Joint,45,IMR,Immediate replacement of fishplated rail end; provide joggled fishplate,0.45
+412,Horizontal Crack connecting Bolt Holes,Web / Joint,0,IMR,Cut defective rail piece (min 6m) and replace,0.6
+421,Hairline Bolt Hole Crack (< 5mm),Web / Joint,45,OBS,Chamfer bolt hole; ultrasonic check every 1 month,0.12
+511,Longitudinal Web Crack (Piping),Web,0,OBS,Measure vertical extent; replace if length > 50mm,0.15
+611,Transverse Crack in Rail Base,Foot / Base,70,IMR,Immediate 20 km/h restriction; clamp joggled plate; urgent cut,0.55
+612,Corrosion Notch in Rail Foot,Foot / Base,0,OBS,Anti-corrosion painting; ultrasonic re-test every 3 months,0.08
+711,AT Weld Transverse Lack of Fusion / Crack,AT Weld,45,IMRW,Immediate joggled fishplating with clamps; cut weld and insert 6m rail piece within 3 days,0.48
+712,AT Weld Slag Inclusion / Shrinkage Cavity,AT Weld,0,OBSW,Monitor growth rate; testing every 15 days,0.16
+811,FBW Interface Oxide / Cold Weld,FBW Weld,45,IMRW,Emergency clamp; cut weld; provide standard rail closure,0.4
+812,FBW Fine Micro-crack in HAZ,FBW HAZ,70,OBSW,Monthly inspection; record echo height in dB,0.14

@@ -1,0 +1,339 @@
+{
+  "timestamp": "2026-11-20 14:46:12",
+  "train_records": 17283,
+  "test_records": 6564,
+  "split_boundary": "2012-01-01",
+  "primary_metric": "macro_f1",
+  "champion_model": "LightGBM",
+  "models": {
+    "Logistic Regression": {
+      "model_name": "Logistic Regression",
+      "accuracy": 0.9639,
+      "macro_precision": 0.9293,
+      "macro_recall": 0.9626,
+      "macro_f1": 0.9435,
+      "weighted_precision": 0.9667,
+      "weighted_recall": 0.9639,
+      "weighted_f1": 0.9646,
+      "critical_recall": 0.9568,
+      "critical_false_negatives": 18,
+      "critical_total": 417,
+      "roc_auc_ovr": 0.9961,
+      "fit_time_seconds": 0.23,
+      "confusion_matrix": [
+        [
+          2105,
+          1,
+          0,
+          0
+        ],
+        [
+          4,
+          1845,
+          64,
+          0
+        ],
+        [
+          14,
+          22,
+          1978,
+          114
+        ],
+        [
+          0,
+          0,
+          18,
+          399
+        ]
+      ],
+      "class_names": [
+        "Normal (Class 0)",
+        "Minor (Class 1)",
+        "Major (Class 2)",
+        "Critical (Class 3)"
+      ]
+    },
+    "Decision Tree": {
+      "model_name": "Decision Tree",
+      "accuracy": 0.9927,
+      "macro_precision": 0.9906,
+      "macro_recall": 0.9917,
+      "macro_f1": 0.9911,
+      "weighted_precision": 0.9928,
+      "weighted_recall": 0.9927,
+      "weighted_f1": 0.9927,
+      "critical_recall": 0.988,
+      "critical_false_negatives": 5,
+      "critical_total": 417,
+      "roc_auc_ovr": 0.9974,
+      "fit_time_seconds": 0.02,
+      "confusion_matrix": [
+        [
+          2090,
+          0,
+          16,
+          0
+        ],
+        [
+          0,
+          1896,
+          17,
+          0
+        ],
+        [
+          0,
+          2,
+          2118,
+          8
+        ],
+        [
+          0,
+          0,
+          5,
+          412
+        ]
+      ],
+      "class_names": [
+        "Normal (Class 0)",
+        "Minor (Class 1)",
+        "Major (Class 2)",
+        "Critical (Class 3)"
+      ]
+    },
+    "Random Forest": {
+      "model_name": "Random Forest",
+      "accuracy": 0.9939,
+      "macro_precision": 0.9944,
+      "macro_recall": 0.9908,
+      "macro_f1": 0.9925,
+      "weighted_precision": 0.994,
+      "weighted_recall": 0.9939,
+      "weighted_f1": 0.9939,
+      "critical_recall": 0.9784,
+      "critical_false_negatives": 9,
+      "critical_total": 417,
+      "roc_auc_ovr": 1.0,
+      "fit_time_seconds": 0.26,
+      "confusion_matrix": [
+        [
+          2091,
+          0,
+          15,
+          0
+        ],
+        [
+          0,
+          1899,
+          14,
+          0
+        ],
+        [
+          0,
+          0,
+          2126,
+          2
+        ],
+        [
+          0,
+          0,
+          9,
+          408
+        ]
+      ],
+      "class_names": [
+        "Normal (Class 0)",
+        "Minor (Class 1)",
+        "Major (Class 2)",
+        "Critical (Class 3)"
+      ]
+    },
+    "Support Vector Machine": {
+      "model_name": "Support Vector Machine",
+      "accuracy": 0.9095,
+      "macro_precision": 0.8964,
+      "macro_recall": 0.8661,
+      "macro_f1": 0.8791,
+      "weighted_precision": 0.9097,
+      "weighted_recall": 0.9095,
+      "weighted_f1": 0.9089,
+      "critical_recall": 0.6906,
+      "critical_false_negatives": 129,
+      "critical_total": 417,
+      "roc_auc_ovr": 0.9862,
+      "fit_time_seconds": 0.13,
+      "confusion_matrix": [
+        [
+          2067,
+          39,
+          0,
+          0
+        ],
+        [
+          2,
+          1767,
+          144,
+          0
+        ],
+        [
+          10,
+          218,
+          1848,
+          52
+        ],
+        [
+          0,
+          0,
+          129,
+          288
+        ]
+      ],
+      "class_names": [
+        "Normal (Class 0)",
+        "Minor (Class 1)",
+        "Major (Class 2)",
+        "Critical (Class 3)"
+      ]
+    },
+    "K-Nearest Neighbours": {
+      "model_name": "K-Nearest Neighbours",
+      "accuracy": 0.9733,
+      "macro_precision": 0.9679,
+      "macro_recall": 0.9559,
+      "macro_f1": 0.9616,
+      "weighted_precision": 0.9733,
+      "weighted_recall": 0.9733,
+      "weighted_f1": 0.9732,
+      "critical_recall": 0.8849,
+      "critical_false_negatives": 48,
+      "critical_total": 417,
+      "roc_auc_ovr": 0.9956,
+      "fit_time_seconds": 0.04,
+      "confusion_matrix": [
+        [
+          2086,
+          4,
+          16,
+          0
+        ],
+        [
+          7,
+          1882,
+          22,
+          2
+        ],
+        [
+          9,
+          48,
+          2052,
+          19
+        ],
+        [
+          0,
+          0,
+          48,
+          369
+        ]
+      ],
+      "class_names": [
+        "Normal (Class 0)",
+        "Minor (Class 1)",
+        "Major (Class 2)",
+        "Critical (Class 3)"
+      ]
+    },
+    "LightGBM": {
+      "model_name": "LightGBM",
+      "accuracy": 0.9948,
+      "macro_precision": 0.9951,
+      "macro_recall": 0.9948,
+      "macro_f1": 0.9949,
+      "weighted_precision": 0.9949,
+      "weighted_recall": 0.9948,
+      "weighted_f1": 0.9948,
+      "critical_recall": 0.9952,
+      "critical_false_negatives": 2,
+      "critical_total": 417,
+      "roc_auc_ovr": 1.0,
+      "fit_time_seconds": 0.38,
+      "confusion_matrix": [
+        [
+          2090,
+          0,
+          16,
+          0
+        ],
+        [
+          0,
+          1899,
+          14,
+          0
+        ],
+        [
+          0,
+          0,
+          2126,
+          2
+        ],
+        [
+          0,
+          0,
+          2,
+          415
+        ]
+      ],
+      "class_names": [
+        "Normal (Class 0)",
+        "Minor (Class 1)",
+        "Major (Class 2)",
+        "Critical (Class 3)"
+      ]
+    },
+    "XGBoost Champion": {
+      "model_name": "XGBoost Champion",
+      "accuracy": 0.9948,
+      "macro_precision": 0.9941,
+      "macro_recall": 0.9939,
+      "macro_f1": 0.994,
+      "weighted_precision": 0.9949,
+      "weighted_recall": 0.9948,
+      "weighted_f1": 0.9948,
+      "critical_recall": 0.9904,
+      "critical_false_negatives": 4,
+      "critical_total": 417,
+      "roc_auc_ovr": 1.0,
+      "fit_time_seconds": 0.46,
+      "confusion_matrix": [
+        [
+          2093,
+          0,
+          13,
+          0
+        ],
+        [
+          0,
+          1900,
+          13,
+          0
+        ],
+        [
+          0,
+          0,
+          2124,
+          4
+        ],
+        [
+          0,
+          0,
+          4,
+          413
+        ]
+      ],
+      "class_names": [
+        "Normal (Class 0)",
+        "Minor (Class 1)",
+        "Major (Class 2)",
+        "Critical (Class 3)"
+      ]
+    }
+  }
+}

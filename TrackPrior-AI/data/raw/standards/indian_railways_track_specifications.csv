@@ -1,0 +1,14 @@
+category,type,steel_grade,yield_strength_mpa,tensile_strength_mpa,standard_application,axle_load_max_tonnes,design_speed_max_kmh,weight_kg,sleeper_spacing_mm,density_per_km,service_life_years,fastening_system,cushion_depth_mm,shoulders_width_straight_mm,shoulders_width_curve_mm,maintenance_tamping_cycle_gmt,lead_curve_radius_m,switch_entry_angle_deg,permissible_diverging_speed_kmh,inspection_frequency_days
+Rail Section,60 kg/m (UIC 60),90 UTS,460.0,880.0,"Broad Gauge Group A & B routes, High Density Corridors",25.0,160.0,,,,,,,,,,,,,
+Rail Section,60 kg/m (UIC 60),110 UTS (Micro-alloyed),560.0,1080.0,"Dedicated Freight Corridors (DFC), Heavy Haul (CC+8+2, CC+6+2)",32.5,100.0,,,,,,,,,,,,,
+Rail Section,52 kg/m,90 UTS,410.0,880.0,"Broad Gauge Group C & D routes, Secondary Main lines",22.82,110.0,,,,,,,,,,,,,
+Rail Section,90 R (Older section),72 UTS,350.0,710.0,"Branch lines, Loop lines, Yard sidings",18.0,75.0,,,,,,,,,,,,,
+Sleeper,PSC Sleeper RT-2496 (60 kg),,,,"Group A & B routes, LWR/CWR Track",,,298.0,600.0,1660.0,40.0,Elastic Rail Clip (ERC Mk-III/V),,,,,,,,
+Sleeper,PSC Sleeper RT-2495 (52 kg),,,,"Group C, D & E routes",,,285.0,650.0,1540.0,35.0,Elastic Rail Clip (ERC Mk-III),,,,,,,,
+Sleeper,Wider PSC Sleeper RT-8521,,,,25t Axle Load DFC & Feeder Routes,,,345.0,600.0,1660.0,45.0,Heavy Duty ERC Mk-V with GFN Liners,,,,,,,,
+Ballast Cushion,Clean Crushed Stone 50mm,,,,Group A routes (V >= 130 km/h) & 25t DFC routes,,,,,,,,350.0,350.0,500.0,50.0,,,,
+Ballast Cushion,Clean Crushed Stone 50mm,,,,Group B & C routes (110 <= V < 130 km/h),,,,,,,,300.0,350.0,450.0,65.0,,,,
+Ballast Cushion,Clean Crushed Stone 50mm,,,,Group D & E routes (V < 100 km/h),,,,,,,,250.0,300.0,400.0,80.0,,,,
+Turnout,1 in 12 Curved Switch (CMS Crossing),,,,Mainline Loops & Junction crossovers,,,,,,,,,,,,441.36,0.54,50.0,30.0
+Turnout,1 in 8.5 Curved Switch (CMS Crossing),,,,Station yards & terminal sidings,,,,,,,,,,,,218.89,0.78,25.0,30.0
+Turnout,1 in 16 High-Speed Crossover (Thick Web Switch),,,,High speed quadruple track overtaking loops,,,,,,,,,,,,782.0,0.38,65.0,15.0

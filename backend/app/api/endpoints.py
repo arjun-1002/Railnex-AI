@@ -1,23 +1,26 @@
 """
-Railnex AI API Endpoints
+RailRakshak AI — Unified API Endpoints (All 19 Modules)
 """
 
 import os
 import io
 import sys
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from fastapi import APIRouter, HTTPException, Query, UploadFile, File
 import pandas as pd
 
 from ..schemas.models import (
     SeverityPredictionRequest, SeverityPredictionResponse,
-    MaintenancePriorityItem, StationItem, DegradationSimulationRequest
+    MaintenancePriorityItem, StationItem, DegradationSimulationRequest,
+    CvDefectPrediction, AssistantChatRequest, AssistantChatResponse
 )
 from ..core.ml_service import MLService
 from ..core.data_service import DataService
+from ..core.cv_service import CvService
+from ..core.assistant_service import AssistantService
 from ..config import BASE_DIR
 
-# Ensure TrackPrior-AI scripts are importable
+# Ensure scripts dir is in sys.path
 SCRIPTS_DIR = os.path.join(BASE_DIR, "TrackPrior-AI", "scripts")
 if SCRIPTS_DIR not in sys.path:
     sys.path.append(SCRIPTS_DIR)
@@ -29,19 +32,30 @@ router = APIRouter(prefix="/api")
 
 ml_service = MLService()
 data_service = DataService()
+cv_service = CvService()
+assistant_service = AssistantService()
 rti_pipeline = RTIIndianRailwaysTMSPipeline()
 weather_importer = WeatherDataImporter()
 
+# ==============================================================================
+# Health & Status
+# ==============================================================================
 @router.get("/health")
 def health_check():
     return {
         "status": "online",
-        "system": "Railnex AI Decision Support Engine",
-        "version": "1.0.0",
+        "system": "RailRakshak AI Decision Support Engine",
+        "version": "2.0.0",
+        "academic_course": "Supervised Learning (INT395) Topic 20",
+        "champion_model": ml_service.champion_name,
         "model_loaded": ml_service.model is not None,
-        "datasets_ready": data_service.df_informs is not None
+        "datasets_ready": data_service.df_informs is not None,
+        "total_datasets_integrated": 13
     }
 
+# ==============================================================================
+# Module 1 — National Railway Dashboard
+# ==============================================================================
 @router.get("/overview")
 def get_overview():
     try:
@@ -49,6 +63,9 @@ def get_overview():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# ==============================================================================
+# Module 4 & 5 — AI Defect Severity Prediction (4-Class & TreeSHAP)
+# ==============================================================================
 @router.post("/predict/severity", response_model=SeverityPredictionResponse)
 def predict_severity(payload: SeverityPredictionRequest):
     try:
@@ -56,6 +73,19 @@ def predict_severity(payload: SeverityPredictionRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# ==============================================================================
+# Module 15 — Model Performance Dashboard (7 Competing Models & Metrics)
+# ==============================================================================
+@router.get("/models/evaluation")
+def get_model_evaluation():
+    try:
+        return ml_service.get_model_evaluation()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ==============================================================================
+# Module 6 — Maintenance Priority Management
+# ==============================================================================
 @router.get("/maintenance/prioritization", response_model=List[MaintenancePriorityItem])
 def get_maintenance_prioritization(
     urgency: str = Query("ALL", description="Urgency filter: ALL, CRITICAL, HIGH"),
@@ -73,6 +103,31 @@ def get_maintenance_prioritization(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# ==============================================================================
+# Module 6 & 18 — Official P-Way Maintenance Advisory Sheet
+# ==============================================================================
+@router.get("/reports/advisory")
+def get_maintenance_advisory():
+    try:
+        priorities = data_service.get_maintenance_prioritization(limit=50)
+        critical_items = [p for p in priorities if "Critical" in p.get("predicted_severity", "") or p.get("priority_tier") == "CRITICAL_REVIEW"]
+        tamping_items = [p for p in priorities if p.get("priority_tier") in ["CRITICAL_REVIEW", "HIGH_PRIORITY"]]
+
+        return {
+            "advisory_ref": f"IR/PWAY/ADV/{pd.Timestamp.now().strftime('%Y%m%d')}/042",
+            "statutory_mandate": "Indian Railways Permanent Way Manual (IRPWM 2020 Edition) Table 5.1 & Para 5.1",
+            "generation_timestamp": pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S IST"),
+            "critical_exceedances": critical_items,
+            "tamping_allocation": tamping_items,
+            "presiding_engineer": "Senior Section Engineer (SSE / P-Way / TRC Analytics)",
+            "work_orders": priorities
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ==============================================================================
+# Module 3 & 8 — Track Health, Deterioration & Prognostics
+# ==============================================================================
 @router.get("/track/deterioration")
 def get_track_deterioration():
     try:
@@ -80,164 +135,186 @@ def get_track_deterioration():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# ==============================================================================
+# Module 17 — Interactive What-If Operational Sensitivity Sandbox
+# ==============================================================================
+@router.post("/track/simulate-degradation")
+def simulate_track_degradation(payload: DegradationSimulationRequest):
+    try:
+        return data_service.simulate_track_degradation(
+            line_segment_id=payload.line_segment_id,
+            baseline_amplitude_mm=payload.baseline_amplitude_mm,
+            axle_load_tonnes=payload.axle_load_tonnes,
+            traffic_mgt_annual=payload.traffic_mgt_annual,
+            deferred_maintenance_days=payload.deferred_maintenance_days,
+            monsoon_rainfall_mm=payload.monsoon_rainfall_mm,
+            ballast_condition=payload.ballast_condition
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ==============================================================================
+# Module 2 — Network Geography, GIS Stations, Zones & Divisions
+# ==============================================================================
 @router.get("/network/stations", response_model=List[StationItem])
 def get_stations(
-    zone: str = Query("ALL", description="Railway Zone (e.g., NR, WR, CR, SR, SCR)"),
-    limit: int = Query(150, ge=1, le=1000)
+    zone: Optional[str] = Query(None, description="Railway Zone filter, e.g. NR, NCR"),
+    limit: int = Query(100, ge=1, le=500)
 ):
     try:
         return data_service.get_stations(zone=zone, limit=limit)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@router.get("/network/search", response_model=List[StationItem])
+def search_stations(
+    q: str = Query(..., min_length=1, description="Station name, station code, or state"),
+    limit: int = Query(25, ge=1, le=100)
+):
+    try:
+        return data_service.search_stations(query=q, limit=limit)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.get("/network/zones")
-def get_zones():
+def get_network_zones():
     try:
-        return data_service.get_zones_summary()
+        return data_service.get_zones_and_divisions()
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.get("/weather/analysis")
-def get_weather_analysis():
+# ==============================================================================
+# Module 14 — Data Explorer & Manifest
+# ==============================================================================
+@router.get("/data/explorer")
+def get_data_explorer(
+    page: int = Query(1, ge=1),
+    page_size: int = Query(20, ge=1, le=100),
+    defect_type: str = Query("ALL"),
+    line_segment: Optional[int] = Query(None)
+):
     try:
-        return data_service.get_weather_analytics()
+        return data_service.get_data_explorer(
+            page=page,
+            page_size=page_size,
+            defect_type=defect_type,
+            line_segment_id=line_segment
+        )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.get("/models/evaluation")
-def get_models_evaluation():
+@router.get("/datasets/manifest")
+def get_datasets_manifest():
     try:
-        return ml_service.get_model_evaluation()
+        return data_service.manifest_data if data_service.manifest_data else {}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# ==============================================================================
+# Module 7 — Weather Intelligence & Buckling Risks
+# ==============================================================================
+@router.get("/weather/intelligence")
+def get_weather_intelligence():
+    try:
+        return data_service.get_weather_intelligence()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ==============================================================================
+# Module 9 — Computer Vision Track Defect Detection
+# ==============================================================================
+@router.get("/cv/samples")
+def get_cv_sample_images(limit: int = Query(12, ge=4, le=24)):
+    try:
+        return cv_service.list_sample_images(limit=limit)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/cv/predict", response_model=CvDefectPrediction)
+async def predict_cv_defect(file: UploadFile = File(...)):
+    try:
+        contents = await file.read()
+        return cv_service.analyze_image(contents, filename=file.filename)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ==============================================================================
+# Module 10 — Ultrasonic Flaw Detection (USFD)
+# ==============================================================================
+@router.get("/usfd/flaws")
+def get_usfd_flaws(limit: int = Query(100, ge=10, le=250)):
+    try:
+        return data_service.get_usfd_flaws(limit=limit)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/usfd/standards")
+def get_usfd_standards():
+    try:
+        return data_service.get_usfd_standards()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ==============================================================================
+# Module 13 — Railway Safety & Accident Analytics
+# ==============================================================================
+@router.get("/safety/accidents")
+def get_safety_accidents():
+    try:
+        return data_service.get_accident_analytics()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ==============================================================================
+# Module 16 — AI Railway Maintenance Assistant
+# ==============================================================================
+@router.post("/assistant/chat", response_model=AssistantChatResponse)
+def assistant_chat(payload: AssistantChatRequest):
+    try:
+        return assistant_service.chat(query=payload.query, zone=payload.context_zone)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ==============================================================================
+# File Ingestion Pipelines (Module 14)
+# ==============================================================================
+@router.post("/upload/rti-tms")
+async def upload_rti_tms_file(file: UploadFile = File(...)):
+    try:
+        contents = await file.read()
+        df_uploaded = pd.read_csv(io.BytesIO(contents))
+        df_clean, audit = rti_pipeline.process_dataframe(df_uploaded, source_filename=file.filename)
+        return {
+            "status": "SUCCESS",
+            "message": f"Successfully ingested {len(df_clean)} RTI TMS inspection records.",
+            "audit": audit,
+            "preview_records": df_clean.head(20).to_dict(orient="records")
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"RTI TMS ingestion failed: {str(e)}")
+
+@router.post("/upload/weather")
+async def upload_weather_file(file: UploadFile = File(...)):
+    try:
+        contents = await file.read()
+        df_uploaded = pd.read_csv(io.BytesIO(contents))
+        df_clean = weather_importer.standardize(df_uploaded)
+        audit = weather_importer.audit_quality(df_clean)
+        return {
+            "status": "SUCCESS",
+            "message": "Weather telemetry ingested successfully.",
+            "audit": audit,
+            "preview_records": df_clean.head(20).to_dict(orient="records")
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Weather ingestion failed: {str(e)}")
+
+# ==============================================================================
+# Standards
+# ==============================================================================
 @router.get("/standards")
 def get_standards():
     try:
         return ml_service.get_standards()
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-@router.get("/data/explorer")
-def explore_data(
-    page: int = Query(1, ge=1),
-    page_size: int = Query(50, ge=1, le=200),
-    defect_type: Optional[str] = Query(None),
-    priority: Optional[str] = Query(None),
-    line_segment: Optional[int] = Query(None)
-):
-    try:
-        return data_service.query_inspection_records(
-            page=page,
-            page_size=page_size,
-            defect_type=defect_type,
-            priority_tag=priority,
-            line_segment_id=line_segment
-        )
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-@router.post("/upload/rti-tms")
-async def upload_rti_tms(file: UploadFile = File(...)):
-    """Accepts and audits uploaded Indian Railways TMS inspection files."""
-    try:
-        contents = await file.read()
-        filename = file.filename or "uploaded_tms.csv"
-        ext = os.path.splitext(filename)[1].lower()
-        
-        if ext == ".csv":
-            df_raw = pd.read_csv(io.BytesIO(contents))
-        elif ext in [".xlsx", ".xls"]:
-            df_raw = pd.read_excel(io.BytesIO(contents))
-        elif ext == ".parquet":
-            df_raw = pd.read_parquet(io.BytesIO(contents))
-        else:
-            raise HTTPException(status_code=400, detail="Unsupported format. Please upload .csv, .xlsx, or .parquet")
-            
-        df_clean, audit = rti_pipeline.process_dataframe(df_raw, source_filename=filename)
-        
-        sample_records = df_clean.head(20).to_dict(orient="records")
-        for r in sample_records:
-            for k, v in r.items():
-                if pd.isna(v):
-                    r[k] = None
-                elif hasattr(v, 'isoformat'):
-                    r[k] = v.isoformat()
-                    
-        return {
-            "status": "SUCCESS",
-            "message": f"Successfully ingested and audited {len(df_clean)} Indian Railways TMS records.",
-            "audit": audit,
-            "preview_records": sample_records
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to process TMS file: {str(e)}")
-
-@router.post("/upload/weather")
-async def upload_weather(file: UploadFile = File(...)):
-    """Accepts and audits uploaded meteorological time-series records."""
-    try:
-        contents = await file.read()
-        filename = file.filename or "uploaded_weather.csv"
-        ext = os.path.splitext(filename)[1].lower()
-        
-        if ext == ".csv":
-            df_raw = pd.read_csv(io.BytesIO(contents))
-        elif ext in [".xlsx", ".xls"]:
-            df_raw = pd.read_excel(io.BytesIO(contents))
-        elif ext == ".parquet":
-            df_raw = pd.read_parquet(io.BytesIO(contents))
-        else:
-            raise HTTPException(status_code=400, detail="Unsupported format. Please upload .csv, .xlsx, or .parquet")
-            
-        std_df, audit = weather_importer.process_dataframe(df_raw)
-        
-        sample_records = std_df.head(15).to_dict(orient="records")
-        for r in sample_records:
-            for k, v in r.items():
-                if pd.isna(v):
-                    r[k] = None
-                elif hasattr(v, 'isoformat'):
-                    r[k] = v.isoformat()
-                    
-        return {
-            "status": "SUCCESS",
-            "message": f"Successfully standardized {len(std_df)} weather observations.",
-            "audit": audit,
-            "preview_records": sample_records
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to process weather file: {str(e)}")
-
-@router.get("/reports/advisory")
-def get_maintenance_advisory():
-    """Generates an official printable Indian Railways Track Maintenance Advisory."""
-    try:
-        return data_service.get_maintenance_advisory()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-@router.get("/network/search")
-def search_stations(q: str = Query(..., min_length=1, description="Station search query")):
-    """Searches Indian Railways stations by code, name, or state."""
-    try:
-        return data_service.search_stations(query=q)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-@router.post("/track/simulate-degradation")
-def simulate_track_degradation(req: DegradationSimulationRequest):
-    """Simulates track geometry degradation under variable axle loads, deferred tamping, and climate events."""
-    try:
-        return data_service.simulate_track_degradation(
-            line_segment_id=req.line_segment_id,
-            baseline_amplitude_mm=req.baseline_amplitude_mm,
-            axle_load_tonnes=req.axle_load_tonnes,
-            traffic_mgt_annual=req.traffic_mgt_annual,
-            deferred_maintenance_days=req.deferred_maintenance_days,
-            monsoon_rainfall_mm=req.monsoon_rainfall_mm,
-            ballast_condition=req.ballast_condition
-        )
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
